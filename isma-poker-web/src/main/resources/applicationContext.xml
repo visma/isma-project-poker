@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <bean id="gameConfiguration" class="org.isma.poker.game.GameConfiguration">
+        <constructor-arg value="5"/>
+        <constructor-arg value="10"/>
+        <constructor-arg value="false"/>
+        <constructor-arg value="true"/>
+    </bean>
+    <bean id="deckFactory" class="org.isma.poker.factory.DeckFactory"/>
+    <bean id="tableFactory" class="org.isma.poker.factory.TableFactory"/>
+</beans>

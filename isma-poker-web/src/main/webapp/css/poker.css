@@ -1,0 +1,60 @@
+/* Style General */
+* {
+    /*margin: 10px;*/
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background: #6d071a;
+    border-width: 1px;
+}
+
+.pokertable {
+    border: 1px;
+    background: green;
+    text-align: center;
+}
+
+.pokertable td {
+    width: 200px;
+    height: 200px;
+}
+
+.pokerboard {
+    border: 1px;
+    background: #90ee90;
+    text-align: center;
+}
+
+.pokerboard td {
+    width: 80px;
+    height: 100px;
+}
+
+.panel {
+    border-width: 1px;
+    background: #7d172a;
+    text-align: left;
+}
+
+.panel td {
+    width: 100px;
+    color: #FFD700;
+}
+
+.playeractions {
+    border-width: 0px;
+    background: #7d172a;
+    text-align: left;
+}
+
+.playeractions td {
+    color: #FFD700;
+    /*width: 100px;*/
+}

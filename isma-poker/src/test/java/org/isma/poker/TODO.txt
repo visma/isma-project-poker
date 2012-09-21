@@ -1,0 +1,1 @@
+- vérifier que le tour d'un joueur est skyppé s'il a plus de jetons (allin)
