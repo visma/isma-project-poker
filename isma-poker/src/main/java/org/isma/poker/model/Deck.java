@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck implements IHand {
-    public static final Logger log = Logger.getLogger(Deck.class);
+    public static final Logger LOG = Logger.getLogger(Deck.class);
     //Inner composition : not exposing Collection method
     protected final AbstractHand innerHand = new AbstractHand() {
     };
@@ -59,7 +59,7 @@ public class Deck implements IHand {
     }
 
     public Object getInnerData() {
-        log.warn("exposing inner data must be avoid if not in a test context !!!");
+        LOG.warn("exposing inner data must be avoid if not in a test context !!!");
         return innerHand;
     }
 

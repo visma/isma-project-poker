@@ -7,5 +7,5 @@ public interface IDeckFactory {
         FIFTY_TWO_CARDS_DECK;
     }
 
-    public Deck buildPokerDeck(DeckFactory.DeckTypeEnum deckTypeEnum);
+    Deck buildPokerDeck(DeckFactory.DeckTypeEnum deckTypeEnum);
 }

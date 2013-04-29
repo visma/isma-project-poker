@@ -44,7 +44,6 @@ public class PokerWebSocketHandler extends WebSocketHandler {
         //TODO recursif
         public void onMessage(String message) {
             try {
-                System.out.println("onMessage =>" + message);
                 AbstractPokerAction action = gameSessionHandler.getAction(message);
                 AbstractObjectMessageResponse response = action.update(game, message);
                 for (PokerWebSocket webSocket : webSockets) {

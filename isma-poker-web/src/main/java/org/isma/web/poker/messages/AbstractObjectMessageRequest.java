@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 import static java.lang.String.format;
 
 public abstract class AbstractObjectMessageRequest<O> {
-    private static final Logger log = Logger.getLogger(AbstractObjectMessageRequest.class);
+    private static final Logger LOG = Logger.getLogger(AbstractObjectMessageRequest.class);
 
 
     public abstract String getIdentifier();
@@ -23,7 +23,6 @@ public abstract class AbstractObjectMessageRequest<O> {
     }
 
     private Map<String, String> decodeMessage(String message) {
-        //log.setLevel(Level.TRACE);
         Map<String, String> decodeMap = new HashMap<String, String>();
         Pattern pattern = Pattern.compile(format("%s\\{(\\w+=\\w+)(,\\w+=\\w+)*\\}", getIdentifier()));
         Matcher matcher = pattern.matcher(message);
@@ -31,11 +30,11 @@ public abstract class AbstractObjectMessageRequest<O> {
         if (!matches){
             return decodeMap;
         }
-        log.trace("groupes = " + matcher.groupCount());
+        LOG.trace("groupes = " + matcher.groupCount());
         List<String> attributesKeys = getAttributesKeys();
         for (int i = 1; i < matcher.groupCount(); i++) {
             String group = matcher.group(i);
-            log.trace("groupe = " + group);
+            LOG.trace("groupe = " + group);
             String[] split = group.split("=");
             String key = split[0];
             String value = split[1];

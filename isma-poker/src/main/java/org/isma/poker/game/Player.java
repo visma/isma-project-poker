@@ -6,7 +6,7 @@ import org.isma.poker.exceptions.InvalidPlayerTurnException;
 import org.isma.poker.model.Hand;
 
 public class Player {
-    private static final Logger log = Logger.getLogger(Player.class);
+    private static final Logger LOG = Logger.getLogger(Player.class);
     private final String nickname;
     protected int chips;
     private final Hand hand = new Hand();
@@ -94,7 +94,7 @@ public class Player {
         } else {
             chips -= priceToPay;
         }
-        log.debug(String.format("Player{%s}.payChips(%s)", nickname, priceToPay));
+        LOG.debug(String.format("Player{%s}.payChips(%s)", nickname, priceToPay));
         return priceToPay;
     }
 

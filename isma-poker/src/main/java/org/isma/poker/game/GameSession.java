@@ -17,7 +17,7 @@ import static org.isma.poker.factory.IDeckFactory.DeckTypeEnum.FIFTY_TWO_CARDS_D
 import static org.isma.poker.game.PokerActionEnum.*;
 
 public class GameSession implements PlayerBetListener {
-    private static final Logger log = Logger.getLogger(GameSession.class);
+    private static final Logger LOG = Logger.getLogger(GameSession.class);
     private final AvailableActionsEvaluator availableActionsEvaluator = new AvailableActionsEvaluator();
     private final GameConfiguration configuration;
     private final IDeckFactory deckFactory;
@@ -209,7 +209,7 @@ public class GameSession implements PlayerBetListener {
         new AbstractPlayerAction(this, SHOW) {
             @Override
             protected void doAction(Player player) throws InvalidPlayerBetException {
-                log.warn("GameSession.show not yet implemented...");
+                LOG.warn("GameSession.show not yet implemented...");
             }
         }.execute(player);
     }

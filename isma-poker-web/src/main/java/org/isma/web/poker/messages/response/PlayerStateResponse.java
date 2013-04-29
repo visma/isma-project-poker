@@ -32,8 +32,8 @@ public class PlayerStateResponse extends AbstractObjectMessageResponse<TableInfo
 
     @Override
     public String getAttributeValue(TableInfos tableInfos, String attributeKey) {
-        String key = attributeKey.substring(0, attributeKey.lastIndexOf("_"));
-        int position = Integer.valueOf(attributeKey.substring(attributeKey.lastIndexOf("_")));
+        String key = attributeKey.substring(0, attributeKey.lastIndexOf('_'));
+        int position = Integer.valueOf(attributeKey.substring(attributeKey.lastIndexOf('_')));
         Player player = tableInfos.getPlayersInfos().get(position).getPlayer();
         if (key.equals(NICKNAME)) {
             return player.getNickname();

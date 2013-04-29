@@ -66,13 +66,13 @@ public class Results {
             int prize = splitPot.getTotal() / splitCount;
             for (Player winner : winnerList) {
                 if (splitPot.getPlayers().contains(winner)) {
-                    deliverPrize(winner, splitPot, prize);
+                    deliverPrize(winner, prize);
                     splitPots.remove(splitPot);
                 }
             }
         }
     }
-    private void deliverPrize(final Player winnerPlayer, SplitPot splitPot, int prize) {
+    private void deliverPrize(final Player winnerPlayer, int prize) {
         if (winners.get(winnerPlayer) == null) {
             Winner winner = new Winner(winnerPlayer, handEvaluator.evaluate(winnerPlayer.getHand()));
             winners.put(winnerPlayer, winner);
