@@ -1,5 +1,6 @@
 package org.isma.poker.game;
 
+import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.poker.game.step.PokerStepGame;
 import org.isma.poker.game.step.StepEnum;
 
@@ -13,7 +14,7 @@ public class GameStep {
         step = StepEnum.END;
     }
 
-    public void nextStep() throws Exception {
+    public void nextStep() throws InvalidStepActionException {
         stepOver = false;
         step = step.nextStep();
         step.setUp(game);

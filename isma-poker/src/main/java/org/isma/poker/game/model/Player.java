@@ -4,7 +4,7 @@ import org.isma.poker.model.Hand;
 
 public class Player {
     private final String nickname;
-    protected int chips;
+    private int chips;
     private final Hand hand = new Hand();
     private boolean fold = false;
 

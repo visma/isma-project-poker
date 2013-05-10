@@ -78,7 +78,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
         return gameStep.isOver() && gameStep.getStep() == StepEnum.END;
     }
 
-    public void nextStep() throws Exception {
+    public void nextStep() throws InvalidStepActionException {
         if (table.isRoundOver()) {
             gameStep.gotoEnd();
         } else {

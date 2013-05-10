@@ -14,14 +14,14 @@ import static junit.framework.Assert.assertFalse;
 import static org.isma.poker.game.step.StepEnum.BLINDS;
 
 public class GameSessionTest extends AbstractPokerTest {
-    private TestPlayer player1 = new TestPlayer("toto");
-    private TestPlayer player2 = new TestPlayer("titi");
+    private Player player1 = new Player("toto");
+    private Player player2 = new Player("titi");
     private boolean isRoundOverValue;
 
     @Before
     public void setUp() throws Exception {
-        player1.clearChips();
-        player2.clearChips();
+        player1.setChips(0);
+        player2.setChips(0);
     }
 
     @Override
@@ -61,13 +61,4 @@ public class GameSessionTest extends AbstractPokerTest {
 
     }
 
-    private class TestPlayer extends Player {
-        public TestPlayer(String nickName) {
-            super(nickName);
-        }
-
-        public void clearChips() {
-            chips = 0;
-        }
-    }
 }
