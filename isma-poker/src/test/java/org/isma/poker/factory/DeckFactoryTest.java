@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 public class DeckFactoryTest {
 
     @Test
-    public void test_texasHoldemDeck() {
+    public void texasHoldemDeck() {
         Deck deck = new DeckFactory().buildPokerDeck(FIFTY_TWO_CARDS_DECK);
         assertEquals(52, deck.size());
 

@@ -1,4 +1,4 @@
-package org.isma.poker.comparators;
+package org.isma.poker;
 
 import org.isma.poker.model.HandEvaluation;
 import org.isma.poker.HandEvaluator;
