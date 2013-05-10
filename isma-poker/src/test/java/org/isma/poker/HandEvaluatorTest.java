@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static org.isma.poker.model.HandEvaluation.*;
 import static org.isma.poker.model.FiftyTwoCardsEnum.*;
+import static org.isma.poker.model.HandEvaluation.*;
 
 
 public class HandEvaluatorTest {
@@ -19,7 +19,7 @@ public class HandEvaluatorTest {
     }
 
     @Test
-    public void test_kicker() {
+    public void kicker() {
         hand.add(ACE_OF_CLUBS);
         hand.add(KING_OF_CLUBS);
         hand.add(QUEEN_OF_CLUBS);
@@ -29,18 +29,10 @@ public class HandEvaluatorTest {
         hand.add(TWO_OF_HEARTS);
 
         assertEquals(KICKER, evaluator.evaluate(hand));
-        assertEquals(false, evaluator.isStraightFlush(hand));
-        assertEquals(false, evaluator.isFourOfAKind(hand));
-        assertEquals(false, evaluator.isFullHouse(hand));
-        assertEquals(false, evaluator.isFlush(hand));
-        assertEquals(false, evaluator.isStraight(hand));
-        assertEquals(false, evaluator.isThreeOfAKind(hand));
-        assertEquals(false, evaluator.isTwoPair(hand));
-        assertEquals(false, evaluator.isPair(hand));
     }
 
     @Test
-    public void test_pair() {
+    public void pair() {
         hand.add(ACE_OF_CLUBS);
         hand.add(KING_OF_CLUBS);
         hand.add(QUEEN_OF_CLUBS);
@@ -49,12 +41,12 @@ public class HandEvaluatorTest {
 
         hand.add(NINE_OF_SPADES);
         hand.add(NINE_OF_DIAMONDS);
+
         assertEquals(PAIR, evaluator.evaluate(hand));
-        assertEquals(true, evaluator.isPair(hand));
     }
 
     @Test
-    public void test_twoPair() {
+    public void twoPair() {
         hand.add(ACE_OF_CLUBS);
         hand.add(SIX_OF_HEARTS);
         hand.add(FIVE_OF_HEARTS);
@@ -64,11 +56,10 @@ public class HandEvaluatorTest {
         hand.add(NINE_OF_SPADES);
         hand.add(NINE_OF_DIAMONDS);
         assertEquals(TWO_PAIR, evaluator.evaluate(hand));
-        assertEquals(true, evaluator.isTwoPair(hand));
     }
 
     @Test
-    public void test_threeOfAKind() {
+    public void threeOfAKind() {
         hand.add(ACE_OF_CLUBS);
         hand.add(KING_OF_CLUBS);
         hand.add(SIX_OF_HEARTS);
@@ -77,13 +68,12 @@ public class HandEvaluatorTest {
         hand.add(NINE_OF_HEARTS);
         hand.add(NINE_OF_SPADES);
         hand.add(NINE_OF_DIAMONDS);
-        assertEquals(THREE_OF_A_KIND, evaluator.evaluate(hand));
-        assertEquals(true, evaluator.isThreeOfAKind(hand));
 
+        assertEquals(THREE_OF_A_KIND, evaluator.evaluate(hand));
     }
 
     @Test
-    public void test_lowStraight() {
+    public void lowStraight() {
         hand.add(ACE_OF_DIAMONDS);
         hand.add(ACE_OF_SPADES);
 
@@ -92,12 +82,12 @@ public class HandEvaluatorTest {
         hand.add(THREE_OF_CLUBS);
         hand.add(FOUR_OF_DIAMONDS);
         hand.add(FIVE_OF_DIAMONDS);
+
         assertEquals(STRAIGHT, evaluator.evaluate(hand));
-        assertEquals(true, evaluator.isStraight(hand));
     }
 
     @Test
-    public void test_highStraight() {
+    public void highStraight() {
         hand.add(ACE_OF_DIAMONDS);
         hand.add(ACE_OF_SPADES);
 
@@ -107,11 +97,10 @@ public class HandEvaluatorTest {
         hand.add(KNAVE_OF_DIAMONDS);
         hand.add(TEN_OF_CLUBS);
         assertEquals(STRAIGHT, evaluator.evaluate(hand));
-        assertEquals(true, evaluator.isStraight(hand));
     }
 
     @Test
-    public void test_notAStraight() {
+    public void notAStraight() {
         hand.add(EIGHT_OF_HEARTS);
         hand.add(NINE_OF_HEARTS);
 
@@ -120,19 +109,12 @@ public class HandEvaluatorTest {
         hand.add(TWO_OF_CLUBS);
         hand.add(THREE_OF_CLUBS);
         hand.add(FOUR_OF_DIAMONDS);
+        
         assertEquals(KICKER, evaluator.evaluate(hand));
-        assertEquals(false, evaluator.isStraightFlush(hand));
-        assertEquals(false, evaluator.isFourOfAKind(hand));
-        assertEquals(false, evaluator.isFullHouse(hand));
-        assertEquals(false, evaluator.isFlush(hand));
-        assertEquals(false, evaluator.isStraight(hand));
-        assertEquals(false, evaluator.isThreeOfAKind(hand));
-        assertEquals(false, evaluator.isTwoPair(hand));
-        assertEquals(false, evaluator.isPair(hand));
     }
 
     @Test
-    public void test_flush() {
+    public void flush() {
         hand.add(EIGHT_OF_HEARTS);
         hand.add(EIGHT_OF_DIAMONDS);
 
@@ -141,12 +123,12 @@ public class HandEvaluatorTest {
         hand.add(SIX_OF_CLUBS);
         hand.add(EIGHT_OF_CLUBS);
         hand.add(KNAVE_OF_CLUBS);
+        
         assertEquals(FLUSH, evaluator.evaluate(hand));
-        assertEquals(true, evaluator.isFlush(hand));
     }
 
     @Test
-    public void test_fullHouse() {
+    public void fullHouse() {
         hand.add(EIGHT_OF_DIAMONDS);
         hand.add(NINE_OF_DIAMONDS);
 
@@ -155,12 +137,12 @@ public class HandEvaluatorTest {
         hand.add(TWO_OF_SPADES);
         hand.add(SIX_OF_CLUBS);
         hand.add(SIX_OF_DIAMONDS);
+        
         assertEquals(FULL_HOUSE, evaluator.evaluate(hand));
-        assertEquals(true, evaluator.isFullHouse(hand));
     }
 
     @Test
-    public void test_fourOfAKind() {
+    public void fourOfAKind() {
         hand.add(EIGHT_OF_DIAMONDS);
         hand.add(NINE_OF_DIAMONDS);
 
@@ -170,12 +152,12 @@ public class HandEvaluatorTest {
         hand.add(SIX_OF_SPADES);
         hand.add(SIX_OF_CLUBS);
         hand.add(SIX_OF_DIAMONDS);
+
         assertEquals(FOUR_OF_A_KIND, evaluator.evaluate(hand));
-        assertEquals(true, evaluator.isFourOfAKind(hand));
     }
 
     @Test
-    public void test_straightFlush() {
+    public void straightFlush() {
         hand.add(EIGHT_OF_DIAMONDS);
         hand.add(NINE_OF_DIAMONDS);
 
@@ -184,8 +166,8 @@ public class HandEvaluatorTest {
         hand.add(QUEEN_OF_CLUBS);
         hand.add(KNAVE_OF_CLUBS);
         hand.add(TEN_OF_CLUBS);
+
         assertEquals(STRAIGHT_FLUSH, evaluator.evaluate(hand));
-        assertEquals(true, evaluator.isStraightFlush(hand));
     }
 
 }

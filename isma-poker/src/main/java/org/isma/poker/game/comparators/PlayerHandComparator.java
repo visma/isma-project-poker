@@ -1,5 +1,6 @@
-package org.isma.poker.comparators;
+package org.isma.poker.game.comparators;
 
+import org.isma.poker.comparators.HandComparator;
 import org.isma.poker.game.Player;
 
 import java.util.Comparator;

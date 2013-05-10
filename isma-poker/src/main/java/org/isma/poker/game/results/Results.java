@@ -4,7 +4,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.collections.Predicate;
 import org.isma.poker.HandEvaluator;
-import org.isma.poker.comparators.PlayerHandComparator;
+import org.isma.poker.game.comparators.PlayerHandComparator;
 import org.isma.poker.game.Player;
 import org.isma.poker.game.Pot;
 import org.isma.poker.game.SplitPot;
