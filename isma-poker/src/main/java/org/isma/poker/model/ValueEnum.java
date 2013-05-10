@@ -15,8 +15,8 @@ public enum ValueEnum {
     THREE("3", 3),
     TWO("2", 2);
 
-    private String label;
-    private int value;
+    private final String label;
+    private final int value;
 
     ValueEnum(String label, int value) {
         this.label = label;

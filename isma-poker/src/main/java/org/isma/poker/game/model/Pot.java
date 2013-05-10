@@ -61,6 +61,4 @@ public class Pot extends AbstractPot {
     public int getTotalBet(Player player) {
         return potMap.get(player);
     }
-
-
 }

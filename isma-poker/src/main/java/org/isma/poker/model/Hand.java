@@ -16,10 +16,6 @@ public final class Hand extends AbstractHand {
     }
 
 
-    public boolean isFull() {
-        return size() == 7;
-    }
-
     public int count(final SuitEnum suit) {
         return CollectionUtils.countMatches(this, new Predicate() {
             @Override

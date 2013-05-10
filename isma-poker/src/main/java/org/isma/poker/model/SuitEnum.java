@@ -6,7 +6,7 @@ public enum SuitEnum {
     DIAMONDS("Diamonds"),
     CLUBS("Clubs");
 
-    private String label;
+    private final String label;
 
     SuitEnum(String label) {
         this.label = label;

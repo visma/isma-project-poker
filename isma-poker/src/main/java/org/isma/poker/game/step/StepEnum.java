@@ -13,8 +13,8 @@ public enum StepEnum implements Step {
     SHOWDOWN(10, new ShowDownStep()),
     END(11, new ResultsStep());
 
-    private int order;
-    private AbstractStep step;
+    private final int order;
+    private final AbstractStep step;
 
     StepEnum(int order, AbstractStep step) {
         this.order = order;
