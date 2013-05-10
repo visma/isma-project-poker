@@ -1,7 +1,7 @@
 package org.isma.poker.game.comparators;
 
 import org.isma.poker.HandEvaluator;
-import org.isma.poker.game.results.AbstractFinalPlayerState;
+import org.isma.poker.game.model.AbstractFinalPlayerState;
 
 import java.util.Comparator;
 

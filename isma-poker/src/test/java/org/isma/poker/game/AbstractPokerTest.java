@@ -1,7 +1,8 @@
 package org.isma.poker.game;
 
-import org.isma.poker.factory.ITableFactory;
-import org.isma.poker.factory.TableFactory;
+import org.isma.poker.game.factory.ITableFactory;
+import org.isma.poker.game.factory.TableFactory;
+import org.isma.poker.game.model.GameConfiguration;
 import org.isma.poker.mock.MockDeck;
 import org.isma.poker.mock.MockDeckFactory;
 import org.isma.poker.model.FiftyTwoCardsEnum;

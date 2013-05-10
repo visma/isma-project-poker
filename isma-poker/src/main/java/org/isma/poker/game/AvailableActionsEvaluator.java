@@ -10,7 +10,7 @@ import static org.isma.poker.game.step.StepEnum.SHOWDOWN;
 
 public class AvailableActionsEvaluator {
 
-    public List<PokerActionEnum> evaluate(GameSession gameSession, Player player) {
+    public List<PokerActionEnum> evaluate(PokerGameState gameSession, Player player) {
         TableInfos tableInfos = gameSession.getTableInfos();
         if (!player.hasChips()) {
             return asList(SIT_OUT);
@@ -31,7 +31,7 @@ public class AvailableActionsEvaluator {
         if (remainingChipsToPay >= player.getChips()) {
             return asList(SIT_OUT, FOLD, ALLIN);
         }
-        if (remainingChipsToPay == 0){
+        if (remainingChipsToPay == 0) {
             return asList(SIT_OUT, FOLD, CHECK, RAISE, ALLIN);
         }
         return asList(SIT_OUT, FOLD, CALL, RAISE, ALLIN);

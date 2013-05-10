@@ -1,7 +1,7 @@
-package org.isma.poker.game;
+package org.isma.poker.game.actions;
 
 import org.isma.poker.game.exceptions.InvalidPlayerBetException;
-import org.isma.poker.game.exceptions.InvalidPlayerTurnException;
+import org.isma.poker.game.model.InvalidPlayerTurnException;
 import org.isma.poker.game.model.Player;
 
 public interface PlayerBetListener {

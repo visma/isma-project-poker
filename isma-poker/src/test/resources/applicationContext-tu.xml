@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-    <bean id="gameConfiguration" class="org.isma.poker.game.GameConfiguration">
+    <bean id="gameConfiguration" class="org.isma.poker.game.model.GameConfiguration">
         <constructor-arg value="5"/>
         <constructor-arg value="10"/>
         <constructor-arg value="false"/>

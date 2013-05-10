@@ -2,9 +2,9 @@ package org.isma.poker.game;
 
 import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.step.InvalidStepActionException;
-import org.isma.poker.game.results.Loser;
+import org.isma.poker.game.model.Loser;
 import org.isma.poker.game.results.Results;
-import org.isma.poker.game.results.Winner;
+import org.isma.poker.game.model.Winner;
 import org.isma.poker.model.Card;
 import org.junit.Test;
 

@@ -1,6 +1,4 @@
-package org.isma.poker.game;
-
-import org.isma.poker.game.exceptions.InvalidGameConfigurationException;
+package org.isma.poker.game.model;
 
 public class GameConfiguration {
     private static final int DEFAULT_MAX_PLAYERS = 2;

@@ -1,9 +1,9 @@
 package org.isma.web.poker;
 
 import org.isma.poker.factory.DeckFactory;
-import org.isma.poker.factory.ITableFactory;
-import org.isma.poker.factory.TableFactory;
-import org.isma.poker.game.GameConfiguration;
+import org.isma.poker.game.factory.ITableFactory;
+import org.isma.poker.game.factory.TableFactory;
+import org.isma.poker.game.model.GameConfiguration;
 import org.isma.poker.game.GameSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

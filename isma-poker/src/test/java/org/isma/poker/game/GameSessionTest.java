@@ -1,6 +1,6 @@
 package org.isma.poker.game;
 
-import org.isma.poker.factory.ITableFactory;
+import org.isma.poker.game.factory.ITableFactory;
 import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Table;

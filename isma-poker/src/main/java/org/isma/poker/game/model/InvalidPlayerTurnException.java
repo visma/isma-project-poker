@@ -1,4 +1,4 @@
-package org.isma.poker.game.exceptions;
+package org.isma.poker.game.model;
 
 import org.isma.poker.game.model.Player;
 

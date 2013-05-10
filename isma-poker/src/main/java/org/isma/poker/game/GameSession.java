@@ -2,15 +2,13 @@ package org.isma.poker.game;
 
 import org.apache.log4j.Logger;
 import org.isma.poker.factory.IDeckFactory;
-import org.isma.poker.factory.ITableFactory;
+import org.isma.poker.game.factory.ITableFactory;
 import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.actions.PlayerBetListener;
 import org.isma.poker.game.exceptions.InvalidPlayerBetException;
-import org.isma.poker.game.exceptions.InvalidPlayerTurnException;
-import org.isma.poker.game.model.Player;
-import org.isma.poker.game.model.Pot;
-import org.isma.poker.game.model.Table;
+import org.isma.poker.game.model.InvalidPlayerTurnException;
+import org.isma.poker.game.model.*;
 import org.isma.poker.game.results.Results;
-import org.isma.poker.game.results.Winner;
 import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.poker.game.step.PokerStepGame;
 import org.isma.poker.game.step.Step;
@@ -23,7 +21,7 @@ import static org.isma.poker.factory.IDeckFactory.DeckTypeEnum.FIFTY_TWO_CARDS_D
 import static org.isma.poker.game.PokerActionEnum.*;
 import static org.isma.poker.game.exceptions.InvalidPlayerBetException.InvalidBetEnum.*;
 
-public class GameSession implements PlayerBetListener, PokerStepGame {
+public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameState {
     private static final Logger LOG = Logger.getLogger(GameSession.class);
     private final AvailableActionsEvaluator availableActionsEvaluator = new AvailableActionsEvaluator();
     private final GameConfiguration configuration;
@@ -282,6 +280,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame {
         return table.getPot();
     }
 
+    //TODO a tester
     public List<PokerActionEnum> getAvailablesActions(Player player) {
         return availableActionsEvaluator.evaluate(this, player);
     }

@@ -2,7 +2,7 @@ package org.isma.poker.game;
 
 import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.exceptions.InvalidPlayerBetException;
-import org.isma.poker.game.exceptions.InvalidPlayerTurnException;
+import org.isma.poker.game.model.InvalidPlayerTurnException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

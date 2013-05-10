@@ -1,8 +1,7 @@
 package org.isma.poker.game.model;
 
-import org.isma.poker.game.PlayerBetListener;
+import org.isma.poker.game.actions.PlayerBetListener;
 import org.isma.poker.game.actions.PlayerAction;
-import org.isma.poker.game.model.Player;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

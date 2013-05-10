@@ -1,4 +1,4 @@
-package org.isma.poker.game.results;
+package org.isma.poker.game.model;
 
 import org.isma.poker.model.HandEvaluation;
 import org.isma.poker.game.model.Player;

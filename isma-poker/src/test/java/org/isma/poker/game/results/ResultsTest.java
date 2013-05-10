@@ -5,6 +5,7 @@ import org.isma.poker.game.GameSession;
 import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Pot;
+import org.isma.poker.game.model.Winner;
 import org.isma.poker.model.FiftyTwoCardsEnum;
 import org.junit.Before;
 import org.junit.Test;

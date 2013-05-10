@@ -1,4 +1,4 @@
-package org.isma.poker.game.exceptions;
+package org.isma.poker.game.model;
 
 public class InvalidGameConfigurationException extends Exception {
     public InvalidGameConfigurationException(String message) {

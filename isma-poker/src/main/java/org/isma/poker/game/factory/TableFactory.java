@@ -1,4 +1,4 @@
-package org.isma.poker.factory;
+package org.isma.poker.game.factory;
 
 import org.isma.poker.game.model.Table;
 
