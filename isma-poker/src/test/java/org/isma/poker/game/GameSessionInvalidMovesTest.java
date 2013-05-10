@@ -15,7 +15,7 @@ public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest 
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void test_2Players_too_cheap_bet() throws Exception {
+    public void two_Players_too_cheap_bet() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("invalid action :BET");
 
@@ -25,7 +25,7 @@ public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest 
     }
 
     @Test(expected = InvalidPlayerTurnException.class)
-    public void test_2Players_player_bet_at_wrong_position() throws Exception {
+    public void two_Players_player_bet_at_wrong_position() throws Exception {
         gotoStep(BETS_1);
         assertEquals(player2, tableInfos.getCurrentPlayer());
         PlayerAction.call(player1, game);
@@ -33,7 +33,7 @@ public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest 
 
 
     @Test
-    public void test_2Players_check_after_a_bet() throws Exception {
+    public void two_Players_check_after_a_bet() throws Exception {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("invalid action :BET");
 
@@ -44,7 +44,7 @@ public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest 
     }
 
     @Test
-    public void test_2Players_raises_do_not_exceed_limit() throws Exception, InvalidPlayerBetException {
+    public void two_Players_raises_do_not_exceed_limit() throws Exception, InvalidPlayerBetException {
         gotoStep(BETS_1);
         PlayerAction.raise(player2, game, 10);
         PlayerAction.raise(player1, game, 10);
@@ -52,7 +52,7 @@ public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest 
     }
 
     @Test(expected = InvalidPlayerBetException.class)
-    public void test_2Players_raises_exceed_limit() throws Exception, InvalidPlayerBetException {
+    public void two_Players_raises_exceed_limit() throws Exception, InvalidPlayerBetException {
         gotoStep(BETS_1);
         PlayerAction.raise(player2, game, 10);
         PlayerAction.raise(player1, game, 10);

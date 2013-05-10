@@ -23,13 +23,13 @@ public class DeckTest {
     }
 
     @Test
-    public void test_size() {
+    public void size() {
         assertEquals(52, deck.size());
     }
 
 
     @Test
-    public void test_natural_order() {
+    public void natural_order() {
         List<Card> tenCards = deck.deal(10);
         assertEquals(10, tenCards.size());
 
@@ -47,7 +47,7 @@ public class DeckTest {
     }
 
     @Test
-    public void test_burn() {
+    public void burn() {
         assertEquals(52, deck.size());
         assertEquals(THREE_OF_SPADES.getCard(), deck.deal(1).get(0));
         assertEquals(50, deck.size());
@@ -58,7 +58,7 @@ public class DeckTest {
     }
 
     @Test
-    public void test_shuffle() {
+    public void shuffle() {
         deck.shuffle();
         List<Card> cards = deck.deal(8);
         assertEquals(8, cards.size());
@@ -75,7 +75,7 @@ public class DeckTest {
     }
 
     @Test
-    public void test_sort() {
+    public void sort() {
         deck.shuffle();
         deck.sort();
 

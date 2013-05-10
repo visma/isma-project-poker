@@ -16,7 +16,7 @@ import static org.isma.poker.game.step.StepEnum.*;
 public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
 
     @Test
-    public void test_2Players_nextPlayer() throws Exception {
+    public void two_players_nextPlayer() throws Exception {
         gotoStep(BETS_1);
         assertEquals(player2, tableInfos.getCurrentPlayer());
         assertEquals(player1, tableInfos.getNextPlayer());
@@ -31,7 +31,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_step_blinds() throws Exception {
+    public void two_players_step_blinds() throws Exception {
         gotoStep(BLINDS);
         //
         assertEquals(player1, tableInfos.getDealer());
@@ -47,7 +47,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_step_handsDealing() throws Exception {
+    public void two_players_step_handsDealing() throws Exception {
         gotoStep(HANDS_DEALING);
         assertTrue(game.isStepOver());
         assertEquals(2, player1.getHand().size());
@@ -60,7 +60,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_step_bet1() throws Exception {
+    public void two_players_step_bet1() throws Exception {
         gotoStep(BETS_1);
         // Player 2 call big blind
         assertEquals(player2, tableInfos.getCurrentPlayer());
@@ -76,7 +76,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_step_bet1_multiples_raises() throws Exception {
+    public void two_players_step_bet1_multiples_raises() throws Exception {
         gotoStep(BETS_1);
         // Player 2 call big blind
         PlayerAction.call(player2, game);
@@ -97,7 +97,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_step_flop() throws Exception {
+    public void two_players_step_flop() throws Exception {
         gotoStep(FLOP);
         assertTrue(game.isStepOver());
         assertEquals(3, tableInfos.getCommunityCards().size());
@@ -120,7 +120,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_step_bet2() throws Exception {
+    public void two_players_step_bet2() throws Exception {
         gotoStep(BETS_2);
         assertEquals(20, tableInfos.getTotalPot());
         //
@@ -140,7 +140,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_step_turn() throws Exception {
+    public void two_players_step_turn() throws Exception {
         gotoStep(TURN);
         assertTrue(game.isStepOver());
         assertEquals(4, tableInfos.getCommunityCards().size());
@@ -155,7 +155,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_step_bet3() throws Exception {
+    public void two_players_step_bet3() throws Exception {
         gotoStep(BETS_3);
         assertEquals(20, tableInfos.getTotalPot());
         //
@@ -174,7 +174,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_step_river() throws Exception {
+    public void two_players_step_river() throws Exception {
         gotoStep(RIVER);
         assertTrue(game.isStepOver());
         assertEquals(5, tableInfos.getCommunityCards().size());
@@ -189,7 +189,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_step_bet4() throws Exception {
+    public void two_players_step_bet4() throws Exception {
         gotoStep(BETS_4);
         assertEquals(20, tableInfos.getTotalPot());
         //
@@ -208,7 +208,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_step_showdown() throws Exception, InvalidStepActionException {
+    public void two_players_step_showdown() throws Exception, InvalidStepActionException {
         gotoStep(SHOWDOWN);
         assertEquals(player2, tableInfos.getCurrentPlayer());
         PlayerAction.show(player2, game);
@@ -235,7 +235,7 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     }
 
     @Test
-    public void test_2Players_second_round_start() throws Exception {
+    public void two_players_second_round_start() throws Exception {
         gotoStep(END);
         assertTrue(game.isRoundOver());
         assertTrue(game.isStepOver());

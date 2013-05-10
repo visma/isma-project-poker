@@ -37,7 +37,7 @@ public class TableTest {
     }
 
     @Test
-    public void test_prepare_new_round_reset_fold_status() throws Exception {
+    public void prepare_new_round_reset_fold_status() throws Exception {
         toto.setFold(true);
         titi.setFold(true);
         tata.setFold(true);
@@ -49,7 +49,7 @@ public class TableTest {
         assertFalse(tata.isFold());
     }
         @Test
-    public void test_prepare_first_round_check_ingame_players() throws Exception {
+    public void prepare_first_round_check_ingame_players() throws Exception {
         table.prepareNewRound();
 
         assertEquals(toto, table.getDealer());
@@ -59,7 +59,7 @@ public class TableTest {
     }
 
     @Test
-    public void test_prepare_second_round_check_ingame_players() throws Exception {
+    public void prepare_second_round_check_ingame_players() throws Exception {
         table.prepareNewRound();
         table.prepareNewRound();
         assertEquals(tata, table.getDealer());
@@ -69,7 +69,7 @@ public class TableTest {
     }
 
     @Test
-    public void test_move_button_check_ingame_players() throws Exception {
+    public void move_button_check_ingame_players() throws Exception {
         table.prepareNewRound();
         table.moveButton();
         assertEquals(tata, table.getDealer());
@@ -79,7 +79,7 @@ public class TableTest {
     }
 
     @Test
-    public void test_prepare_next_player() throws Exception {
+    public void prepare_next_player() throws Exception {
         table.prepareNewRound();
         assertEquals(toto, table.getCurrentPlayer());
         assertTrue(table.prepareNextPlayer());
@@ -90,7 +90,7 @@ public class TableTest {
     }
 
     @Test
-    public void test_remove_folding_player() throws Exception {
+    public void remove_folding_player() throws Exception {
         table.prepareNewRound();
         assertEquals(toto, table.getCurrentPlayer());
         table.removeFromRound(toto);

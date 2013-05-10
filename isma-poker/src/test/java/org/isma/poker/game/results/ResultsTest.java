@@ -42,7 +42,7 @@ public class ResultsTest extends AbstractPokerTest {
     }
 
     @Test
-    public void test_winners() throws Exception {
+    public void winners() throws Exception {
         Results results = new Results(getPot(), getPlayers());
 
         assertEquals(2, results.getWinners().size());

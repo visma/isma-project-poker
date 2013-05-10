@@ -72,7 +72,7 @@ public class HandComparatorTest {
 
     // KICKERS
     @Test
-    public void test_kickerEqualsVsKicker() {
+    public void kickerEqualsVsKicker() {
         addPocketCards(lowHand, QUEEN_OF_CLUBS, SEVEN_OF_DIAMONDS);
         addPocketCards(highHand, QUEEN_OF_DIAMONDS, SEVEN_OF_CLUBS);
         assertEvaluation(KICKER, KICKER);
@@ -81,7 +81,7 @@ public class HandComparatorTest {
 
 
     @Test
-    public void test_kickerWinVsKicker() {
+    public void kickerWinVsKicker() {
         addPocketCards(lowHand, QUEEN_OF_CLUBS, SIX_OF_DIAMONDS);
         addPocketCards(highHand, QUEEN_OF_DIAMONDS, SEVEN_OF_CLUBS);
         assertEvaluation(KICKER, KICKER);
@@ -90,7 +90,7 @@ public class HandComparatorTest {
 
     // PAIR
     @Test
-    public void test_pairWinVsKicker() {
+    public void pairWinVsKicker() {
         addPocketCards(lowHand, ACE_OF_CLUBS, SIX_OF_DIAMONDS);
         addPocketCards(highHand, TWO_OF_CLUBS, SEVEN_OF_CLUBS);
         assertEvaluation(PAIR, KICKER);
@@ -98,7 +98,7 @@ public class HandComparatorTest {
     }
 
     @Test
-    public void test_pairEqualsVsPair() {
+    public void pairEqualsVsPair() {
         addPocketCards(lowHand, KING_OF_CLUBS, THREE_OF_CLUBS);
         addPocketCards(highHand, KING_OF_DIAMONDS, THREE_OF_SPADES);
         assertEvaluation(PAIR, PAIR);
@@ -106,7 +106,7 @@ public class HandComparatorTest {
     }
 
     @Test
-    public void test_pairWinVsPair() {
+    public void pairWinVsPair() {
         addPocketCards(lowHand, KNAVE_OF_CLUBS, THREE_OF_CLUBS);
         addPocketCards(highHand, KING_OF_DIAMONDS, THREE_OF_SPADES);
         assertEvaluation(PAIR, PAIR);
@@ -115,7 +115,7 @@ public class HandComparatorTest {
 
     // TWO PAIR
     @Test
-    public void test_twoPairWinVsPair() {
+    public void twoPairWinVsPair() {
         addPocketCards(lowHand, THREE_OF_SPADES, KING_OF_CLUBS);
         addPocketCards(highHand, FIVE_OF_CLUBS, TWO_OF_CLUBS);
         assertEvaluation(TWO_PAIR, PAIR);
@@ -123,7 +123,7 @@ public class HandComparatorTest {
     }
 
     @Test
-    public void test_twoPairWinVsTwoPair() {
+    public void twoPairWinVsTwoPair() {
         addPocketCards(lowHand, TEN_OF_DIAMONDS, KNAVE_OF_SPADES);
         addPocketCards(highHand, TWO_OF_DIAMONDS, KING_OF_DIAMONDS);
         assertEvaluation(TWO_PAIR, TWO_PAIR);
@@ -133,7 +133,7 @@ public class HandComparatorTest {
 
     // THREE OF A KIND
     @Test
-    public void test_threeOfAKindWinVsTwoPair() {
+    public void threeOfAKindWinVsTwoPair() {
         addPocketCards(lowHand, FIVE_OF_CLUBS, TWO_OF_CLUBS);
         addPocketCards(highHand, TWO_OF_DIAMONDS, TWO_OF_SPADES);
         assertEvaluation(THREE_OF_A_KIND, TWO_PAIR);
@@ -141,7 +141,7 @@ public class HandComparatorTest {
     }
 
     @Test
-    public void test_threeOfAKindWinVsThreeOfAKind() {
+    public void threeOfAKindWinVsThreeOfAKind() {
         addPocketCards(lowHand, TWO_OF_DIAMONDS, TWO_OF_CLUBS);
         addPocketCards(highHand, FIVE_OF_DIAMONDS, FIVE_OF_CLUBS);
         assertEvaluation(THREE_OF_A_KIND, THREE_OF_A_KIND);
@@ -150,7 +150,7 @@ public class HandComparatorTest {
 
     // STRAIGHT
     @Test
-    public void test_straightWinVsThreeOfAKind() {
+    public void straightWinVsThreeOfAKind() {
         addPocketCards(lowHand, FIVE_OF_DIAMONDS, FIVE_OF_CLUBS);
         addPocketCards(highHand, ACE_OF_CLUBS, QUEEN_OF_CLUBS);
         assertEvaluation(STRAIGHT, THREE_OF_A_KIND);
@@ -158,7 +158,7 @@ public class HandComparatorTest {
     }
 
     @Test
-    public void test_straightEqualsVsStraight() {
+    public void straightEqualsVsStraight() {
         addPocketCards(lowHand, ACE_OF_DIAMONDS, QUEEN_OF_DIAMONDS);
         addPocketCards(highHand, ACE_OF_CLUBS, QUEEN_OF_CLUBS);
         assertEvaluation(STRAIGHT, STRAIGHT);
@@ -166,7 +166,7 @@ public class HandComparatorTest {
     }
 
     @Test
-    public void test_straightWinVsStraight() {
+    public void straightWinVsStraight() {
         addPocketCards(lowHand, NINE_OF_DIAMONDS, QUEEN_OF_CLUBS);
         addPocketCards(highHand, ACE_OF_DIAMONDS, QUEEN_OF_DIAMONDS);
         assertEvaluation(STRAIGHT, STRAIGHT);
@@ -175,7 +175,7 @@ public class HandComparatorTest {
 
     // FLUSH
     @Test
-    public void test_flushWinVsStraight() {
+    public void flushWinVsStraight() {
         addPocketCards(lowHand, ACE_OF_DIAMONDS, QUEEN_OF_DIAMONDS);
         addPocketCards(highHand, FOUR_OF_HEARTS, SEVEN_OF_HEARTS);
         assertEvaluation(FLUSH, STRAIGHT);
@@ -183,7 +183,7 @@ public class HandComparatorTest {
     }
 
     @Test
-    public void test_flushWinVsFlush() {
+    public void flushWinVsFlush() {
         addPocketCards(lowHand, FOUR_OF_HEARTS, SEVEN_OF_HEARTS);
         addPocketCards(highHand, THREE_OF_HEARTS, EIGHT_OF_HEARTS);
         assertEvaluation(FLUSH, FLUSH);
@@ -192,7 +192,7 @@ public class HandComparatorTest {
 
     // FULL HOUSE
     @Test
-    public void test_fullHouseWinVsFlush() {
+    public void fullHouseWinVsFlush() {
         setUpWithPair();
         addPocketCards(lowHand, THREE_OF_HEARTS, EIGHT_OF_HEARTS);
         addPocketCards(highHand, KNAVE_OF_SPADES, TWO_OF_SPADES);
@@ -202,7 +202,7 @@ public class HandComparatorTest {
 
 
     @Test
-    public void test_fullHouseEqualsVsFullHouse() {
+    public void fullHouseEqualsVsFullHouse() {
         setUpWithPair();
         addPocketCards(lowHand, KNAVE_OF_SPADES, TWO_OF_SPADES);
         addPocketCards(highHand, KNAVE_OF_CLUBS, TWO_OF_DIAMONDS);
@@ -211,7 +211,7 @@ public class HandComparatorTest {
     }
 
     @Test
-    public void test_fullHouseWinVsFullHouse() {
+    public void fullHouseWinVsFullHouse() {
         setUpWithPair();
         addPocketCards(lowHand, KNAVE_OF_SPADES, TWO_OF_SPADES);
         addPocketCards(highHand, KNAVE_OF_CLUBS, FIVE_OF_DIAMONDS);
@@ -221,7 +221,7 @@ public class HandComparatorTest {
 
     // FOUR OF A KIND
     @Test
-    public void test_fourOfAKindWinVsFullHouse() {
+    public void fourOfAKindWinVsFullHouse() {
         setUpWithTwoPair();
         addPocketCards(lowHand, KNAVE_OF_CLUBS, KING_OF_SPADES);
         addPocketCards(highHand, TWO_OF_CLUBS, TWO_OF_SPADES);
@@ -230,7 +230,7 @@ public class HandComparatorTest {
     }
 
     @Test
-    public void test_fourOfAKindWinVsFourOfAKind() {
+    public void fourOfAKindWinVsFourOfAKind() {
         setUpWithTwoPair();
         addPocketCards(lowHand, TWO_OF_CLUBS, TWO_OF_SPADES);
         addPocketCards(highHand, KNAVE_OF_CLUBS, KNAVE_OF_SPADES);
@@ -240,7 +240,7 @@ public class HandComparatorTest {
 
     // STRAIGHT FLUSH
     @Test
-    public void test_straightFlushWinVsFourOfAKind() {
+    public void straightFlushWinVsFourOfAKind() {
         lowHand.clear();
         highHand.clear();
         addCommunityCard(KING_OF_HEARTS);
@@ -256,7 +256,7 @@ public class HandComparatorTest {
     }
 
     @Test
-    public void test_straightFlushWinVsStraightFlush() {
+    public void straightFlushWinVsStraightFlush() {
         lowHand.clear();
         highHand.clear();
         addCommunityCard(KING_OF_HEARTS);

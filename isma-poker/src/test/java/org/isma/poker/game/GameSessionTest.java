@@ -36,14 +36,14 @@ public class GameSessionTest extends AbstractPokerTest {
     }
 
     @Test
-    public void test_round_over() throws Exception {
+    public void round_over() throws Exception {
         setUpWithRoundOverValue(true);
         assertFalse(game.isRoundOver());
         assertEquals(game.getStep(), StepEnum.END);
     }
 
     @Test
-    public void test_round_not_over() throws Exception {
+    public void round_not_over() throws Exception {
         setUpWithRoundOverValue(false);
         assertFalse(game.isRoundOver());
         assertEquals(BLINDS, game.getStep());

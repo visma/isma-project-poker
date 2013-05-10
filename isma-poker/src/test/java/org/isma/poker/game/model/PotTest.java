@@ -23,7 +23,7 @@ public class PotTest {
     }
 
     @Test
-    public void test_split_pots() throws Exception {
+    public void split_pots() throws Exception {
         Pot pot = new Pot();
         assertEquals(0, pot.getTotal());
         pot.add(toto, 50);

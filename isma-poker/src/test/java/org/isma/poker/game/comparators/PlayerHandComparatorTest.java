@@ -15,7 +15,7 @@ public class PlayerHandComparatorTest {
     public static final PlayerHandComparator COMPARATOR = new PlayerHandComparator();
 
     @Test
-    public void test_sort() throws Exception {
+    public void sort() throws Exception {
 
         Player toto = new Player("toto");
         Player tata = new Player("tata");

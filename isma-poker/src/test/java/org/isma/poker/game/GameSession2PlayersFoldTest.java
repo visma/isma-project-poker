@@ -10,31 +10,31 @@ import static org.isma.poker.game.step.StepEnum.*;
 
 public class GameSession2PlayersFoldTest extends Abstract2PlayerGameSessionTest {
     @Test
-    public void test_fold_in_bet1_game_over() throws Exception {
+    public void fold_in_bet1_game_over() throws Exception {
         gotoStep(BETS_1);
         player2FoldPlayer1Win();
     }
 
     @Test
-    public void test_fold_in_bet2_game_over() throws Exception {
+    public void fold_in_bet2_game_over() throws Exception {
         gotoStep(BETS_2);
         player2FoldPlayer1Win();
     }
 
     @Test
-    public void test_fold_in_bet3_game_over() throws Exception {
+    public void fold_in_bet3_game_over() throws Exception {
         gotoStep(BETS_3);
         player2FoldPlayer1Win();
     }
 
     @Test
-    public void test_fold_in_bet4_game_over() throws Exception {
+    public void fold_in_bet4_game_over() throws Exception {
         gotoStep(BETS_4);
         player2FoldPlayer1Win();
     }
 
     @Test
-    public void test_fold_in_showdown_game_over() throws Exception {
+    public void fold_in_showdown_game_over() throws Exception {
         gotoStep(SHOWDOWN);
         player2FoldPlayer1Win();
     }

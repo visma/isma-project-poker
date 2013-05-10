@@ -22,7 +22,7 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
     }
 
     @Test
-    public void test_evaluate_not_current_player() throws Exception {
+    public void evaluate_not_current_player() throws Exception {
         gotoStep(BETS_1);
         assertEquals(player1, tableInfos.getCurrentPlayer());
         List<PokerActionEnum> availablePokerActions = evaluator.evaluate(game, player2);
@@ -31,7 +31,7 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
     }
 
     @Test
-    public void test_evaluate_first_player_actions() throws Exception {
+    public void evaluate_first_player_actions() throws Exception {
         gotoStep(BETS_1);
         assertEquals(player1, tableInfos.getCurrentPlayer());
         List<PokerActionEnum> availablePokerActions = evaluator.evaluate(game, player1);
@@ -44,7 +44,7 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
     }
 
     @Test
-    public void test_evaluate_small_blind_player_actions() throws Exception {
+    public void evaluate_small_blind_player_actions() throws Exception {
         gotoStep(BETS_1);
         PlayerAction.call(player1, game);
         assertEquals(player2, tableInfos.getCurrentPlayer());
@@ -58,7 +58,7 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
     }
 
     @Test
-    public void test_evaluate_second_player_actions_case_no_bet_before() throws Exception {
+    public void evaluate_second_player_actions_case_no_bet_before() throws Exception {
         gotoStep(BETS_2);
         PlayerAction.check(player1, game);
         assertEquals(player2, tableInfos.getCurrentPlayer());
@@ -72,7 +72,7 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
     }
 
     @Test
-    public void test_evaluate_second_player_actions_case_bet_before() throws Exception {
+    public void evaluate_second_player_actions_case_bet_before() throws Exception {
         gotoStep(BETS_2);
         PlayerAction.bet(player1, game, 20);
         assertEquals(player2, tableInfos.getCurrentPlayer());

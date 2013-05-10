@@ -18,7 +18,7 @@ public class StraightHelperTest {
     }
 
     @Test
-    public void test_isTheLowerStraight() {
+    public void isTheLowerStraight() {
         hand.add(TWO_OF_CLUBS);
         hand.add(THREE_OF_CLUBS);
         hand.add(FOUR_OF_DIAMONDS);
@@ -28,7 +28,7 @@ public class StraightHelperTest {
     }
 
     @Test
-    public void test_isNotTheLowerStraight() {
+    public void isNotTheLowerStraight() {
         hand.add(TWO_OF_CLUBS);
         hand.add(THREE_OF_CLUBS);
         hand.add(FOUR_OF_DIAMONDS);
@@ -38,7 +38,7 @@ public class StraightHelperTest {
     }
 
     @Test
-    public void test_isStraight_HighCard_Ace() {
+    public void isStraight_HighCard_Ace() {
         hand.add(TEN_OF_CLUBS);
         hand.add(KNAVE_OF_CLUBS);
         hand.add(QUEEN_OF_CLUBS);
@@ -48,7 +48,7 @@ public class StraightHelperTest {
     }
 
     @Test
-    public void test_isStraight_HighCard_King() {
+    public void isStraight_HighCard_King() {
         hand.add(NINE_OF_CLUBS);
         hand.add(TEN_OF_CLUBS);
         hand.add(KNAVE_OF_CLUBS);
@@ -58,7 +58,7 @@ public class StraightHelperTest {
     }
 
     @Test
-    public void test_isStraight_HighCard_Five() {
+    public void isStraight_HighCard_Five() {
         hand.add(TWO_OF_CLUBS);
         hand.add(THREE_OF_CLUBS);
         hand.add(FOUR_OF_CLUBS);
@@ -68,7 +68,7 @@ public class StraightHelperTest {
     }
 
     @Test
-    public void test_isNotAStraight_MissingOneCard() {
+    public void isNotAStraight_MissingOneCard() {
         hand.add(KING_OF_CLUBS);
         hand.add(QUEEN_OF_CLUBS);
         hand.add(KNAVE_OF_CLUBS);
@@ -78,7 +78,7 @@ public class StraightHelperTest {
     }
 
     @Test
-    public void test_isNotAStraight_AceNotACenterCard() {
+    public void isNotAStraight_AceNotACenterCard() {
         hand.add(KING_OF_CLUBS);
         hand.add(ACE_OF_CLUBS);
         hand.add(TWO_OF_CLUBS);
@@ -89,7 +89,7 @@ public class StraightHelperTest {
 
 
     @Test
-    public void test_possibleStraights_normalCase() {
+    public void possibleStraights_normalCase() {
         hand.add(ACE_OF_CLUBS);
         hand.add(KING_OF_CLUBS);
         hand.add(QUEEN_OF_CLUBS);
@@ -106,7 +106,7 @@ public class StraightHelperTest {
     }
 
     @Test
-    public void test_possibleStraights_pairInsideStraight() {
+    public void possibleStraights_pairInsideStraight() {
         hand.add(ACE_OF_CLUBS);
         hand.add(KING_OF_CLUBS);
         hand.add(QUEEN_OF_CLUBS);

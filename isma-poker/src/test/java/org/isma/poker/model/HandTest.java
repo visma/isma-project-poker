@@ -18,7 +18,7 @@ public class HandTest {
     }
 
     @Test
-    public void test_countSuit() {
+    public void countSuit() {
         hand.add(EIGHT_OF_CLUBS);
         hand.add(ACE_OF_CLUBS);
 
@@ -36,7 +36,7 @@ public class HandTest {
     }
 
     @Test
-    public void test_countValue() {
+    public void countValue() {
         hand.add(EIGHT_OF_CLUBS);
         hand.add(EIGHT_OF_DIAMONDS);
 
@@ -53,7 +53,7 @@ public class HandTest {
     }
 
     @Test
-    public void test_getHandBySuit() {
+    public void getHandBySuit() {
         hand.add(EIGHT_OF_CLUBS);
         hand.add(EIGHT_OF_DIAMONDS);
 
@@ -69,7 +69,7 @@ public class HandTest {
     }
 
     @Test
-    public void test_getHandByValue() {
+    public void getHandByValue() {
         hand.add(EIGHT_OF_CLUBS);
         hand.add(EIGHT_OF_DIAMONDS);
 
@@ -90,7 +90,7 @@ public class HandTest {
     }
 
     @Test
-    public void test_getPairs() {
+    public void getPairs() {
         hand.add(EIGHT_OF_CLUBS);
         hand.add(EIGHT_OF_DIAMONDS);
 
@@ -105,7 +105,7 @@ public class HandTest {
     }
 
     @Test
-    public void test_getThreeOfAKinds() {
+    public void getThreeOfAKinds() {
         hand.add(EIGHT_OF_CLUBS);
         hand.add(EIGHT_OF_DIAMONDS);
         hand.add(EIGHT_OF_SPADES);
@@ -122,7 +122,7 @@ public class HandTest {
     }
 
     @Test
-    public void test_getFourOfAKind() {
+    public void getFourOfAKind() {
         hand.add(EIGHT_OF_CLUBS);
         hand.add(EIGHT_OF_DIAMONDS);
         hand.add(EIGHT_OF_SPADES);

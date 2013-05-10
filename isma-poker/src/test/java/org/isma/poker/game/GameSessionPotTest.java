@@ -16,7 +16,7 @@ public class GameSessionPotTest extends Abstract3PlayersGameSessionTest {
 
 
     @Test
-    public void test_3Players_2SplitPots() throws Exception {
+    public void three_players_2SplitPots() throws Exception {
         gotoStep(BETS_4);
         int previousPot = 30;
         assertEquals(90, player1.getChips());
