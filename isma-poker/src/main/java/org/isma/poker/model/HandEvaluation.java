@@ -1,6 +1,6 @@
-package org.isma.poker;
+package org.isma.poker.model;
 
-public enum HandEvaluationEnum {
+public enum HandEvaluation {
     KICKER(1),
     PAIR(2),
     TWO_PAIR(3),
@@ -13,7 +13,7 @@ public enum HandEvaluationEnum {
 
     private int rank;
 
-    HandEvaluationEnum(int rank) {
+    HandEvaluation(int rank) {
         this.rank = rank;
     }
 

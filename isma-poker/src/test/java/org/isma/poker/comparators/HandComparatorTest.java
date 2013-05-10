@@ -1,13 +1,13 @@
 package org.isma.poker.comparators;
 
-import org.isma.poker.HandEvaluationEnum;
+import org.isma.poker.model.HandEvaluation;
 import org.isma.poker.HandEvaluator;
 import org.isma.poker.model.FiftyTwoCardsEnum;
 import org.isma.poker.model.Hand;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.isma.poker.HandEvaluationEnum.*;
+import static org.isma.poker.model.HandEvaluation.*;
 import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -63,7 +63,7 @@ public class HandComparatorTest {
         hand.add(cardEnum2);
     }
 
-    private void assertEvaluation(HandEvaluationEnum highHandEvaluation, HandEvaluationEnum lowHandEvaluation) {
+    private void assertEvaluation(HandEvaluation highHandEvaluation, HandEvaluation lowHandEvaluation) {
         assertEquals(highHandEvaluation, evaluator.evaluate(highHand));
         assertEquals(lowHandEvaluation, evaluator.evaluate(lowHand));
     }

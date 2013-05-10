@@ -1,15 +1,18 @@
 package org.isma.poker.comparators;
 
+import org.isma.poker.model.HandEvaluation;
 import org.junit.Test;
 
+import java.util.Comparator;
+
 import static junit.framework.Assert.assertTrue;
-import static org.isma.poker.HandEvaluationEnum.*;
+import static org.isma.poker.model.HandEvaluation.*;
 
 public class HandEvaluationComparatorTest {
-    private HandEvaluationComparator comp = new HandEvaluationComparator();
+    private Comparator<HandEvaluation> comp = HandComparator.HAND_EVALUATION_COMPARATOR;
 
     @Test
-    public void test_greatherThan() {
+    public void greatherThan() {
         assertTrue(comp.compare(STRAIGHT_FLUSH, FOUR_OF_A_KIND) > 0);
         assertTrue(comp.compare(FOUR_OF_A_KIND, FULL_HOUSE) > 0);
         assertTrue(comp.compare(FULL_HOUSE, FLUSH) > 0);
@@ -21,7 +24,7 @@ public class HandEvaluationComparatorTest {
     }
 
     @Test
-    public void test_lowerThan() {
+    public void lowerThan() {
         assertTrue(comp.compare(FOUR_OF_A_KIND, STRAIGHT_FLUSH) < 0);
         assertTrue(comp.compare(FULL_HOUSE, FOUR_OF_A_KIND) < 0);
         assertTrue(comp.compare(FLUSH, FULL_HOUSE) < 0);
@@ -33,7 +36,7 @@ public class HandEvaluationComparatorTest {
     }
 
     @Test
-    public void test_equals() {
+    public void equals() {
         assertTrue(comp.compare(STRAIGHT_FLUSH, STRAIGHT_FLUSH) == 0);
         assertTrue(comp.compare(KICKER, KICKER) == 0);
     }

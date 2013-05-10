@@ -8,8 +8,8 @@ import org.isma.poker.model.Card;
 import org.junit.Test;
 
 import static junit.framework.Assert.*;
-import static org.isma.poker.HandEvaluationEnum.STRAIGHT;
-import static org.isma.poker.HandEvaluationEnum.TWO_PAIR;
+import static org.isma.poker.model.HandEvaluation.STRAIGHT;
+import static org.isma.poker.model.HandEvaluation.TWO_PAIR;
 import static org.isma.poker.game.StepEnum.*;
 
 public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {

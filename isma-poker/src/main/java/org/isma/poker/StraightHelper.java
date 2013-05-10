@@ -11,11 +11,59 @@ import java.util.List;
 
 import static org.isma.poker.model.ValueEnum.*;
 
-public class HandCombination {
-    public static final int STRAIGHT_CARDS_REQUIRED = 5;
-    public static final CardValueComparator COMPARATOR = new CardValueComparator();
+public class StraightHelper {
+    private static final int STRAIGHT_CARDS_REQUIRED = 5;
+    private static final CardValueComparator COMPARATOR = new CardValueComparator();
 
-    private List<ValueEnum> getStraightsLowerCards(Hand hand) {
+    private StraightHelper() {
+    }
+
+
+    public static List<Hand> getAllStraights(Hand hand) {
+        Collections.sort(hand, COMPARATOR);
+        List<ValueEnum> straightsLowerCardList = getStraightsLowerCards(hand);
+        List<Hand> allStraights = new ArrayList<Hand>();
+        for (ValueEnum valueEnum : straightsLowerCardList) {
+            ValueEnum currentValue = valueEnum;
+            List<Hand> straights = new ArrayList<Hand>();
+            straights.add(new Hand());
+            for (int i = 0; i < STRAIGHT_CARDS_REQUIRED; i++) {
+                feedStraights(hand, straights, currentValue);
+                currentValue = currentValue.nextValue();
+            }
+            allStraights.addAll(straights);
+        }
+        for (Hand finalStraight : allStraights) {
+            Collections.reverse(finalStraight);
+        }
+        Collections.reverse(allStraights);
+        return allStraights;
+    }
+
+
+    public static boolean isLowerStraight(Hand subHand) {
+        Card card = subHand.get(0);
+        if (card.getValue() != ValueEnum.TWO) {
+            return false;
+        }
+        card = subHand.get(1);
+        if (card.getValue() != ValueEnum.THREE) {
+            return false;
+        }
+        card = subHand.get(2);
+        if (card.getValue() != ValueEnum.FOUR) {
+            return false;
+        }
+        card = subHand.get(3);
+        if (card.getValue() != ValueEnum.FIVE) {
+            return false;
+        }
+        card = subHand.get(4);
+        return card.getValue() == ACE;
+    }
+
+
+    private static List<ValueEnum> getStraightsLowerCards(Hand hand) {
         List<ValueEnum> straightsLowerCards = new ArrayList<ValueEnum>();
         for (int startIndex = 0; startIndex <= hand.size() - STRAIGHT_CARDS_REQUIRED; startIndex++) {
             fillStraightsLowerCards(hand, straightsLowerCards, startIndex);
@@ -25,7 +73,8 @@ public class HandCombination {
         return straightsLowerCards;
     }
 
-    private void fillStraightsLowerCards(Hand hand, List<ValueEnum> straightsLowerCards, int handIndex) {
+
+    private static void fillStraightsLowerCards(Hand hand, List<ValueEnum> straightsLowerCards, int handIndex) {
         ValueEnum currentValue = hand.get(handIndex).getValue();
         if (straightsLowerCards.contains(currentValue)) {
             return;
@@ -53,7 +102,7 @@ public class HandCombination {
     /**
      * clone current straights to manage multiples values
      */
-    private void feedStraights(Hand hand, List<Hand> straights, ValueEnum valueEnum) {
+    private static void feedStraights(Hand hand, List<Hand> straights, ValueEnum valueEnum) {
         int originalStraightsSize = straights.size();
         int count = hand.count(valueEnum);
         Hand valueHand = hand.getHand(valueEnum);
@@ -70,32 +119,10 @@ public class HandCombination {
         straights.addAll(newStraights);
     }
 
-    public List<Hand> getAllStraights(Hand hand) {
-        Collections.sort(hand, COMPARATOR);
-        List<ValueEnum> straightsLowerCardList = getStraightsLowerCards(hand);
-        List<Hand> allStraights = new ArrayList<Hand>();
-        for (ValueEnum valueEnum : straightsLowerCardList) {
-            ValueEnum currentValue = valueEnum;
-            List<Hand> straights = new ArrayList<Hand>();
-            straights.add(new Hand());
-            for (int i = 0; i < STRAIGHT_CARDS_REQUIRED; i++) {
-                feedStraights(hand, straights, currentValue);
-                currentValue = currentValue.nextValue();
-            }
-            allStraights.addAll(straights);
-        }
-        for (Hand finalStraight : allStraights) {
-            Collections.reverse(finalStraight);
-        }
-        Collections.reverse(allStraights);
-        return allStraights;
-    }
-
-
     /**
      * Prerequisite : subHand sorted
      */
-    boolean isStraight(Hand subHand) {
+    static boolean isStraight(Hand subHand) {
         if (isLowerStraight(subHand)) {
             return true;
         }
@@ -109,24 +136,4 @@ public class HandCombination {
         return true;
     }
 
-    public boolean isLowerStraight(Hand subHand) {
-        Card card = subHand.get(0);
-        if (card.getValue() != ValueEnum.TWO) {
-            return false;
-        }
-        card = subHand.get(1);
-        if (card.getValue() != ValueEnum.THREE) {
-            return false;
-        }
-        card = subHand.get(2);
-        if (card.getValue() != ValueEnum.FOUR) {
-            return false;
-        }
-        card = subHand.get(3);
-        if (card.getValue() != ValueEnum.FIVE) {
-            return false;
-        }
-        card = subHand.get(4);
-        return card.getValue() == ACE;
-    }
 }

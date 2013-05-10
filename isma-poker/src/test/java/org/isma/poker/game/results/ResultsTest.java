@@ -12,8 +12,8 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import static org.isma.poker.HandEvaluationEnum.PAIR;
-import static org.isma.poker.HandEvaluationEnum.STRAIGHT;
+import static org.isma.poker.model.HandEvaluation.PAIR;
+import static org.isma.poker.model.HandEvaluation.STRAIGHT;
 import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 
 public class ResultsTest extends AbstractPokerTest {

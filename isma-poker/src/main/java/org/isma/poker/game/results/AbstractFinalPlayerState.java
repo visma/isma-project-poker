@@ -1,13 +1,13 @@
 package org.isma.poker.game.results;
 
-import org.isma.poker.HandEvaluationEnum;
+import org.isma.poker.model.HandEvaluation;
 import org.isma.poker.game.Player;
 
 public abstract class AbstractFinalPlayerState {
     private Player player;
-    private HandEvaluationEnum handEvaluation;
+    private HandEvaluation handEvaluation;
 
-    protected AbstractFinalPlayerState(Player player, HandEvaluationEnum handEvaluation) {
+    protected AbstractFinalPlayerState(Player player, HandEvaluation handEvaluation) {
         this.player = player;
         this.handEvaluation = handEvaluation;
     }
@@ -16,7 +16,7 @@ public abstract class AbstractFinalPlayerState {
         return player;
     }
 
-    public HandEvaluationEnum getHandEvaluation() {
+    public HandEvaluation getHandEvaluation() {
         return handEvaluation;
     }
 

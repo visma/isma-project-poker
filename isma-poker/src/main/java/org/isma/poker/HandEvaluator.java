@@ -1,25 +1,21 @@
 package org.isma.poker;
 
-import org.isma.poker.model.Card;
-import org.isma.poker.model.Hand;
-import org.isma.poker.model.SuitEnum;
-import org.isma.poker.model.ValueEnum;
+import org.isma.poker.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.isma.poker.HandEvaluationEnum.*;
+import static org.isma.poker.model.HandEvaluation.*;
 
 public class HandEvaluator {
     private final HandEvaluatorSorter handEvaluatorSorter;
-    private final HandCombination handCombination = new HandCombination();
 
     public HandEvaluator() {
         handEvaluatorSorter = new HandEvaluatorSorter(this);
     }
 
-    public HandEvaluationEnum evaluate(Hand hand) {
-        HandEvaluationEnum handEvaluation;
+    public HandEvaluation evaluate(Hand hand) {
+        HandEvaluation handEvaluation;
         if (isStraightFlush(hand)) {
             handEvaluation = STRAIGHT_FLUSH;
         } else if (isFourOfAKind(hand)) {
@@ -73,7 +69,7 @@ public class HandEvaluator {
     }
 
     public boolean isStraight(Hand hand) {
-        return !handCombination.getAllStraights(hand).isEmpty();
+        return !StraightHelper.getAllStraights(hand).isEmpty();
     }
 
     public boolean isFlush(Hand hand) {
@@ -116,11 +112,11 @@ public class HandEvaluator {
     }
 
     Hand getMaxStraight(Hand hand) {
-        return handCombination.getAllStraights(hand).get(0);
+        return StraightHelper.getAllStraights(hand).get(0);
     }
 
     List<Hand> getStraightFlushes(Hand hand) {
-        List<Hand> possibleStraights = handCombination.getAllStraights(hand);
+        List<Hand> possibleStraights = StraightHelper.getAllStraights(hand);
         List<Hand> straightFlushes = new ArrayList<Hand>();
         for (Hand possibleStraight : possibleStraights) {
             Card firstCard = possibleStraight.get(0);

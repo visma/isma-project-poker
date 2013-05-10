@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static org.isma.poker.HandEvaluationEnum.*;
+import static org.isma.poker.model.HandEvaluation.*;
 import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 
 

@@ -1,24 +1,25 @@
 package org.isma.poker;
 
-import org.isma.poker.comparators.CardValueThenSuitOrderComparator;
 import org.isma.poker.model.Card;
 import org.isma.poker.model.Hand;
+import org.isma.poker.model.HandEvaluation;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.isma.poker.model.ValueEnum.ACE;
 import static org.isma.poker.model.ValueEnum.FIVE;
 
 public class HandEvaluatorSorter {
-    public static final CardValueThenSuitOrderComparator COMPARATOR = new CardValueThenSuitOrderComparator();
+    private static final CardValueThenSuitOrderComparator COMPARATOR = new CardValueThenSuitOrderComparator();
     private HandEvaluator handEvaluator;
 
     public HandEvaluatorSorter(HandEvaluator handEvaluator) {
         this.handEvaluator = handEvaluator;
     }
 
-    public void sortBest(Hand hand, HandEvaluationEnum handEvaluation) {
+    public void sortBest(Hand hand, HandEvaluation handEvaluation) {
         switch (handEvaluation) {
             case STRAIGHT_FLUSH:
                 sortBestStraightFlush(hand);
@@ -170,5 +171,14 @@ public class HandEvaluatorSorter {
         Collections.sort(hand, COMPARATOR);
     }
 
+    private static class CardValueThenSuitOrderComparator implements Comparator<Card> {
+        @Override
+        public int compare(Card card1, Card card2) {
+            if (card2.getValue().getValue() != card1.getValue().getValue()) {
+                return card2.getValue().getValue() - card1.getValue().getValue();
+            }
+            return card1.getSuit().ordinal() - card2.getSuit().ordinal();
+        }
+    }
 
 }

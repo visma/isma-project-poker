@@ -1,10 +1,10 @@
 package org.isma.poker.model;
 
 import org.apache.log4j.Logger;
-import org.isma.poker.comparators.DeckComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Deck implements IHand {
@@ -63,5 +63,13 @@ public class Deck implements IHand {
         return innerHand;
     }
 
-
+    private class DeckComparator implements Comparator<Card> {
+        @Override
+        public int compare(Card card1, Card card2) {
+            if (card1.getSuit().ordinal() != card2.getSuit().ordinal()) {
+                return card1.getSuit().ordinal() - card2.getSuit().ordinal();
+            }
+            return card1.getValue().getValue() - card2.getValue().getValue();
+        }
+    }
 }

@@ -3,7 +3,7 @@ package org.isma.poker;
 import org.isma.poker.model.Hand;
 import org.junit.Test;
 
-import static org.isma.poker.HandEvaluationEnum.*;
+import static org.isma.poker.model.HandEvaluation.*;
 import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 import static org.junit.Assert.assertEquals;
 

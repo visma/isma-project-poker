@@ -1,12 +1,12 @@
 package org.isma.poker.game.results;
 
-import org.isma.poker.HandEvaluationEnum;
+import org.isma.poker.model.HandEvaluation;
 import org.isma.poker.game.Player;
 
 public class Winner extends AbstractFinalPlayerState {
     private int prize;
 
-    public Winner(Player player, HandEvaluationEnum handEvaluation) {
+    public Winner(Player player, HandEvaluation handEvaluation) {
         super(player, handEvaluation);
     }
 
