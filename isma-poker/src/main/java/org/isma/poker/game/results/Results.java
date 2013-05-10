@@ -8,6 +8,7 @@ import org.isma.poker.game.comparators.PlayerHandComparator;
 import org.isma.poker.game.Player;
 import org.isma.poker.game.Pot;
 import org.isma.poker.game.SplitPot;
+import org.isma.poker.game.comparators.PlayerStateComparator;
 import org.isma.utils.collections.CollectionHelper;
 
 import java.util.*;

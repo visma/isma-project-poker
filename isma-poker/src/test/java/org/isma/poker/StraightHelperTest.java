@@ -9,7 +9,7 @@ import java.util.List;
 import static junit.framework.Assert.*;
 import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 
-public class StraightTest {
+public class StraightHelperTest {
     private final Hand hand = new Hand();
 
     @Before

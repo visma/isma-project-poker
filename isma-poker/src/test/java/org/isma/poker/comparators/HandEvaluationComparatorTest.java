@@ -1,5 +1,6 @@
 package org.isma.poker.comparators;
 
+import org.isma.poker.HandEvaluator;
 import org.isma.poker.model.HandEvaluation;
 import org.junit.Test;
 
@@ -9,7 +10,7 @@ import static junit.framework.Assert.assertTrue;
 import static org.isma.poker.model.HandEvaluation.*;
 
 public class HandEvaluationComparatorTest {
-    private Comparator<HandEvaluation> comp = HandComparator.HAND_EVALUATION_COMPARATOR;
+    private Comparator<HandEvaluation> comp = HandEvaluator.HAND_EVALUATION_COMPARATOR;
 
     @Test
     public void greatherThan() {
