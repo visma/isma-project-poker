@@ -8,5 +8,5 @@ public enum PokerActionEnum {
     BET,
     RAISE,
     ALLIN,
-    SHOW;
+    SHOW
 }

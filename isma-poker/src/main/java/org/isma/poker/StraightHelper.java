@@ -41,7 +41,7 @@ public class StraightHelper {
     }
 
 
-    public static boolean isLowerStraight(Hand subHand) {
+    private static boolean isLowerStraight(Hand subHand) {
         Card card = subHand.get(0);
         if (card.getValue() != ValueEnum.TWO) {
             return false;
@@ -107,8 +107,7 @@ public class StraightHelper {
         int count = hand.count(valueEnum);
         Hand valueHand = hand.getHand(valueEnum);
         List<Hand> newStraights = new ArrayList<Hand>(originalStraightsSize * count);
-        for (int i = 0; i < originalStraightsSize; i++) {
-            Hand currentStraight = straights.get(i);
+        for (Hand currentStraight : straights) {
             for (int j = 0; j < count; j++) {
                 Hand clone = new Hand(currentStraight);
                 clone.add(valueHand.get(j));

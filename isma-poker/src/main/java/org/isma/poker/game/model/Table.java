@@ -24,7 +24,7 @@ public class Table {
     private Player underTheGunPlayer;
     private Player currentPlayer;
 
-    private Pot pot = new Pot();
+    private final Pot pot = new Pot();
     private int currentBet;
     private int raisesRemaining;
     private final Map<Player, Integer> currentStepBet = new HashMap<Player, Integer>();
@@ -228,7 +228,7 @@ public class Table {
         raisesRemaining--;
     }
 
-    class HasMoneyPredicate implements Predicate {
+    private class HasMoneyPredicate implements Predicate {
         @Override
         public boolean evaluate(Object o) {
             return ((Player) o).hasChips();
@@ -248,7 +248,7 @@ public class Table {
         return alivePlayers;
     }
 
-    class PlayerActionPredicate implements Predicate {
+    private class PlayerActionPredicate implements Predicate {
         @Override
         public boolean evaluate(Object o) {
             return ((Player) o).hasChips() && !((Player) o).isFold();

@@ -1,7 +1,7 @@
 package org.isma.poker.game.step;
 
 public abstract class AbstractStep {
-    protected Step step;
+    private Step step;
 
     public void setUp(PokerStepGame game) throws InvalidStepActionException {
         if (game.getStep() != step) {

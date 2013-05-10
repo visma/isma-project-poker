@@ -11,7 +11,7 @@ public enum HandEvaluation {
     FOUR_OF_A_KIND(8),
     STRAIGHT_FLUSH(9);
 
-    private int rank;
+    private final int rank;
 
     HandEvaluation(int rank) {
         this.rank = rank;

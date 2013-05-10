@@ -15,14 +15,14 @@ import static org.apache.commons.collections.ComparatorUtils.reversedComparator;
 
 public class Results {
     private final HandEvaluator handEvaluator = new HandEvaluator();
-    public static final PlayerHandComparator COMPARATOR = new PlayerHandComparator();
+    private static final PlayerHandComparator COMPARATOR = new PlayerHandComparator();
 
     private final Map<Player, Winner> winners = new HashMap<Player, Winner>();
     private final Map<Player, Loser> losers = new HashMap<Player, Loser>();
 
 
     private class PlayerEngagedOnSplitPot implements Predicate {
-        private SplitPot splitPot;
+        private final SplitPot splitPot;
 
         PlayerEngagedOnSplitPot(SplitPot splitPot) {
             this.splitPot = splitPot;

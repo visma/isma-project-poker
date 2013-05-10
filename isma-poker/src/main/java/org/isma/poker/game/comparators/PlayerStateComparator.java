@@ -6,7 +6,7 @@ import org.isma.poker.game.model.AbstractFinalPlayerState;
 import java.util.Comparator;
 
 public class PlayerStateComparator implements Comparator<AbstractFinalPlayerState> {
-    private HandEvaluator handEvaluator = new HandEvaluator();
+    private final HandEvaluator handEvaluator = new HandEvaluator();
 
     @Override
     public int compare(AbstractFinalPlayerState p1, AbstractFinalPlayerState p2) {

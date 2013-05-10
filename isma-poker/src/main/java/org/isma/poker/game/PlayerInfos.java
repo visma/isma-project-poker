@@ -3,8 +3,8 @@ package org.isma.poker.game;
 import org.isma.poker.game.model.Player;
 
 public class PlayerInfos {
-    private Player player;
-    private int position;
+    private final Player player;
+    private final int position;
 
     public PlayerInfos(Player player, int position) {
         this.player = player;

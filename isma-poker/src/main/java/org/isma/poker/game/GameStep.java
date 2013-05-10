@@ -4,9 +4,9 @@ import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.poker.game.step.PokerStepGame;
 import org.isma.poker.game.step.StepEnum;
 
-public class GameStep {
+class GameStep {
     private StepEnum step;
-    private PokerStepGame game;
+    private final PokerStepGame game;
     private boolean stepOver;
 
     public GameStep(PokerStepGame stepGame) {

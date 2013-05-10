@@ -5,10 +5,10 @@ import java.util.Collection;
 import java.util.List;
 
 public abstract class AbstractHand extends ArrayList<Card> implements IHand {
-    protected AbstractHand() {
+    AbstractHand() {
     }
 
-    protected AbstractHand(Collection<Card> collection) {
+    AbstractHand(Collection<Card> collection) {
         super(collection);
     }
 

@@ -4,10 +4,10 @@ import org.isma.poker.model.HandEvaluation;
 import org.isma.poker.game.model.Player;
 
 public abstract class AbstractFinalPlayerState {
-    private Player player;
-    private HandEvaluation handEvaluation;
+    private final Player player;
+    private final HandEvaluation handEvaluation;
 
-    protected AbstractFinalPlayerState(Player player, HandEvaluation handEvaluation) {
+    AbstractFinalPlayerState(Player player, HandEvaluation handEvaluation) {
         this.player = player;
         this.handEvaluation = handEvaluation;
     }

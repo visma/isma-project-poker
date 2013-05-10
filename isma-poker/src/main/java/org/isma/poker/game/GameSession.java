@@ -57,7 +57,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
         table.add(player);
     }
 
-    public Results buildResults() throws InvalidStepActionException {
+    public Results buildResults() {
         return new Results(table.getPot(), table.getAlivePlayers());
     }
 
@@ -289,12 +289,12 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
         private final GameSession gameSession;
         private final PokerActionEnum action;
 
-        protected AbstractPlayerAction(GameSession gameSession, PokerActionEnum action) {
+        AbstractPlayerAction(GameSession gameSession, PokerActionEnum action) {
             this.gameSession = gameSession;
             this.action = action;
         }
 
-        protected void checkAvailableAction(Player player) throws InvalidPlayerTurnException {
+        void checkAvailableAction(Player player) throws InvalidPlayerTurnException {
             if (action != SIT_OUT && table.getCurrentPlayer() != player) {
                 throw new InvalidPlayerTurnException(player);
             }
@@ -310,7 +310,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
             endPlayerTurn();
         }
 
-        protected void endPlayerTurn() {
+        void endPlayerTurn() {
             if (!table.prepareNextPlayer()) {
                 gameStep.finish();
             }

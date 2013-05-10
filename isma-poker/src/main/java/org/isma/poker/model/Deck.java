@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Deck implements IHand {
-    public static final Logger LOG = Logger.getLogger(Deck.class);
+    private static final Logger LOG = Logger.getLogger(Deck.class);
     //Inner composition : not exposing Collection method
     protected final AbstractHand innerHand = new AbstractHand() {
     };
