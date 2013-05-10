@@ -19,40 +19,28 @@ public class HandEvaluator {
     }
 
     public HandEvaluationEnum evaluate(Hand hand) {
+        HandEvaluationEnum handEvaluation;
         if (isStraightFlush(hand)) {
-            handEvaluatorSorter.sortBestStraightFlush(hand);
-            return STRAIGHT_FLUSH;
+            handEvaluation = STRAIGHT_FLUSH;
+        } else if (isFourOfAKind(hand)) {
+            handEvaluation = FOUR_OF_A_KIND;
+        } else if (isFullHouse(hand)) {
+            handEvaluation = FULL_HOUSE;
+        } else if (isFlush(hand)) {
+            handEvaluation = FLUSH;
+        } else if (isStraight(hand)) {
+            handEvaluation = STRAIGHT;
+        } else if (isThreeOfAKind(hand)) {
+            handEvaluation = THREE_OF_A_KIND;
+        } else if (isTwoPair(hand)) {
+            handEvaluation = TWO_PAIR;
+        } else if (isPair(hand)) {
+            handEvaluation = PAIR;
+        } else {
+            handEvaluation = KICKER;
         }
-        if (isFourOfAKind(hand)) {
-            handEvaluatorSorter.sortBestFourOfAKind(hand);
-            return FOUR_OF_A_KIND;
-        }
-        if (isFullHouse(hand)) {
-            handEvaluatorSorter.sortBestFullHouse(hand);
-            return FULL_HOUSE;
-        }
-        if (isFlush(hand)) {
-            handEvaluatorSorter.sortBestFlush(hand);
-            return FLUSH;
-        }
-        if (isStraight(hand)) {
-            handEvaluatorSorter.sortBestStraight(hand);
-            return STRAIGHT;
-        }
-        if (isThreeOfAKind(hand)) {
-            handEvaluatorSorter.sortBestThreeOfAKind(hand);
-            return THREE_OF_A_KIND;
-        }
-        if (isTwoPair(hand)) {
-            handEvaluatorSorter.sortBestTwoPair(hand);
-            return TWO_PAIR;
-        }
-        if (isPair(hand)) {
-            handEvaluatorSorter.sortBestPair(hand);
-            return PAIR;
-        }
-        handEvaluatorSorter.sortKicker(hand);
-        return KICKER;
+        handEvaluatorSorter.sortBest(hand, handEvaluation);
+        return handEvaluation;
     }
 
     public boolean isPair(Hand hand) {

@@ -18,7 +18,39 @@ public class HandEvaluatorSorter {
         this.handEvaluator = handEvaluator;
     }
 
-    public void sortBestStraightFlush(Hand hand) {
+    public void sortBest(Hand hand, HandEvaluationEnum handEvaluation) {
+        switch (handEvaluation) {
+            case STRAIGHT_FLUSH:
+                sortBestStraightFlush(hand);
+                break;
+            case FOUR_OF_A_KIND:
+                sortBestFourOfAKind(hand);
+                break;
+            case FULL_HOUSE:
+                sortBestFullHouse(hand);
+                break;
+            case FLUSH:
+                sortBestFlush(hand);
+                break;
+            case STRAIGHT:
+                sortBestStraight(hand);
+                break;
+            case THREE_OF_A_KIND:
+                sortBestThreeOfAKind(hand);
+                break;
+            case TWO_PAIR:
+                sortBestTwoPair(hand);
+                break;
+            case PAIR:
+                sortBestPair(hand);
+                break;
+            case KICKER:
+                sortKicker(hand);
+                break;
+        }
+    }
+
+    private void sortBestStraightFlush(Hand hand) {
         Hand maxSortedHand = handEvaluator.getStraightFlushes(hand).get(0);
         int index = 0;
         for (Card sortedCard : maxSortedHand) {
@@ -27,7 +59,7 @@ public class HandEvaluatorSorter {
         }
     }
 
-    public void sortBestFourOfAKind(Hand hand) {
+    private void sortBestFourOfAKind(Hand hand) {
         Hand fourOfAKind = hand.getFourOfAKind().get(0);
         Hand kickers = new Hand(hand);
         kickers.removeAll(fourOfAKind);
@@ -38,7 +70,7 @@ public class HandEvaluatorSorter {
         hand.addAll(kickers);
     }
 
-    public void sortBestFullHouse(Hand hand) {
+    private void sortBestFullHouse(Hand hand) {
         List<Hand> threeOfAKinds = hand.getThreeOfAKinds();
         if (threeOfAKinds.size() > 1) {
             Collections.sort(threeOfAKinds.get(0), COMPARATOR);
@@ -66,7 +98,7 @@ public class HandEvaluatorSorter {
         }
     }
 
-    public void sortBestFlush(Hand hand) {
+    private void sortBestFlush(Hand hand) {
         Hand maxFlush = hand.getFlush();
         Hand kickers = new Hand(hand);
         kickers.removeAll(maxFlush);
@@ -78,7 +110,7 @@ public class HandEvaluatorSorter {
 
     }
 
-    public void sortBestStraight(Hand hand) {
+    private void sortBestStraight(Hand hand) {
         Hand maxStraight = handEvaluator.getMaxStraight(hand);
         Hand kickers = new Hand(hand);
         kickers.removeAll(maxStraight);
@@ -97,7 +129,7 @@ public class HandEvaluatorSorter {
         }
     }
 
-    public void sortBestThreeOfAKind(Hand hand) {
+    private void sortBestThreeOfAKind(Hand hand) {
         Hand threeOfAKind = hand.getThreeOfAKinds().get(0);
         Hand kickers = new Hand(hand);
         kickers.removeAll(threeOfAKind);
@@ -108,7 +140,7 @@ public class HandEvaluatorSorter {
         hand.addAll(kickers);
     }
 
-    public void sortBestTwoPair(Hand hand) {
+    private void sortBestTwoPair(Hand hand) {
         Hand maxPair = hand.getPairs().get(0);
         Hand minPair = hand.getPairs().get(1);
         Hand kickers = new Hand(hand);
@@ -123,7 +155,7 @@ public class HandEvaluatorSorter {
         hand.addAll(kickers);
     }
 
-    public void sortBestPair(Hand hand) {
+    private void sortBestPair(Hand hand) {
         Hand pair = hand.getPairs().get(0);
         Hand kickers = new Hand(hand);
         kickers.removeAll(pair);
@@ -134,7 +166,7 @@ public class HandEvaluatorSorter {
         hand.addAll(kickers);
     }
 
-    public void sortKicker(Hand hand) {
+    private void sortKicker(Hand hand) {
         Collections.sort(hand, COMPARATOR);
     }
 
