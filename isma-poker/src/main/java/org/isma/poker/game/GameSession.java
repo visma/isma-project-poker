@@ -1,22 +1,29 @@
 package org.isma.poker.game;
 
 import org.apache.log4j.Logger;
-import org.isma.poker.exceptions.InvalidPlayerBetException;
-import org.isma.poker.exceptions.InvalidPlayerTurnException;
-import org.isma.poker.exceptions.InvalidStepActionException;
 import org.isma.poker.factory.IDeckFactory;
 import org.isma.poker.factory.ITableFactory;
+import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.exceptions.InvalidPlayerBetException;
+import org.isma.poker.game.exceptions.InvalidPlayerTurnException;
+import org.isma.poker.game.model.Player;
+import org.isma.poker.game.model.Pot;
+import org.isma.poker.game.model.Table;
 import org.isma.poker.game.results.Results;
 import org.isma.poker.game.results.Winner;
+import org.isma.poker.game.step.InvalidStepActionException;
+import org.isma.poker.game.step.PokerStepGame;
+import org.isma.poker.game.step.Step;
+import org.isma.poker.game.step.StepEnum;
 import org.isma.poker.model.Deck;
 
 import java.util.List;
 
-import static org.isma.poker.exceptions.InvalidPlayerBetException.InvalidBetEnum.*;
 import static org.isma.poker.factory.IDeckFactory.DeckTypeEnum.FIFTY_TWO_CARDS_DECK;
 import static org.isma.poker.game.PokerActionEnum.*;
+import static org.isma.poker.game.exceptions.InvalidPlayerBetException.InvalidBetEnum.*;
 
-public class GameSession implements PlayerBetListener {
+public class GameSession implements PlayerBetListener, PokerStepGame {
     private static final Logger LOG = Logger.getLogger(GameSession.class);
     private final AvailableActionsEvaluator availableActionsEvaluator = new AvailableActionsEvaluator();
     private final GameConfiguration configuration;
@@ -65,7 +72,7 @@ public class GameSession implements PlayerBetListener {
     }
 
 
-    public StepEnum getStep() {
+    public Step getStep() {
         return gameStep.getStep();
     }
 
@@ -89,20 +96,21 @@ public class GameSession implements PlayerBetListener {
     @Override
     public void paySmallBlind(Player player) {
         table.addSmallBlind(configuration);
-        int paid = player.payChips(configuration.getSmallBlindAmount());
+        int paid = PlayerAction.payChips(player, configuration.getSmallBlindAmount());
         table.addToPot(player, paid);
     }
 
     @Override
     public void payBigBlind(Player player) {
         table.addBigBlind(configuration);
-        int paid = player.payChips(configuration.getBigBlindAmount());
+        int paid = PlayerAction.payChips(player, configuration.getBigBlindAmount());
         table.addToPot(player, paid);
         gameStep.finish();
     }
 
     @Override
     public boolean buy(Player player, int chips) {
+        //TODO
         return true;
     }
 
@@ -127,7 +135,7 @@ public class GameSession implements PlayerBetListener {
             protected void doAction(Player player) throws InvalidPlayerBetException {
                 int currentPlayerBet = table.getCurrentStepBet(player);
                 int remainingToPay = table.getCurrentBet() - currentPlayerBet;
-                int paid = player.payChips(remainingToPay);
+                int paid = PlayerAction.payChips(player, remainingToPay);
                 table.addToPot(player, paid);
             }
         }.execute(player);
@@ -148,7 +156,7 @@ public class GameSession implements PlayerBetListener {
                 if (player.getChips() < chips) {
                     throw new InvalidPlayerBetException(NOT_ENOUGH_CHIPS);
                 }
-                player.payChips(chips);
+                PlayerAction.payChips(player, chips);
                 table.addToPot(player, chips);
                 table.addBet(chips);
             }
@@ -176,7 +184,7 @@ public class GameSession implements PlayerBetListener {
                     throw new InvalidPlayerBetException(NOT_ENOUGH_CHIPS);
                 }
                 table.decreaseRaiseRemainings();
-                player.payChips(raiseCost);
+                PlayerAction.payChips(player, raiseCost);
                 table.addToPot(player, raiseCost);
                 table.addBet(chips);
             }
@@ -192,7 +200,7 @@ public class GameSession implements PlayerBetListener {
                 if (remainingChips == 0) {
                     throw new InvalidPlayerBetException(ALLIN_FORBIDDEN);
                 }
-                player.payChips(remainingChips);
+                PlayerAction.payChips(player, remainingChips);
                 table.addToPot(player, remainingChips);
                 int currentBet = table.getCurrentBet();
                 int currentPaid = table.getCurrentStepBet(player);
@@ -239,8 +247,8 @@ public class GameSession implements PlayerBetListener {
 
     public void executeBlindStep() {
         table.prepareNewRound();
-        table.getSmallBlindPlayer().paySmallBlind(this);
-        table.getBigBlindPlayer().payBigBlind(this);
+        PlayerAction.paySmallBlind(table.getSmallBlindPlayer(), this);
+        PlayerAction.payBigBlind(table.getBigBlindPlayer(), this);
     }
 
     public void executeHandsDealingStep() {
@@ -257,9 +265,10 @@ public class GameSession implements PlayerBetListener {
         table.prepareShowDown();
     }
 
-    public void executeEndStep(Results results) {
+    public void executeEndStep() throws InvalidStepActionException {
+        Results results = buildResults();
         for (Winner winner : results.getWinners()) {
-            winner.getPlayer().win(winner.getPrize());
+            PlayerAction.win(winner.getPlayer(), winner.getPrize());
         }
         gameStep.finish();
     }

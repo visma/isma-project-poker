@@ -1,6 +1,7 @@
 package org.isma.poker.game;
 
-import org.isma.poker.exceptions.InvalidStepActionException;
+import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.poker.game.results.Loser;
 import org.isma.poker.game.results.Results;
 import org.isma.poker.game.results.Winner;
@@ -10,7 +11,7 @@ import org.junit.Test;
 import static junit.framework.Assert.*;
 import static org.isma.poker.model.HandEvaluation.STRAIGHT;
 import static org.isma.poker.model.HandEvaluation.TWO_PAIR;
-import static org.isma.poker.game.StepEnum.*;
+import static org.isma.poker.game.step.StepEnum.*;
 
 public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
 
@@ -20,12 +21,12 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         assertEquals(player2, tableInfos.getCurrentPlayer());
         assertEquals(player1, tableInfos.getNextPlayer());
         assertEquals(15, tableInfos.getTotalPot());
-        player2.call(game);
+        PlayerAction.call(player2, game);
         assertEquals(20, tableInfos.getTotalPot());
         //Player 1 check
         assertEquals(player1, tableInfos.getCurrentPlayer());
         assertEquals(player2, tableInfos.getNextPlayer());
-        player1.check(game);
+        PlayerAction.check(player1, game);
         assertTrue(game.isStepOver());
     }
 
@@ -63,12 +64,12 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         gotoStep(BETS_1);
         // Player 2 call big blind
         assertEquals(player2, tableInfos.getCurrentPlayer());
-        player2.call(game);
+        PlayerAction.call(player2, game);
         assertEquals(90, player2.getChips());
         //Player 1 check
         assertEquals(player1, tableInfos.getCurrentPlayer());
         assertFalse(game.isStepOver());
-        player1.check(game);
+        PlayerAction.check(player1, game);
         assertTrue(game.isStepOver());
         assertEquals(90, player1.getChips());
         assertEquals(20, tableInfos.getTotalPot());
@@ -78,16 +79,16 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     public void test_2Players_step_bet1_multiples_raises() throws Exception {
         gotoStep(BETS_1);
         // Player 2 call big blind
-        player2.call(game);
+        PlayerAction.call(player2, game);
         assertEquals(90, player2.getChips());
         //Player 1 raise 1/3
-        player1.raise(10, game);
+        PlayerAction.raise(player1, game, 10);
         //Player 2 raise 2/3
-        player2.raise(10, game);
+        PlayerAction.raise(player2, game, 10);
         //Player 1 raise 3/3
         assertFalse(game.isStepOver());
-        player1.raise(10, game);
-        player2.call(game);
+        PlayerAction.raise(player1, game, 10);
+        PlayerAction.call(player2, game);
         assertTrue(game.isStepOver());
 
         assertEquals(60, player1.getChips());
@@ -126,13 +127,13 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         assertEquals(player1, tableInfos.getDealer());
         assertEquals(player2, tableInfos.getCurrentPlayer());
         //Player 2 check
-        player2.check(game);
+        PlayerAction.check(player2, game);
         assertFalse(game.isStepOver());
         assertEquals(90, player2.getChips());
         //Player 1 check
         assertEquals(player1, tableInfos.getCurrentPlayer());
         assertFalse(game.isStepOver());
-        player1.check(game);
+        PlayerAction.check(player1, game);
         assertEquals(90, player1.getChips());
         assertTrue(game.isStepOver());
         assertEquals(20, tableInfos.getTotalPot());
@@ -161,12 +162,12 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         assertEquals(player1, tableInfos.getDealer());
         assertEquals(player2, tableInfos.getCurrentPlayer());
         //Player 2 check
-        player2.check(game);
+        PlayerAction.check(player2, game);
         assertEquals(90, player2.getChips());
         //Player 1 check
         assertEquals(player1, tableInfos.getCurrentPlayer());
         assertFalse(game.isStepOver());
-        player1.check(game);
+        PlayerAction.check(player1, game);
         assertEquals(90, player1.getChips());
         assertTrue(game.isStepOver());
         assertEquals(20, tableInfos.getTotalPot());
@@ -195,12 +196,12 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         assertEquals(player1, tableInfos.getDealer());
         assertEquals(player2, tableInfos.getCurrentPlayer());
         //Player 2 check
-        player2.check(game);
+        PlayerAction.check(player2, game);
         assertEquals(90, player2.getChips());
         //Player 1 check
         assertEquals(player1, tableInfos.getCurrentPlayer());
         assertFalse(game.isStepOver());
-        player1.check(game);
+        PlayerAction.check(player1, game);
         assertEquals(90, player1.getChips());
         assertTrue(game.isStepOver());
         assertEquals(20, tableInfos.getTotalPot());
@@ -210,11 +211,11 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     public void test_2Players_step_showdown() throws Exception, InvalidStepActionException {
         gotoStep(SHOWDOWN);
         assertEquals(player2, tableInfos.getCurrentPlayer());
-        player2.show(game);
+        PlayerAction.show(player2, game);
         assertEquals(player1, tableInfos.getCurrentPlayer());
         assertFalse(game.isStepOver());
         assertFalse(game.isRoundOver());
-        player1.show(game);
+        PlayerAction.show(player1, game);
         assertTrue(game.isStepOver());
         game.nextStep();
         assertEquals(END, game.getStep());

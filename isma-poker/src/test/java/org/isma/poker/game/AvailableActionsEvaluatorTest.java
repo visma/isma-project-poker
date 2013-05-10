@@ -1,13 +1,14 @@
 package org.isma.poker.game;
 
+import org.isma.poker.game.actions.PlayerAction;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
 import static org.isma.poker.game.PokerActionEnum.*;
-import static org.isma.poker.game.StepEnum.BETS_1;
-import static org.isma.poker.game.StepEnum.BETS_2;
+import static org.isma.poker.game.step.StepEnum.BETS_1;
+import static org.isma.poker.game.step.StepEnum.BETS_2;
 import static org.junit.Assert.assertEquals;
 
 //TODO faire plein de cas de tests la
@@ -45,7 +46,7 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
     @Test
     public void test_evaluate_small_blind_player_actions() throws Exception {
         gotoStep(BETS_1);
-        player1.call(game);
+        PlayerAction.call(player1, game);
         assertEquals(player2, tableInfos.getCurrentPlayer());
         List<PokerActionEnum> availablePokerActions = evaluator.evaluate(game, player2);
         assertEquals(5, availablePokerActions.size());
@@ -59,7 +60,7 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
     @Test
     public void test_evaluate_second_player_actions_case_no_bet_before() throws Exception {
         gotoStep(BETS_2);
-        player1.check(game);
+        PlayerAction.check(player1, game);
         assertEquals(player2, tableInfos.getCurrentPlayer());
         List<PokerActionEnum> availablePokerActions = evaluator.evaluate(game, player2);
         assertEquals(5, availablePokerActions.size());
@@ -73,7 +74,7 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
     @Test
     public void test_evaluate_second_player_actions_case_bet_before() throws Exception {
         gotoStep(BETS_2);
-        player1.bet(20, game);
+        PlayerAction.bet(player1, game, 20);
         assertEquals(player2, tableInfos.getCurrentPlayer());
         List<PokerActionEnum> availablePokerActions = evaluator.evaluate(game, player2);
         assertEquals(5, availablePokerActions.size());

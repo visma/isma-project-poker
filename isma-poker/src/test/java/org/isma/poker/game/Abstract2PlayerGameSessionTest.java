@@ -1,11 +1,14 @@
 package org.isma.poker.game;
 
+import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.model.Player;
+import org.isma.poker.game.step.StepEnum;
 import org.isma.poker.mock.MockDeck;
 import org.isma.poker.model.FiftyTwoCardsEnum;
 import org.junit.Before;
 
 import static junit.framework.Assert.*;
-import static org.isma.poker.game.StepEnum.*;
+import static org.isma.poker.game.step.StepEnum.*;
 import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 
 public abstract class Abstract2PlayerGameSessionTest extends AbstractPokerTest {
@@ -18,8 +21,8 @@ public abstract class Abstract2PlayerGameSessionTest extends AbstractPokerTest {
         tableInfos = game.getTableInfos();
         game.addPlayer(player1);
         game.addPlayer(player2);
-        player1.buyChips(game, 100);
-        player2.buyChips(game, 100);
+        PlayerAction.buyChips(player1, game, 100);
+        PlayerAction.buyChips(player2, game, 100);
         game.start();
         deck = (MockDeck) game.getDeck();
     }
@@ -42,8 +45,8 @@ public abstract class Abstract2PlayerGameSessionTest extends AbstractPokerTest {
         }
         if (step.getOrder() > BETS_1.getOrder()) {
             assertFalse(game.isStepOver());
-            player2.call(game);
-            player1.check(game);
+            PlayerAction.call(player2, game);
+            PlayerAction.check(player1, game);
             assertTrue(game.isStepOver());
             forceFlop(TEN_OF_SPADES, TWO_OF_HEARTS, THREE_OF_HEARTS);
             game.nextStep();
@@ -54,8 +57,8 @@ public abstract class Abstract2PlayerGameSessionTest extends AbstractPokerTest {
             assertEquals(BETS_2, game.getStep());
         }
         if (step.getOrder() > BETS_2.getOrder()) {
-            player2.check(game);
-            player1.check(game);
+            PlayerAction.check(player2, game);
+            PlayerAction.check(player1, game);
             forceTurnOrRiver(KNAVE_OF_CLUBS);
             game.nextStep();
             assertEquals(TURN, game.getStep());
@@ -65,8 +68,8 @@ public abstract class Abstract2PlayerGameSessionTest extends AbstractPokerTest {
             assertEquals(BETS_3, game.getStep());
         }
         if (step.getOrder() > BETS_3.getOrder()) {
-            player2.check(game);
-            player1.check(game);
+            PlayerAction.check(player2, game);
+            PlayerAction.check(player1, game);
             forceTurnOrRiver(QUEEN_OF_HEARTS);
             game.nextStep();
             assertEquals(RIVER, game.getStep());
@@ -76,14 +79,14 @@ public abstract class Abstract2PlayerGameSessionTest extends AbstractPokerTest {
             assertEquals(BETS_4, game.getStep());
         }
         if (step.getOrder() > BETS_4.getOrder()) {
-            player2.check(game);
-            player1.check(game);
+            PlayerAction.check(player2, game);
+            PlayerAction.check(player1, game);
             game.nextStep();
             assertEquals(SHOWDOWN, game.getStep());
         }
         if (step.getOrder() > SHOWDOWN.getOrder()) {
-            player2.show(game);
-            player1.show(game);
+            PlayerAction.show(player2, game);
+            PlayerAction.show(player1, game);
             game.nextStep();
             assertEquals(END, game.getStep());
         }

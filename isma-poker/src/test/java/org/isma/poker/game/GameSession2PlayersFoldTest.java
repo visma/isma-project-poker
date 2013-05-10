@@ -1,11 +1,12 @@
 package org.isma.poker.game;
 
+import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.results.Results;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static org.isma.poker.game.StepEnum.*;
+import static org.isma.poker.game.step.StepEnum.*;
 
 public class GameSession2PlayersFoldTest extends Abstract2PlayerGameSessionTest {
     @Test
@@ -41,7 +42,7 @@ public class GameSession2PlayersFoldTest extends Abstract2PlayerGameSessionTest 
 
     private void player2FoldPlayer1Win() throws Exception {
         assertEquals(player2, tableInfos.getCurrentPlayer());
-        player2.fold(game);
+        PlayerAction.fold(player2, game);
         assertTrue(game.isStepOver());
         game.nextStep();
         assertEquals(END, game.getStep());

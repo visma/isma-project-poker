@@ -1,4 +1,7 @@
-package org.isma.poker.game;
+package org.isma.poker.game.model;
+
+import org.isma.poker.game.model.AbstractPot;
+import org.isma.poker.game.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;

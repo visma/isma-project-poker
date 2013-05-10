@@ -1,8 +1,7 @@
 package org.isma.poker.game.comparators;
 
 import junit.framework.Assert;
-import org.isma.poker.game.Player;
-import org.isma.poker.game.comparators.PlayerHandComparator;
+import org.isma.poker.game.model.Player;
 import org.junit.Test;
 
 import java.util.Collections;

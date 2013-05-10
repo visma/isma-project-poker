@@ -1,52 +1,54 @@
 package org.isma.poker.game;
 
+import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.step.StepEnum;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
 
 public class GameSession3PlayersFoldTest extends Abstract3PlayersGameSessionTest {
     @Test
-    public void test_a_fold_in_bet1_game_continue() throws Exception {
+    public void a_fold_in_bet1_game_continue() throws Exception {
         gotoStep(StepEnum.BETS_1);
-        player1.call(game);
-        player2.fold(game);
-        player3.check(game);
+        PlayerAction.call(player1, game);
+        PlayerAction.fold(player2, game);
+        PlayerAction.check(player3, game);
         assertTrue(game.isStepOver());
     }
 
     @Test
-    public void test_a_fold_in_bet2_game_continue() throws Exception {
+    public void a_fold_in_bet2_game_continue() throws Exception {
         gotoStep(StepEnum.BETS_2);
-        player1.check(game);
-        player2.fold(game);
-        player3.bet(10, game);
-        player1.call(game);
+        PlayerAction.check(player1, game);
+        PlayerAction.fold(player2, game);
+        PlayerAction.bet(player3, game, 10);
+        PlayerAction.call(player1, game);
     }
 
     @Test
-    public void test_a_fold_in_bet3_game_continue() throws Exception {
+    public void a_fold_in_bet3_game_continue() throws Exception {
         gotoStep(StepEnum.BETS_3);
-        player1.check(game);
-        player2.fold(game);
-        player3.bet(10, game);
-        player1.call(game);
+        PlayerAction.check(player1, game);
+        PlayerAction.fold(player2, game);
+        PlayerAction.bet(player3, game, 10);
+        PlayerAction.call(player1, game);
     }
 
     @Test
-    public void test_a_fold_in_bet4_game_continue() throws Exception {
+    public void a_fold_in_bet4_game_continue() throws Exception {
         gotoStep(StepEnum.BETS_4);
-        player1.check(game);
-        player2.fold(game);
-        player3.bet(10, game);
-        player1.call(game);
+        PlayerAction.check(player1, game);
+        PlayerAction.fold(player2, game);
+        PlayerAction.bet(player3, game, 10);
+        PlayerAction.call(player1, game);
     }
 
     @Test
-    public void test_a_fold_in_bet5_game_continue() throws Exception {
+    public void a_fold_in_bet5_game_continue() throws Exception {
         gotoStep(StepEnum.SHOWDOWN);
-        player1.show(game);
-        player2.fold(game);
-        player3.show(game);
+        PlayerAction.show(player1, game);
+        PlayerAction.fold(player2, game);
+        PlayerAction.show(player3, game);
         assertTrue(game.isStepOver());
     }
 }

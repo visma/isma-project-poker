@@ -1,5 +1,8 @@
-package org.isma.poker.game;
+package org.isma.poker.game.model;
 
+import org.isma.poker.game.model.Player;
+import org.isma.poker.game.model.Pot;
+import org.isma.poker.game.model.SplitPot;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -2,8 +2,9 @@ package org.isma.poker.game.results;
 
 import org.isma.poker.game.AbstractPokerTest;
 import org.isma.poker.game.GameSession;
-import org.isma.poker.game.Player;
-import org.isma.poker.game.Pot;
+import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.model.Player;
+import org.isma.poker.game.model.Pot;
 import org.isma.poker.model.FiftyTwoCardsEnum;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,9 +28,9 @@ public class ResultsTest extends AbstractPokerTest {
         player1 = new Player("toto");
         player2 = new Player("titi");
         player3 = new Player("tata");
-        player1.buyChips(game, 100);
-        player2.buyChips(game, 100);
-        player3.buyChips(game, 90);
+        PlayerAction.buyChips(player1, game, 100);
+        PlayerAction.buyChips(player2, game, 100);
+        PlayerAction.buyChips(player3, game, 90);
         player1.getHand().addAll(asList(QUEEN_OF_CLUBS, ACE_OF_CLUBS));
         player2.getHand().addAll(asList(KING_OF_CLUBS, KING_OF_DIAMONDS));
         player3.getHand().addAll(asList(FOUR_OF_SPADES, SIX_OF_DIAMONDS));

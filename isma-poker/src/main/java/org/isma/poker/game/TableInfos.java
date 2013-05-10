@@ -1,5 +1,7 @@
 package org.isma.poker.game;
 
+import org.isma.poker.game.model.Player;
+import org.isma.poker.game.model.Table;
 import org.isma.poker.model.CommunityCards;
 
 import java.util.ArrayList;

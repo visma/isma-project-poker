@@ -1,4 +1,4 @@
-package org.isma.poker.exceptions;
+package org.isma.poker.game.exceptions;
 
 public class InvalidPlayerBetException extends Exception {
     public enum InvalidBetEnum {

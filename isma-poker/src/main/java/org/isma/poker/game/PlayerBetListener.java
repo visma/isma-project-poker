@@ -1,7 +1,8 @@
 package org.isma.poker.game;
 
-import org.isma.poker.exceptions.InvalidPlayerBetException;
-import org.isma.poker.exceptions.InvalidPlayerTurnException;
+import org.isma.poker.game.exceptions.InvalidPlayerBetException;
+import org.isma.poker.game.exceptions.InvalidPlayerTurnException;
+import org.isma.poker.game.model.Player;
 
 public interface PlayerBetListener {
     boolean buy(Player player, int chips);

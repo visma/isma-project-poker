@@ -1,6 +1,6 @@
 package org.isma.poker.factory;
 
-import org.isma.poker.game.Table;
+import org.isma.poker.game.model.Table;
 
 public class TableFactory implements ITableFactory{
     @Override

@@ -1,5 +1,7 @@
 package org.isma.poker.game;
 
+import org.isma.poker.game.model.Player;
+
 public class PlayerInfos {
     private Player player;
     private int position;

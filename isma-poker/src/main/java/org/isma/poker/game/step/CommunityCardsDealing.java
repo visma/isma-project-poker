@@ -1,7 +1,5 @@
 package org.isma.poker.game.step;
 
-import org.isma.poker.game.GameSession;
-
 public class CommunityCardsDealing extends AbstractStep {
     private int numberOfCards;
 
@@ -10,7 +8,7 @@ public class CommunityCardsDealing extends AbstractStep {
     }
 
     @Override
-    public void doSetUp(GameSession game) {
+    public void doSetUp(PokerStepGame game) {
         game.executeCommunityCardsDealingStep(numberOfCards);
     }
 }

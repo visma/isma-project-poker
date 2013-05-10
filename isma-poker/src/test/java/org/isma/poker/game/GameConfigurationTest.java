@@ -1,6 +1,6 @@
 package org.isma.poker.game;
 
-import org.isma.poker.exceptions.InvalidGameConfigurationException;
+import org.isma.poker.game.exceptions.InvalidGameConfigurationException;
 import org.junit.Assert;
 import org.junit.Test;
 

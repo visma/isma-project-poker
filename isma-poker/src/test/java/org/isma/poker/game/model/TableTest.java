@@ -1,5 +1,9 @@
-package org.isma.poker.game;
+package org.isma.poker.game.model;
 
+import org.isma.poker.game.PlayerBetListener;
+import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.model.Player;
+import org.isma.poker.game.model.Table;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -30,7 +34,7 @@ public class TableTest {
     }
 
     private void setUp_player(Player player, PlayerBetListener game) {
-        player.buyChips(game, 100);
+        PlayerAction.buyChips(player, game, 100);
         table.add(player);
     }
 

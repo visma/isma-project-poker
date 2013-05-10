@@ -1,8 +1,6 @@
-package org.isma.poker.game;
+package org.isma.poker.game.step;
 
-import org.isma.poker.game.step.*;
-
-public enum StepEnum {
+public enum StepEnum implements Step {
     BLINDS(1, new BlindStep()),
     HANDS_DEALING(2, new HandsDealing()),
     BETS_1(3, new FirstBetStep()),
@@ -61,9 +59,9 @@ public enum StepEnum {
         throw new RuntimeException("not handled step");
     }
 
-    public void setUp(GameSession gameSession) throws Exception {
+    public void setUp(PokerStepGame game) throws Exception {
         if (step != null) {
-            step.setUp(gameSession);
+            step.setUp(game);
         }
     }
 }

@@ -1,19 +1,22 @@
 package org.isma.poker.game;
 
+import org.isma.poker.game.step.PokerStepGame;
+import org.isma.poker.game.step.StepEnum;
+
 public class GameStep {
     private StepEnum step;
-    private GameSession gameSession;
+    private PokerStepGame game;
     private boolean stepOver;
 
-    public GameStep(GameSession gameSession) {
-        this.gameSession = gameSession;
+    public GameStep(PokerStepGame stepGame) {
+        this.game = stepGame;
         step = StepEnum.END;
     }
 
     public void nextStep() throws Exception {
         stepOver = false;
         step = step.nextStep();
-        step.setUp(gameSession);
+        step.setUp(game);
     }
 
     public void gotoEnd() {

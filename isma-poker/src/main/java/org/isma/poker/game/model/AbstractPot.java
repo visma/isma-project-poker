@@ -1,4 +1,6 @@
-package org.isma.poker.game;
+package org.isma.poker.game.model;
+
+import org.isma.poker.game.model.Player;
 
 import java.util.HashMap;
 import java.util.Map;

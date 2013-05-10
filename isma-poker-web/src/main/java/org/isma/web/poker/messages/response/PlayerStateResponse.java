@@ -1,6 +1,6 @@
 package org.isma.web.poker.messages.response;
 
-import org.isma.poker.game.Player;
+import org.isma.poker.game.model.Player;
 import org.isma.poker.game.TableInfos;
 import org.isma.web.poker.messages.AbstractObjectMessageResponse;
 

@@ -1,7 +1,8 @@
-package org.isma.poker.game;
+package org.isma.poker.game.model;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.isma.poker.game.GameConfiguration;
 import org.isma.poker.model.Card;
 import org.isma.poker.model.CommunityCards;
 import org.isma.poker.model.Deck;

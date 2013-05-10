@@ -1,7 +1,7 @@
 package org.isma.web.poker.actions;
 
 import org.isma.poker.game.GameSession;
-import org.isma.poker.game.StepEnum;
+import org.isma.poker.game.step.StepEnum;
 import org.isma.web.poker.AbstractPokerTest;
 import org.isma.web.poker.messages.AbstractPokerAction;
 import org.isma.web.poker.messages.request.JoinMessageRequest;

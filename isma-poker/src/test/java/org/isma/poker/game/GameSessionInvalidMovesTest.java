@@ -1,13 +1,14 @@
 package org.isma.poker.game;
 
-import org.isma.poker.exceptions.InvalidPlayerBetException;
-import org.isma.poker.exceptions.InvalidPlayerTurnException;
+import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.exceptions.InvalidPlayerBetException;
+import org.isma.poker.game.exceptions.InvalidPlayerTurnException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static junit.framework.Assert.assertEquals;
-import static org.isma.poker.game.StepEnum.BETS_1;
+import static org.isma.poker.game.step.StepEnum.BETS_1;
 
 public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest {
     @Rule
@@ -20,14 +21,14 @@ public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest 
 
         gotoStep(BETS_1);
         assertEquals(player2, tableInfos.getCurrentPlayer());
-        player2.bet(4, game);
+        PlayerAction.bet(player2, game, 4);
     }
 
     @Test(expected = InvalidPlayerTurnException.class)
     public void test_2Players_player_bet_at_wrong_position() throws Exception {
         gotoStep(BETS_1);
         assertEquals(player2, tableInfos.getCurrentPlayer());
-        player1.call(game);
+        PlayerAction.call(player1, game);
     }
 
 
@@ -38,25 +39,25 @@ public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest 
 
         gotoStep(BETS_1);
         assertEquals(player2, tableInfos.getCurrentPlayer());
-        player2.bet(50, game);
-        player2.check(game);
+        PlayerAction.bet(player2, game, 50);
+        PlayerAction.check(player2, game);
     }
 
     @Test
     public void test_2Players_raises_do_not_exceed_limit() throws Exception, InvalidPlayerBetException {
         gotoStep(BETS_1);
-        player2.raise(10, game);
-        player1.raise(10, game);
-        player2.raise(10, game);
+        PlayerAction.raise(player2, game, 10);
+        PlayerAction.raise(player1, game, 10);
+        PlayerAction.raise(player2, game, 10);
     }
 
     @Test(expected = InvalidPlayerBetException.class)
     public void test_2Players_raises_exceed_limit() throws Exception, InvalidPlayerBetException {
         gotoStep(BETS_1);
-        player2.raise(10, game);
-        player1.raise(10, game);
-        player2.raise(10, game);
-        player1.raise(10, game);
+        PlayerAction.raise(player2, game, 10);
+        PlayerAction.raise(player1, game, 10);
+        PlayerAction.raise(player2, game, 10);
+        PlayerAction.raise(player1, game, 10);
     }
 
 }

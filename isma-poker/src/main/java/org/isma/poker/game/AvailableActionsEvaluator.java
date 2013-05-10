@@ -1,10 +1,12 @@
 package org.isma.poker.game;
 
+import org.isma.poker.game.model.Player;
+
 import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.isma.poker.game.PokerActionEnum.*;
-import static org.isma.poker.game.StepEnum.SHOWDOWN;
+import static org.isma.poker.game.step.StepEnum.SHOWDOWN;
 
 public class AvailableActionsEvaluator {
 
