@@ -17,7 +17,6 @@ public class Results {
     private final HandEvaluator handEvaluator = new HandEvaluator();
     public static final PlayerHandComparator COMPARATOR = new PlayerHandComparator();
 
-    private final Pot pot;
     private final Map<Player, Winner> winners = new HashMap<Player, Winner>();
     private final Map<Player, Loser> losers = new HashMap<Player, Loser>();
 
@@ -37,7 +36,6 @@ public class Results {
 
     public Results(Pot pot, List<Player> inGamePlayers) {
         List<SplitPot> splitPots = pot.buildSplitPots();
-        this.pot = pot;
         Map<Integer, List<Player>> indexedMap = CollectionHelper.buildIndexedMap(inGamePlayers, reversedComparator(COMPARATOR));
         int winnerRank = 0;
         while (pot.getTotal(splitPots) > 0) {

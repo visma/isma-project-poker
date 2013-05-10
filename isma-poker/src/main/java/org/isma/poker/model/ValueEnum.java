@@ -52,7 +52,7 @@ public enum ValueEnum {
             case TWO:
                 return THREE;
         }
-        throw new RuntimeException("unhandled value");
+        return null;
     }
 
     public String getLabel() {

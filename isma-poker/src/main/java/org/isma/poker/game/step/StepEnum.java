@@ -56,7 +56,7 @@ public enum StepEnum implements Step {
             case SHOWDOWN:
                 return END;
         }
-        throw new RuntimeException("not handled step");
+        return null;
     }
 
     public void setUp(PokerStepGame game) throws InvalidStepActionException {
