@@ -19,38 +19,8 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-public class HandCompareTest extends JUnitStories {
-    private final CrossReference xref = new CrossReference();
-    public HandCompareTest() {
-        Embedder embedder = configuredEmbedder();
-        embedder.useMetaFilters(Arrays.asList("-skip"));
+public class HandCompareTest extends AbstractStory {
 
-        embedder.embedderControls()//
-                .doGenerateViewAfterStories(true)
-                .doIgnoreFailureInStories(false)
-                .doIgnoreFailureInView(true)
-                .doVerboseFailures(true)
-                .doVerboseFiltering(true)
-                .useThreads(1)
-                .useStoryTimeoutInSecs(60000);
-    }
-
-    @Override
-    public Configuration configuration() {
-        Class<? extends Embeddable> embeddableClass = this.getClass();
-        URL codeLocation = CodeLocations.codeLocationFromClass(embeddableClass);
-        StoryReporterBuilder storyReporter = new StoryReporterBuilder()
-                .withCodeLocation(codeLocation)
-                .withReporters(new IdeOnlyConsoleOutput())
-                .withFailureTrace(true)
-                .withFailureTraceCompression(true)
-                .withCrossReference(xref);
-        return new MostUsefulConfiguration()
-                .useStoryLoader(new LoadFromClasspath())
-                .useStoryReporterBuilder(storyReporter)
-                .useStepMonitor(xref.getStepMonitor())
-                .usePendingStepStrategy(new FailingUponPendingStep());
-    }
 
     protected List<String> storyPaths() {
         return new StoryFinder().findPaths(

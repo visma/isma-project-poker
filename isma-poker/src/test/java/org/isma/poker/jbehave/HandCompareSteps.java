@@ -1,6 +1,8 @@
 package org.isma.poker.jbehave;
 
+import junit.framework.Assert;
 import org.isma.poker.HandEvaluator;
+import org.isma.poker.game.model.Player;
 import org.isma.poker.helper.CardHelper;
 import org.isma.poker.model.Card;
 import org.isma.poker.model.Hand;
@@ -36,27 +38,28 @@ public class HandCompareSteps extends Steps {
         return HandEvaluation.valueOf(name);
     }
 
-    @Given("la main $handKey dispose des cartes suivantes : $card1, $card2, $card3, $card4, $card5")
-    public void givenHand(String handKey, Card card1, Card card2, Card card3, Card card4, Card card5) throws Exception {
-        populateHand(handKey, card1, card2, card3, card4, card5);
+    @Given("la main $handKey dispose des cartes suivantes ($handEvaluation) : $card1, $card2, $card3, $card4, $card5, $card6, $card7")
+    public void givenHand(String handKey, HandEvaluation handEvaluation, Card card1, Card card2, Card card3, Card card4, Card card5, Card card6, Card card7) throws Exception {
+        populateHand(handKey, handEvaluation, card1, card2, card3, card4, card5, card6, card7);
     }
 
-    @Given("la main $handKey dispose des cartes suivantes : $card1, $card2, $card3, $card4, $card5, $card6, $card7")
-    public void givenHand(String handKey, Card card1, Card card2, Card card3, Card card4, Card card5, Card card6, Card card7) throws Exception {
-        populateHand(handKey, card1, card2, card3, card4, card5, card6, card7);
+    @Given("la main $handKey dispose des cartes suivantes ($handEvaluation) : $card1, $card2, $card3, $card4, $card5")
+    public void givenHand(String handKey, HandEvaluation handEvaluation, Card card1, Card card2, Card card3, Card card4, Card card5) throws Exception {
+        populateHand(handKey, handEvaluation, card1, card2, card3, card4, card5);
     }
 
-    private void populateHand(String handKey, Card... cards) {
+
+    private void populateHand(String handKey, HandEvaluation expectedHandEval, Card... cards) {
         Hand hand = new Hand();
         Collections.addAll(hand, cards);
+        Assert.assertEquals(expectedHandEval, current().handEvaluator.evaluate(hand));
         current().hands.put(handKey, hand);
+
+        Player player = new Player(handKey);
+        player.getHand().addAll(hand);
+        current().players.put(handKey, player);
     }
 
-    @Then("la combinaison de la main $handKey est : $combination")
-    public void thenCombination(String handKey, HandEvaluation expected) throws Exception {
-        HandEvaluation actual = new HandEvaluator().evaluate(current().hands.get(handKey));
-        assertEquals(expected, actual);
-    }
 
     @Then("la meilleure main est la main $expectedWinnerHandKey")
     public void thenWinner(String expectedWinnerHandKey) throws Exception {
@@ -90,5 +93,7 @@ public class HandCompareSteps extends Steps {
         }
 
         public Map<String, Hand> hands = new HashMap<String, Hand>();
+        public Map<String, Player> players = new HashMap<String, Player>();
+        public HandEvaluator handEvaluator = new HandEvaluator();
     }
 }
