@@ -20,6 +20,11 @@
     <description>webapp de poker en ligne</description>
     <packaging>pom</packaging>
 
+    <properties>
+        <jbehave.core.version>3.6.6</jbehave.core.version>
+        <jbehave.site.version>3.1.1</jbehave.site.version>
+        <jbehave.runner.version>1.0.1</jbehave.runner.version>
+    </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -40,11 +45,38 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-		<dependency>
-			<groupId>org.isma</groupId>
-			<artifactId>isma-web-utils</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.isma</groupId>
+            <artifactId>isma-web-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-core</artifactId>
+            <version>${jbehave.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jbehave.site</groupId>
+            <artifactId>jbehave-site-resources</artifactId>
+            <version>${jbehave.site.version}</version>
+            <type>zip</type>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jbehave</groupId>-->
+            <!--<artifactId>jbehave-spring</artifactId>-->
+            <!--<version>${jbehave.core.version}</version>-->
+        <!--</dependency>-->
     </dependencies>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jbehave</groupId>
+                    <artifactId>jbehave-maven-plugin</artifactId>
+                    <version>${jbehave.core.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
     <modules>
         <module>isma-poker</module>
         <module>isma-poker-web</module>
