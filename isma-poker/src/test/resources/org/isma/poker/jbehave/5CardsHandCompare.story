@@ -5,7 +5,6 @@ Given la main 1 dispose des cartes suivantes (KICKER) : A-S, 2-C, 3-S, K-S, J-D
 And la main 2 dispose des cartes suivantes (PAIR) : 10-S, 2-S, 5-C, 5-D, 8-S
 Then la meilleure main est la main 2
 
-
 Scenario: comparaison suite vs couleur vs brelan
 Given la main 1 dispose des cartes suivantes (STRAIGHT) : 4-S, 2-C, A-S, 3-S, 5-D
 And la main 2 dispose des cartes suivantes (FLUSH) : 10-S, 2-S, 5-S, K-S, 8-S
