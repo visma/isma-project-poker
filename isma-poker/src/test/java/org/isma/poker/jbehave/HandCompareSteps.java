@@ -1,7 +1,10 @@
 package org.isma.poker.jbehave;
 
 import org.isma.poker.HandEvaluator;
-import org.isma.poker.model.*;
+import org.isma.poker.helper.CardHelper;
+import org.isma.poker.model.Card;
+import org.isma.poker.model.Hand;
+import org.isma.poker.model.HandEvaluation;
 import org.jbehave.core.annotations.AsParameterConverter;
 import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.Given;
@@ -25,12 +28,7 @@ public class HandCompareSteps extends Steps {
 
     @AsParameterConverter
     public Card createCard(String name) {
-        String[] valueAndSuit = name.split("-");
-        ValueEnum value = ValueEnum.valueOf(valueAndSuit[0]);
-        SuitEnum suitEnum = SuitEnum.valueOf(valueAndSuit[1]);
-        Card card = new Card(value, suitEnum);
-        LOGGER.finest("parameter conversion into card : " + card);
-        return card;
+        return CardHelper.parse(name);
     }
 
     @AsParameterConverter
@@ -40,12 +38,17 @@ public class HandCompareSteps extends Steps {
 
     @Given("la main $handKey dispose des cartes suivantes : $card1, $card2, $card3, $card4, $card5")
     public void givenHand(String handKey, Card card1, Card card2, Card card3, Card card4, Card card5) throws Exception {
+        populateHand(handKey, card1, card2, card3, card4, card5);
+    }
+
+    @Given("la main $handKey dispose des cartes suivantes : $card1, $card2, $card3, $card4, $card5, $card6, $card7")
+    public void givenHand(String handKey, Card card1, Card card2, Card card3, Card card4, Card card5, Card card6, Card card7) throws Exception {
+        populateHand(handKey, card1, card2, card3, card4, card5, card6, card7);
+    }
+
+    private void populateHand(String handKey, Card... cards) {
         Hand hand = new Hand();
-        hand.add(card1);
-        hand.add(card2);
-        hand.add(card3);
-        hand.add(card4);
-        hand.add(card5);
+        Collections.addAll(hand, cards);
         current().hands.put(handKey, hand);
     }
 
@@ -61,7 +64,7 @@ public class HandCompareSteps extends Steps {
         Collections.sort(values, new HandEvaluator().getHandComparator());
         Hand bestHand = values.get(values.size() - 1);
         for (String key : current().hands.keySet()) {
-            if (bestHand.equals(current().hands.get(key))){
+            if (bestHand.equals(current().hands.get(key))) {
                 assertEquals(expectedWinnerHandKey, key);
                 return;
             }

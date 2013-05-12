@@ -1,17 +1,26 @@
 package org.isma.poker.jbehave;
 
+import org.jbehave.core.Embeddable;
+import org.jbehave.core.configuration.Configuration;
+import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.embedder.Embedder;
+import org.jbehave.core.failures.FailingUponPendingStep;
 import org.jbehave.core.io.CodeLocations;
+import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
+import org.jbehave.core.reporters.CrossReference;
+import org.jbehave.core.reporters.IdeOnlyConsoleOutput;
+import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
 
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
 public class HandCompareTest extends JUnitStories {
-
+    private final CrossReference xref = new CrossReference();
     public HandCompareTest() {
         Embedder embedder = configuredEmbedder();
         embedder.useMetaFilters(Arrays.asList("-skip"));
@@ -26,11 +35,27 @@ public class HandCompareTest extends JUnitStories {
                 .useStoryTimeoutInSecs(60000);
     }
 
+    @Override
+    public Configuration configuration() {
+        Class<? extends Embeddable> embeddableClass = this.getClass();
+        URL codeLocation = CodeLocations.codeLocationFromClass(embeddableClass);
+        StoryReporterBuilder storyReporter = new StoryReporterBuilder()
+                .withCodeLocation(codeLocation)
+                .withReporters(new IdeOnlyConsoleOutput())
+                .withFailureTrace(true)
+                .withFailureTraceCompression(true)
+                .withCrossReference(xref);
+        return new MostUsefulConfiguration()
+                .useStoryLoader(new LoadFromClasspath())
+                .useStoryReporterBuilder(storyReporter)
+                .useStepMonitor(xref.getStepMonitor())
+                .usePendingStepStrategy(new FailingUponPendingStep());
+    }
 
     protected List<String> storyPaths() {
         return new StoryFinder().findPaths(
                 CodeLocations.codeLocationFromClass(getClass()),
-                "org/isma/poker/jbehave/handCompare.story",
+                "org/isma/poker/jbehave/*CardsHandCompare.story",
                 "*KO*");
     }
 
