@@ -1,6 +1,7 @@
 package org.isma.poker.game;
 
 import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.event.RoundEndEvent;
 import org.isma.poker.game.results.Results;
 import org.junit.Test;
 
@@ -9,6 +10,13 @@ import static junit.framework.Assert.assertTrue;
 import static org.isma.poker.game.step.StepEnum.*;
 
 public class GameSession2PlayersFoldTest extends Abstract2PlayerGameSessionTest {
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        game.addEventListener(eventListener);
+    }
+
     @Test
     public void fold_in_bet1_game_over() throws Exception {
         gotoStep(BETS_1);
@@ -42,11 +50,14 @@ public class GameSession2PlayersFoldTest extends Abstract2PlayerGameSessionTest 
 
     private void player2FoldPlayer1Win() throws Exception {
         assertEquals(player2, tableInfos.getCurrentPlayer());
+
+        while (eventListener.poll() != null){
+        }
         PlayerAction.fold(player2, game);
-        assertTrue(game.isStepOver());
-        game.nextStep();
-        assertEquals(END, game.getStep());
-        Results res = game.buildResults();
+        assertEquals(BETS_1, game.getStep());
+        assertTrue(eventListener.hasEvents());
+        RoundEndEvent endEvent = (RoundEndEvent)eventListener.poll();
+        Results res = endEvent.getResults();
         assertEquals(1, res.getWinners().size());
         assertEquals(player1, res.getWinners().get(0).getPlayer());
     }

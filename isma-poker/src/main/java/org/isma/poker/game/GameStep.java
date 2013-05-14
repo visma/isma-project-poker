@@ -29,8 +29,9 @@ class GameStep {
         return step;
     }
 
-    public void finish() {
+    public void finish() throws InvalidStepActionException {
         stepOver = true;
+        nextStep();
     }
 
     public boolean isOver() {

@@ -1,8 +1,10 @@
 package org.isma.web.poker.actions;
 
 import org.isma.poker.game.GameSession;
-import org.isma.poker.game.model.Player;
 import org.isma.poker.game.PlayerInfos;
+import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.model.Player;
+import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.web.poker.messages.AbstractPokerAction;
 import org.isma.web.poker.messages.request.JoinMessageRequest;
 import org.isma.web.poker.messages.response.JoinResponse;
@@ -17,9 +19,9 @@ public class JoinAction extends AbstractPokerAction<String> {
     }
 
 
-    protected String execute(GameSession game, Map<String, String> messageMap) {
+    protected String execute(GameSession game, Map<String, String> messageMap) throws InvalidStepActionException {
         String nickname = messageMap.get(JoinMessageRequest.NICKNAME);
-        game.addPlayer(new Player(nickname));
+        PlayerAction.sitIn(new Player(nickname), game);
         return nickname;
     }
 

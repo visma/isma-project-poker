@@ -23,8 +23,7 @@ public class GameStartAction extends AbstractPokerAction<TableInfos> {
 
     @Override
     protected TableInfos execute(GameSession game, Map<String, String> messageMap) throws Exception {
-        game.start();
-        game.nextStep();
+        game.init(3);
         return game.getTableInfos();
     }
 }

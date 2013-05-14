@@ -7,11 +7,11 @@ public interface PokerStepGame {
 
     void executeBetStep();
 
-    void executeBlindStep();
+    void executeBlindStep() throws InvalidStepActionException;
 
-    void executeHandsDealingStep();
+    void executeHandsDealingStep() throws InvalidStepActionException;
 
-    void executeCommunityCardsDealingStep(int number);
+    void executeCommunityCardsDealingStep(int number) throws InvalidStepActionException;
 
     void executeShowDownStep();
 

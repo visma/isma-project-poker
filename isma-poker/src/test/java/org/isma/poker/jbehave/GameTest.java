@@ -7,19 +7,19 @@ import org.jbehave.core.steps.InstanceStepsFactory;
 
 import java.util.List;
 
-public class HandCompareTest extends AbstractStory {
+public class GameTest extends AbstractStory {
 
 
     protected List<String> storyPaths() {
         return new StoryFinder().findPaths(
                 CodeLocations.codeLocationFromClass(getClass()),
-                "org/isma/poker/jbehave/hand_comparaison_*.story",
+                "org/isma/poker/jbehave/game_*.story",
                 "*KO*");
     }
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        return new InstanceStepsFactory(configuration(), new HandCompareSteps());
+        return new InstanceStepsFactory(configuration(), new GameSteps());
     }
 
 }

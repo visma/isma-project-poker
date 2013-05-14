@@ -12,6 +12,7 @@ import static org.isma.poker.game.step.StepEnum.BETS_2;
 import static org.junit.Assert.assertEquals;
 
 //TODO faire plein de cas de tests la
+//TODO a tester mieux !!!
 public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTest {
     private AvailableActionsEvaluator evaluator = new AvailableActionsEvaluator();
 
@@ -39,7 +40,7 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
         assertEquals(SIT_OUT, availablePokerActions.get(0));
         assertEquals(FOLD, availablePokerActions.get(1));
         assertEquals(CALL, availablePokerActions.get(2));
-        assertEquals(RAISE, availablePokerActions.get(3));
+        assertEquals(BET, availablePokerActions.get(3));
         assertEquals(ALLIN, availablePokerActions.get(4));
     }
 

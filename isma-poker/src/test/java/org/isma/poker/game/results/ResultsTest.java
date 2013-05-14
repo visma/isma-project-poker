@@ -14,14 +14,19 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 import static org.isma.poker.model.HandEvaluation.PAIR;
 import static org.isma.poker.model.HandEvaluation.STRAIGHT;
-import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 
 public class ResultsTest extends AbstractPokerTest {
     private Player player1;
     private Player player2;
     private Player player3;
+
+    @Override
+    protected int getPlayerAmount() {
+        return 3;
+    }
 
     @Before
     public void setUp() throws Exception {

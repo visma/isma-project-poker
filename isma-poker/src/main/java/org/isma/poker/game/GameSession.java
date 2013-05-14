@@ -2,19 +2,21 @@ package org.isma.poker.game;
 
 import org.apache.log4j.Logger;
 import org.isma.poker.factory.IDeckFactory;
-import org.isma.poker.game.factory.ITableFactory;
 import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.actions.PlayerBetListener;
+import org.isma.poker.game.event.*;
 import org.isma.poker.game.exceptions.InvalidPlayerBetException;
-import org.isma.poker.game.model.InvalidPlayerTurnException;
+import org.isma.poker.game.factory.ITableFactory;
 import org.isma.poker.game.model.*;
 import org.isma.poker.game.results.Results;
 import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.poker.game.step.PokerStepGame;
 import org.isma.poker.game.step.Step;
 import org.isma.poker.game.step.StepEnum;
+import org.isma.poker.model.Card;
 import org.isma.poker.model.Deck;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.isma.poker.factory.IDeckFactory.DeckTypeEnum.FIFTY_TWO_CARDS_DECK;
@@ -31,7 +33,10 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
     private final GameStep gameStep;
     private final Table table;
     private final TableInfos tableInfos;
+    private final List<GameEventListener> eventListeners = new ArrayList<GameEventListener>();
 
+    //Bidouille pour tests
+    private int firstRoundMinimumPlayers;
 
     public GameSession(GameConfiguration configuration, IDeckFactory deckFactory, ITableFactory tableFactory) {
         this.configuration = configuration;
@@ -41,8 +46,23 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
         this.gameStep = new GameStep(this);
     }
 
-    public void start() {
+    public void init(int firstRoundMinimumPlayers) {
+        this.firstRoundMinimumPlayers = firstRoundMinimumPlayers;
         deck = deckFactory.buildPokerDeck(FIFTY_TWO_CARDS_DECK);
+    }
+
+
+    private void startRoundIfPrerequisites() throws InvalidStepActionException {
+        int playersWithCash = 0;
+        for (PlayerInfos player : tableInfos.getPlayersInfos()) {
+            if (player.getPlayer().hasChips()) {
+                playersWithCash++;
+            }
+        }
+        if (playersWithCash >= firstRoundMinimumPlayers && gameStep.getStep() == StepEnum.END) {
+            firstRoundMinimumPlayers = 2;
+            nextStep();
+        }
     }
 
 
@@ -53,13 +73,6 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
     // ********************************************************************************
     // **** Facade avec table
     // ********************************************************************************
-    public void addPlayer(Player player) {
-        table.add(player);
-    }
-
-    public Results buildResults() {
-        return new Results(table.getPot(), table.getAlivePlayers());
-    }
 
 
     // ********************************************************************************
@@ -78,7 +91,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
         return gameStep.isOver() && gameStep.getStep() == StepEnum.END;
     }
 
-    public void nextStep() throws InvalidStepActionException {
+    private void nextStep() throws InvalidStepActionException {
         if (table.isRoundOver()) {
             gameStep.gotoEnd();
         } else {
@@ -92,14 +105,23 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
 
 
     @Override
+    public void sitIn(Player player) throws InvalidStepActionException {
+        notify(new PlayerSitEvent(player));
+        table.add(player);
+        startRoundIfPrerequisites();
+    }
+
+    @Override
     public void paySmallBlind(Player player) {
+        notify(new BlindEvent(player, true, configuration.getSmallBlindAmount()));
         table.addSmallBlind(configuration);
         int paid = PlayerAction.payChips(player, configuration.getSmallBlindAmount());
         table.addToPot(player, paid);
     }
 
     @Override
-    public void payBigBlind(Player player) {
+    public void payBigBlind(Player player) throws InvalidStepActionException {
+        notify(new BlindEvent(player, false, configuration.getBigBlindAmount()));
         table.addBigBlind(configuration);
         int paid = PlayerAction.payChips(player, configuration.getBigBlindAmount());
         table.addToPot(player, paid);
@@ -113,10 +135,11 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
     }
 
     @Override
-    public void check(Player player) throws InvalidPlayerBetException, InvalidPlayerTurnException {
+    public void check(Player player) throws InvalidPlayerBetException, InvalidPlayerTurnException, InvalidStepActionException {
         new AbstractPlayerAction(this, CHECK) {
             @Override
             protected void doAction(Player player) throws InvalidPlayerBetException {
+                GameSession.this.notify(new CheckEvent(player));
                 int currentPlayerBet = table.getCurrentStepBet(player);
                 int remainingToPay = table.getCurrentBet() - currentPlayerBet;
                 if (remainingToPay != 0) {
@@ -127,7 +150,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
     }
 
     @Override
-    public void call(Player player) throws InvalidPlayerTurnException, InvalidPlayerBetException {
+    public void call(Player player) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException {
         new AbstractPlayerAction(this, CALL) {
             @Override
             protected void doAction(Player player) throws InvalidPlayerBetException {
@@ -135,13 +158,14 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
                 int remainingToPay = table.getCurrentBet() - currentPlayerBet;
                 int paid = PlayerAction.payChips(player, remainingToPay);
                 table.addToPot(player, paid);
+                GameSession.this.notify(new CallEvent(player));
             }
         }.execute(player);
     }
 
 
     @Override
-    public void bet(Player player, final int chips) throws InvalidPlayerBetException, InvalidPlayerTurnException {
+    public void bet(Player player, final int chips) throws InvalidPlayerBetException, InvalidPlayerTurnException, InvalidStepActionException {
         new AbstractPlayerAction(this, BET) {
             @Override
             protected void doAction(Player player) throws InvalidPlayerBetException {
@@ -157,12 +181,13 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
                 PlayerAction.payChips(player, chips);
                 table.addToPot(player, chips);
                 table.addBet(chips);
+                GameSession.this.notify(new BetEvent(player, chips));
             }
         }.execute(player);
     }
 
     @Override
-    public void raise(Player player, final int chips) throws InvalidPlayerBetException, InvalidPlayerTurnException {
+    public void raise(Player player, final int chips) throws InvalidPlayerBetException, InvalidPlayerTurnException, InvalidStepActionException {
         new AbstractPlayerAction(this, RAISE) {
             @Override
             protected void doAction(Player player) throws InvalidPlayerBetException {
@@ -190,7 +215,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
     }
 
     @Override
-    public void allIn(Player player) throws InvalidPlayerBetException, InvalidPlayerTurnException {
+    public void allIn(Player player) throws InvalidPlayerBetException, InvalidPlayerTurnException, InvalidStepActionException {
         new AbstractPlayerAction(this, ALLIN) {
             @Override
             protected void doAction(Player player) throws InvalidPlayerBetException {
@@ -211,21 +236,21 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
     }
 
     @Override
-    public void show(Player player) throws InvalidPlayerTurnException, InvalidPlayerBetException {
+    public void show(Player player) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException {
         new AbstractPlayerAction(this, SHOW) {
             @Override
             protected void doAction(Player player) throws InvalidPlayerBetException {
-                LOG.warn("GameSession.show not yet implemented...");
+                GameSession.this.notify(new ShowEvent(player));
             }
         }.execute(player);
     }
 
 
     @Override
-    public void fold(Player player) throws InvalidPlayerBetException, InvalidPlayerTurnException {
+    public void fold(Player player) throws InvalidPlayerBetException, InvalidPlayerTurnException, InvalidStepActionException {
         new AbstractPlayerAction(this, FOLD) {
             @Override
-            protected void doAction(Player player) throws InvalidPlayerBetException {
+            protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
                 table.removeFromRound(player);
             }
         }.execute(player);
@@ -243,19 +268,22 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
         table.prepareNextBetStep(false);
     }
 
-    public void executeBlindStep() {
+    public void executeBlindStep() throws InvalidStepActionException {
         table.prepareNewRound();
         PlayerAction.paySmallBlind(table.getSmallBlindPlayer(), this);
         PlayerAction.payBigBlind(table.getBigBlindPlayer(), this);
     }
 
-    public void executeHandsDealingStep() {
+    public void executeHandsDealingStep() throws InvalidStepActionException {
         table.prepareDealHandsStep(deck);
         gameStep.finish();
     }
 
-    public void executeCommunityCardsDealingStep(int number) {
-        table.prepapreDealCommunityCardStep(deck, number);
+    public void executeCommunityCardsDealingStep(int number) throws InvalidStepActionException {
+        List<Card> newCards = table.prepapreDealCommunityCardStep(deck, number);
+        for (Card newCard : newCards) {
+            notify(new CommunityCardEvent(newCard));
+        }
         gameStep.finish();
     }
 
@@ -264,11 +292,11 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
     }
 
     public void executeEndStep() throws InvalidStepActionException {
-        Results results = buildResults();
-        for (Winner winner : results.getWinners()) {
+        notify(new RoundEndEvent(new Results(table.getPot(), table.getAlivePlayers())));
+        for (Winner winner : new Results(table.getPot(), table.getAlivePlayers()).getWinners()) {
             PlayerAction.win(winner.getPlayer(), winner.getPrize());
         }
-        gameStep.finish();
+        gameStep.gotoEnd();
     }
 
     // ********************************************************************************
@@ -285,7 +313,20 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
         return availableActionsEvaluator.evaluate(this, player);
     }
 
+    public void addEventListener(GameEventListener eventListener) {
+        eventListeners.add(eventListener);
+    }
+
+    private void notify(GameEvent gameEvent) {
+        LOG.info("gameEvent : " + gameEvent.getDescription());
+        for (GameEventListener eventListener : eventListeners) {
+            eventListener.add(gameEvent);
+        }
+    }
+
+
     private abstract class AbstractPlayerAction {
+        private final Logger LOG = Logger.getLogger(AbstractPlayerAction.class);
         private final GameSession gameSession;
         private final PokerActionEnum action;
 
@@ -304,19 +345,28 @@ public class GameSession implements PlayerBetListener, PokerStepGame, PokerGameS
         }
 
 
-        void execute(Player player) throws InvalidPlayerTurnException, InvalidPlayerBetException {
+        void execute(Player player) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException {
             checkAvailableAction(player);
             doAction(player);
             endPlayerTurn();
         }
 
-        void endPlayerTurn() {
-            if (!table.prepareNextPlayer()) {
+        void endPlayerTurn() throws InvalidStepActionException {
+            if (table.isRoundOver()) {
+                gameSession.executeEndStep();
+                table.prepareNewRound();
+                startRoundIfPrerequisites();
+            } else if (!table.prepareNextPlayer()) {
                 gameStep.finish();
+                //TODO faire mieux (?)
+                if (getStep() == StepEnum.END) {
+//                    gameSession.executeEndStep();
+//                    table.prepareNewRound();
+                    startRoundIfPrerequisites();
+                }
             }
-
         }
 
-        protected abstract void doAction(Player player) throws InvalidPlayerBetException;
+        protected abstract void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException;
     }
 }

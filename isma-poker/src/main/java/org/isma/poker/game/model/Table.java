@@ -99,12 +99,13 @@ public class Table {
         }
     }
 
-    public void prepapreDealCommunityCardStep(Deck deck, int number) {
-        List<Card> communityCards = deck.deal(number);
-        this.communityCards.addAll(communityCards);
+    public List<Card> prepapreDealCommunityCardStep(Deck deck, int number) {
+        List<Card> newCards = deck.deal(number);
+        this.communityCards.addAll(newCards);
         for (Player inGamePlayer : inGamePlayers) {
-            inGamePlayer.getHand().addAll(communityCards);
+            inGamePlayer.getHand().addAll(newCards);
         }
+        return newCards;
     }
 
     public void prepareShowDown() {
@@ -169,10 +170,6 @@ public class Table {
 
     public List<Player> getAllPlayers() {
         return players;
-    }
-
-    public List<Player> getInGamePlayers() {
-        return inGamePlayers;
     }
 
     public int getCurrentStepBet(Player player) {

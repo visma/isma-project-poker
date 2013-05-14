@@ -24,8 +24,12 @@ public abstract class AbstractPokerTest {
         GameConfiguration gameConfiguration = buildGameConfiguration();
         MockDeckFactory deckFactory = buildDeckFactory();
         ITableFactory tableFactory = buildTableFactory();
-        return new GameSession(gameConfiguration, deckFactory, tableFactory);
+        GameSession gameSession = new GameSession(gameConfiguration, deckFactory, tableFactory);
+        gameSession.init(getPlayerAmount());
+        return gameSession;
     }
+
+    protected abstract int getPlayerAmount();
 
     protected ITableFactory buildTableFactory() {
         return new TableFactory();

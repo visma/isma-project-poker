@@ -4,7 +4,7 @@ import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.step.StepEnum;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.assertEquals;
 
 public class GameSession3PlayersFoldTest extends Abstract3PlayersGameSessionTest {
     @Test
@@ -13,7 +13,7 @@ public class GameSession3PlayersFoldTest extends Abstract3PlayersGameSessionTest
         PlayerAction.call(player1, game);
         PlayerAction.fold(player2, game);
         PlayerAction.check(player3, game);
-        assertTrue(game.isStepOver());
+        assertEquals(StepEnum.BETS_2, game.getStep());
     }
 
     @Test
@@ -49,6 +49,6 @@ public class GameSession3PlayersFoldTest extends Abstract3PlayersGameSessionTest
         PlayerAction.show(player1, game);
         PlayerAction.fold(player2, game);
         PlayerAction.show(player3, game);
-        assertTrue(game.isStepOver());
+        assertEquals(StepEnum.BETS_1, game.getStep());
     }
 }

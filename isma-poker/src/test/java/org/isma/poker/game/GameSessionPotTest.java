@@ -77,7 +77,7 @@ public class GameSessionPotTest extends Abstract3PlayersGameSessionTest {
         assertEquals(20, secondPot.getTotal());
         assertEquals(2, secondPot.getPlayers().size());
 
-        game.nextStep();
+//        game.nextStep();
         assertEquals(SHOWDOWN, game.getStep());
     }
 

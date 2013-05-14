@@ -3,15 +3,12 @@ package org.isma.poker.jbehave;
 import junit.framework.Assert;
 import org.isma.poker.HandEvaluator;
 import org.isma.poker.game.model.Player;
-import org.isma.poker.helper.CardHelper;
 import org.isma.poker.model.Card;
 import org.isma.poker.model.Hand;
 import org.isma.poker.model.HandEvaluation;
-import org.jbehave.core.annotations.AsParameterConverter;
 import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
-import org.jbehave.core.steps.Steps;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -20,22 +17,12 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.isma.poker.jbehave.HandCompareSteps.HandCompareContext.current;
 
-public class HandCompareSteps extends Steps {
+public class HandCompareSteps extends AbstractPokerSteps {
     private static final Logger LOGGER = Logger.getLogger(HandCompareSteps.class.getName());
 
     @BeforeScenario
     public void initializeContext() {
         HandCompareContext.initialize();
-    }
-
-    @AsParameterConverter
-    public Card createCard(String name) {
-        return CardHelper.parse(name);
-    }
-
-    @AsParameterConverter
-    public HandEvaluation createEvaluation(String name) {
-        return HandEvaluation.valueOf(name);
     }
 
     @Given("la main $handKey dispose des cartes suivantes ($handEvaluation) : $card1, $card2, $card3, $card4, $card5, $card6, $card7")

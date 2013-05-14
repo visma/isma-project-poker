@@ -124,4 +124,13 @@ public class TableInfos {
         }
         return 0;
     }
+
+    public PlayerInfos getPlayerInfos(String nickname) {
+        for (PlayerInfos playerInfos : getPlayersInfos()) {
+            if (playerInfos.getPlayer().getNickname().equals(nickname)){
+                return playerInfos;
+            }
+        }
+        return null;
+    }
 }
