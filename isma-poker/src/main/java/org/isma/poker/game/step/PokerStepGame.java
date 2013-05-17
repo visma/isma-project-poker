@@ -3,6 +3,8 @@ package org.isma.poker.game.step;
 public interface PokerStepGame {
     Step getStep();
 
+    void nextStep() throws InvalidStepActionException;
+
     void executeFirstBetStep();
 
     void executeBetStep();
@@ -16,4 +18,5 @@ public interface PokerStepGame {
     void executeShowDownStep();
 
     void executeEndStep() throws InvalidStepActionException;
+
 }

@@ -22,9 +22,9 @@ public interface PlayerBetListener {
 
     void allIn(Player player) throws InvalidPlayerBetException, InvalidPlayerTurnException, InvalidStepActionException;
 
-    void paySmallBlind(Player player);
+    void paySmallBlind(Player player) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException;
 
-    void payBigBlind(Player player) throws InvalidStepActionException;
+    void payBigBlind(Player player) throws InvalidStepActionException, InvalidPlayerBetException, InvalidPlayerTurnException;
 
     void sitIn(Player player) throws InvalidStepActionException;
 }

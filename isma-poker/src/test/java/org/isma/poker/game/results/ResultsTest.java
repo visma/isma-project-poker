@@ -14,6 +14,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 import static org.isma.poker.model.HandEvaluation.PAIR;
 import static org.isma.poker.model.HandEvaluation.STRAIGHT;
@@ -47,7 +48,7 @@ public class ResultsTest extends AbstractPokerTest {
     }
 
     @Test
-    public void winners() throws Exception {
+    public void two_winners_no_equality() throws Exception {
         Results results = new Results(getPot(), getPlayers());
 
         assertEquals(2, results.getWinners().size());
@@ -61,6 +62,11 @@ public class ResultsTest extends AbstractPokerTest {
         assertEquals(player2, winnerPlayer2.getPlayer());
         assertEquals(20, winnerPlayer2.getPrize());
         assertEquals(PAIR, winnerPlayer2.getHandEvaluation());
+    }
+
+    @Test
+    public void two_winners_equality(){
+        fail("todo");
     }
 
     private List<Player> getPlayers() {

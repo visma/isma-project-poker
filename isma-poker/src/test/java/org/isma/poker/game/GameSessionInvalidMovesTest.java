@@ -10,6 +10,7 @@ import org.junit.rules.ExpectedException;
 import static junit.framework.Assert.assertEquals;
 import static org.isma.poker.game.step.StepEnum.BETS_1;
 
+//TODO compléter ce test avec d'autres cas
 public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

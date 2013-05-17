@@ -6,17 +6,24 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.isma.poker.game.PokerActionEnum.*;
+import static org.isma.poker.game.step.StepEnum.BLINDS;
 import static org.isma.poker.game.step.StepEnum.SHOWDOWN;
 
 public class AvailableActionsEvaluator {
 
     public List<PokerActionEnum> evaluate(PokerGameState gameSession, Player player) {
         TableInfos tableInfos = gameSession.getTableInfos();
-        if (!player.hasChips()) {
+
+        if (player != tableInfos.getCurrentPlayer() || player.isFold()){
             return asList(SIT_OUT);
         }
-        if (tableInfos.getCurrentPlayer() != player) {
-            return asList(SIT_OUT);
+        if (gameSession.getStep() == BLINDS) {
+            if (player == tableInfos.getSmallBlindPlayer()) {
+                return asList(SIT_OUT, PAY_SMALL_BLIND);
+            }
+            if (player == tableInfos.getBigBlindPlayer()) {
+                return asList(SIT_OUT, PAY_BIG_BLIND);
+            }
         }
         if (gameSession.getStep() == SHOWDOWN) {
             return asList(SIT_OUT, FOLD, SHOW);

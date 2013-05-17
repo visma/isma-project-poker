@@ -1,5 +1,6 @@
-package org.isma.poker.jbehave;
+package org.isma.poker.jbehave.steps;
 
+import junit.framework.Assert;
 import org.isma.poker.game.GameSession;
 import org.isma.poker.game.PokerActionEnum;
 import org.isma.poker.game.actions.PlayerAction;
@@ -13,7 +14,6 @@ import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.poker.game.step.StepEnum;
 import org.isma.poker.jbehave.utils.TestResultEventListner;
 import org.isma.poker.jbehave.utils.TestShowEventListner;
-import org.isma.poker.mock.MockDeck;
 import org.isma.poker.mock.MockDeckFactory;
 import org.isma.poker.model.Card;
 import org.isma.poker.model.CommunityCards;
@@ -24,11 +24,10 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 import static junit.framework.Assert.*;
-import static org.isma.poker.jbehave.GameSteps.GameContext.current;
+import static org.isma.poker.jbehave.steps.GameSteps.GameContext.current;
 
 public class GameSteps extends AbstractPokerSteps {
     private static final Logger LOGGER = Logger.getLogger(GameSteps.class.getName());
@@ -38,11 +37,10 @@ public class GameSteps extends AbstractPokerSteps {
         GameContext.initialize();
     }
 
-    @Given("la table de jeu est vide")
-    public void givenTable() throws Exception {
+    @Given("la table de jeu est vide, la partie commencera lorsque $minPlayers joueurs sont presents")
+    public void givenTable(int minPlayers) throws Exception {
         assertTrue(current().game.getTableInfos().getPlayersInfos().isEmpty());
-        //TODO attention au 2 du init(2)
-        current().game.init(2);
+        current().game.init(minPlayers);
         current().showEventListener = new TestShowEventListner();
         current().resultEventListner = new TestResultEventListner();
         current().game.addEventListener(current().showEventListener);
@@ -51,13 +49,13 @@ public class GameSteps extends AbstractPokerSteps {
 
     @Given("les blindes sont à $smallBlind/$bigBlind jetons")
     public void givenBlinds(int smallBlind, int bigBlind) throws Exception {
-        assertEquals(smallBlind, current().game.getTableInfos().getSmallBlindAmount());
-        assertEquals(bigBlind, current().game.getTableInfos().getBigBlindAmount());
+        Assert.assertEquals(smallBlind, current().game.getTableInfos().getSmallBlindAmount());
+        Assert.assertEquals(bigBlind, current().game.getTableInfos().getBigBlindAmount());
     }
 
     @Given("les prochaines cartes du deck sont : $cards")
     public void givenDeck(Card... cards) throws Exception {
-        ((MockDeck) current().game.getDeck()).prepareCards(Arrays.asList(cards));
+        current().deckFactory.forceHands(cards);
     }
 
     @Given("le joueur $nickname dispose de $chips jetons et rentre dans la partie")
@@ -81,23 +79,23 @@ public class GameSteps extends AbstractPokerSteps {
 
     @Then("etape en cours : $step (pot : $pot)")
     public void givenGameStep(StepEnum step, int pot) throws Exception {
-        assertEquals(step, current().game.getStep());
-        assertEquals(pot, current().game.getPot().getTotal());
+        Assert.assertEquals(step, current().game.getStep());
+        Assert.assertEquals(pot, current().game.getPot().getTotal());
     }
 
     @Then("$nickname est au bouton")
     public void givenButtonPlayer(String nickname) throws Exception {
-        assertEquals(nickname, current().game.getTableInfos().getDealerInfos().getPlayer().getNickname());
+        Assert.assertEquals(nickname, current().game.getTableInfos().getDealerInfos().getPlayer().getNickname());
     }
 
     @Then("$nickname paie la petite blinde")
     public void givenSmallBlindPaid(String nickname) throws Exception {
-        //TODO
+        PlayerAction.paySmallBlind(getPlayer(nickname), current().game);
     }
 
     @Then("$nickname paie la grosse blinde")
     public void givenBigBlindPaid(String nickname) throws Exception {
-        //TODO
+        PlayerAction.payBigBlind(getPlayer(nickname), current().game);
     }
 
     @Then("$nickname reçoit les cartes cachees : $card1, $card2")
@@ -110,13 +108,13 @@ public class GameSteps extends AbstractPokerSteps {
 
     @Then("$nickname est le prochain joueur à parler")
     public void givenCurrentPlayer(String nickname) throws Exception {
-        assertEquals(nickname, current().game.getTableInfos().getCurrentPlayerInfos().getPlayer().getNickname());
+        Assert.assertEquals(nickname, current().game.getTableInfos().getCurrentPlayerInfos().getPlayer().getNickname());
     }
 
     @When("$nickname effectue l'action : $action($chipsStr)")
     public void givenPlayerAction(String nickname, PokerActionEnum pokerAction, String chipsStr) throws Exception {
         GameSession game = current().game;
-        Player player = getPlayer(nickname);;
+        Player player = getPlayer(nickname);
         Integer chips = chipsStr.trim().length() > 0 ? Integer.parseInt(chipsStr) : null;
         switch (pokerAction) {
             case CHECK:
@@ -130,6 +128,9 @@ public class GameSteps extends AbstractPokerSteps {
                 break;
             case RAISE:
                 PlayerAction.raise(player, game, chips);
+                break;
+            case ALLIN:
+                PlayerAction.allIn(player, game);
                 break;
             default:
                 throw new Exception("action non gere dans le test :" + pokerAction);
@@ -219,6 +220,7 @@ public class GameSteps extends AbstractPokerSteps {
 
     public static class GameContext {
         private static ThreadLocal<GameContext> current = new ThreadLocal<GameContext>();
+        private MockDeckFactory deckFactory;
         public GameSession game;
         public TestShowEventListner showEventListener;
         public TestResultEventListner resultEventListner;
@@ -230,7 +232,8 @@ public class GameSteps extends AbstractPokerSteps {
         public static GameContext initialize() throws InvalidGameConfigurationException {
             GameContext value = new GameContext();
             current.set(value);
-            current().game = new GameSession(new GameConfiguration(5, 10, false, true), new MockDeckFactory(), new TableFactory());
+            current().deckFactory = new MockDeckFactory();
+            current().game = new GameSession(new GameConfiguration(5, 10, false, true), current().deckFactory, new TableFactory());
             return value;
         }
 

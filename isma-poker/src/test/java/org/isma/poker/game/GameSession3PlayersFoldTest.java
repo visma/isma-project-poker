@@ -49,6 +49,6 @@ public class GameSession3PlayersFoldTest extends Abstract3PlayersGameSessionTest
         PlayerAction.show(player1, game);
         PlayerAction.fold(player2, game);
         PlayerAction.show(player3, game);
-        assertEquals(StepEnum.BETS_1, game.getStep());
+        assertEquals(StepEnum.BLINDS, game.getStep());
     }
 }

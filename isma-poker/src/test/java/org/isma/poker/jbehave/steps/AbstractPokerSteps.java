@@ -1,4 +1,4 @@
-package org.isma.poker.jbehave;
+package org.isma.poker.jbehave.steps;
 
 import org.isma.poker.game.PokerActionEnum;
 import org.isma.poker.game.step.StepEnum;

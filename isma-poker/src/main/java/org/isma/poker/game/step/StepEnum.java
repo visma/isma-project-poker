@@ -31,7 +31,7 @@ public enum StepEnum implements Step {
     }
 
 
-    public StepEnum nextStep() {
+    public StepEnum getNextStep() {
         switch (this) {
             case END:
                 return BLINDS;

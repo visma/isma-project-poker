@@ -1,4 +1,4 @@
-package org.isma.poker.jbehave;
+package org.isma.poker.jbehave.steps;
 
 import junit.framework.Assert;
 import org.isma.poker.HandEvaluator;
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
-import static org.isma.poker.jbehave.HandCompareSteps.HandCompareContext.current;
+import static org.isma.poker.jbehave.steps.HandCompareSteps.HandCompareContext.current;
 
 public class HandCompareSteps extends AbstractPokerSteps {
     private static final Logger LOGGER = Logger.getLogger(HandCompareSteps.class.getName());

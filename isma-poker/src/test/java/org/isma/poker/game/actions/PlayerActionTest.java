@@ -1,41 +1,29 @@
-package org.isma.poker.game.model;
+package org.isma.poker.game.actions;
 
-import org.isma.poker.game.actions.PlayerBetListener;
-import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.model.Player;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class PlayerTest {
+public class PlayerActionTest {
     private PlayerBetListener game;
     private Player player;
 
 
     @Before
     public void setUp() throws Exception {
-        game = Mockito.mock(PlayerBetListener.class);
+        game = mock(PlayerBetListener.class);
         player = new Player("toto");
-        when(game.buy(player, 100)).thenReturn(true);
-        PlayerAction.buyChips(player, game, 100);
-        assertEquals(100, player.getChips());
     }
 
     @Test
-    public void buy_more_chips_ok() throws Exception {
+    public void buy_listener_plugged() throws Exception {
         when(game.buy(player, 80)).thenReturn(true);
         PlayerAction.buyChips(player, game, 80);
-        assertEquals(180, player.getChips());
+        verify(game, times(1)).buy(player, 80);
     }
 
-    @Test
-    public void buy_more_chips_ko() throws Exception {
-        when(game.buy(player, 80)).thenReturn(false);
-        PlayerAction.buyChips(player, game, 80);
-        assertEquals(100, player.getChips());
-    }
 
     @Test
     public void bet_listener_plugged() throws Exception {
@@ -62,7 +50,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void fold() throws Exception {
+    public void fold_listener_plugged() throws Exception {
         PlayerAction.fold(player, game);
         verify(game, times(1)).fold(player);
     }

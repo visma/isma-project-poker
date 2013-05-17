@@ -1,5 +1,6 @@
 package org.isma.poker.jbehave;
 
+import org.isma.poker.jbehave.steps.HandCompareSteps;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.steps.InjectableStepsFactory;

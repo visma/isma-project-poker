@@ -11,9 +11,7 @@ public class PlayerAction {
 
 
     public static void buyChips(Player player, PlayerBetListener game, int chips) {
-        if (game.buy(player, chips)) {
-            player.setChips(player.getChips() + chips);
-        }
+        game.buy(player, chips);
     }
 
     public static void allIn(Player player, PlayerBetListener game) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException {
@@ -40,6 +38,24 @@ public class PlayerAction {
         game.bet(player, chips);
     }
 
+
+    public static void paySmallBlind(Player player, PlayerBetListener game) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException {
+        game.paySmallBlind(player);
+    }
+
+    public static void payBigBlind(Player player, PlayerBetListener game) throws InvalidStepActionException, InvalidPlayerTurnException, InvalidPlayerBetException {
+        game.payBigBlind(player);
+    }
+
+    public static void check(Player player, PlayerBetListener game) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException {
+        game.check(player);
+    }
+
+    public static void sitIn(Player player, PlayerBetListener game) throws InvalidStepActionException {
+        game.sitIn(player);
+    }
+
+    //TODO a deplacer dans le GameSession
     public static int payChips(Player player, int priceToPay) {
         if (!player.hasChips()) {
             throw new RuntimeException("avoid this...");
@@ -56,23 +72,8 @@ public class PlayerAction {
         return priceToPay;
     }
 
-    public static void paySmallBlind(Player player, PlayerBetListener playerBetListener) {
-        playerBetListener.paySmallBlind(player);
-    }
-
-    public static void payBigBlind(Player player, PlayerBetListener playerBetListener) throws InvalidStepActionException {
-        playerBetListener.payBigBlind(player);
-    }
-
+    //TODO gagner n'est pas une action !!
     public static void win(Player player, int prize) {
         player.setChips(player.getChips() + prize);
-    }
-
-    public static void check(Player player, PlayerBetListener game) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException {
-        game.check(player);
-    }
-
-    public static void sitIn(Player player, PlayerBetListener game) throws InvalidStepActionException {
-        game.sitIn(player);
     }
 }

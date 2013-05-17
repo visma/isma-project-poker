@@ -54,7 +54,7 @@ public class GameSession2PlayersFoldTest extends Abstract2PlayerGameSessionTest 
         while (eventListener.poll() != null){
         }
         PlayerAction.fold(player2, game);
-        assertEquals(BETS_1, game.getStep());
+        assertEquals(END, game.getStep());
         assertTrue(eventListener.hasEvents());
         RoundEndEvent endEvent = (RoundEndEvent)eventListener.poll();
         Results res = endEvent.getResults();

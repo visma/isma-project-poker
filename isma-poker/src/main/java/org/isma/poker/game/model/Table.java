@@ -2,6 +2,7 @@ package org.isma.poker.game.model;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.log4j.Logger;
 import org.isma.poker.model.Card;
 import org.isma.poker.model.CommunityCards;
 import org.isma.poker.model.Deck;
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Table {
+    private static final Logger LOG = Logger.getLogger(Table.class);
+
     private static final int MAX_RAISES = 3;
     private final CommunityCards communityCards = new CommunityCards();
     private final CircleList<Player> players = new CircleList<Player>();
@@ -39,7 +42,18 @@ public class Table {
     /* ---------------------------------------------------------------------------------*/
     /* ------   ROUND PREPARATION                                                       */
     /* ---------------------------------------------------------------------------------*/
-    public void prepareNewRound() {
+    protected void moveButton() {
+        dealer = dealer == null ? inGamePlayers.get(0) : inGamePlayers.next(dealer);
+        smallBlindPlayer = inGamePlayers.next(dealer);
+        bigBlindPlayer = inGamePlayers.next(smallBlindPlayer);
+        underTheGunPlayer = inGamePlayers.next(bigBlindPlayer);
+        currentPlayer = smallBlindPlayer;
+    }
+
+    /* ---------------------------------------------------------------------------------*/
+    /* ------   STEPS PREPARATION                                                       */
+    /* ---------------------------------------------------------------------------------*/
+    public void prepareBlindsStep() {
         pot.clear();
         inGamePlayers.clear();
         inGamePlayers.addAll(CollectionUtils.select(players, new HasMoneyPredicate()));
@@ -47,35 +61,11 @@ public class Table {
             inGamePlayer.setFold(false);
         }
         moveButton();
-        prepareNextBetStep(true);
-    }
-
-    protected void moveButton() {
-        dealer = dealer == null ? inGamePlayers.get(0) : inGamePlayers.next(dealer);
-        smallBlindPlayer = inGamePlayers.next(dealer);
-        bigBlindPlayer = inGamePlayers.next(smallBlindPlayer);
-        underTheGunPlayer = inGamePlayers.next(bigBlindPlayer);
-        currentPlayer = underTheGunPlayer;
-    }
-
-    /* ---------------------------------------------------------------------------------*/
-    /* ------   STEPS PREPARATION                                                       */
-    /* ---------------------------------------------------------------------------------*/
-    public void addSmallBlind(GameConfiguration gameConfiguration) {
-        addToCurrentBet(gameConfiguration.getSmallBlindAmount());
-    }
-
-    public void addBigBlind(GameConfiguration gameConfiguration) {
-        addToCurrentBet(gameConfiguration.getBigBlindAmount() - gameConfiguration.getSmallBlindAmount());
-    }
-
-    public void addBet(int amount) {
-        addToCurrentBet(amount);
-        betUpdateRemainingActionPlayers();
-    }
-
-    private void addToCurrentBet(int bet) {
-        currentBet += bet;
+        remainingActionPlayers.add(smallBlindPlayer);
+        remainingActionPlayers.add(bigBlindPlayer);
+        for (Player player : players) {
+            player.getHand().clear();
+        }
     }
 
     public void prepareNextBetStep(boolean firstBetStep) {
@@ -83,13 +73,19 @@ public class Table {
         if (!firstBetStep) {
             currentBet = 0;
             currentStepBet.clear();
-            //TODO faux si underTheGUn est foldé
-            currentPlayer = underTheGunPlayer;
         }
+        //TODO faux si underTheGUn est foldé
+        currentPlayer = underTheGunPlayer;
         updateRemainingActionPlayers();
     }
 
-    public void prepareDealHandsStep(Deck deck) {
+    public void prepareShowDown() {
+        //TODO faux si underTheGUn est foldé
+        currentPlayer = underTheGunPlayer;
+        updateRemainingActionPlayers();
+    }
+
+    public void prepareDealHoleCardsStep(Deck deck) {
         int cardAmount = 2;
         List<Card> cards = deck.deal(inGamePlayers.size() * cardAmount);
         for (int i = 0; i < cardAmount; i++) {
@@ -108,18 +104,36 @@ public class Table {
         return newCards;
     }
 
-    public void prepareShowDown() {
-        //TODO faux si underTheGUn est foldé
-        currentPlayer = underTheGunPlayer;
-        updateRemainingActionPlayers();
-    }
-
     private void updateRemainingActionPlayers() {
         remainingActionPlayers.add(currentPlayer);
         while (remainingActionPlayers.size() < inGamePlayers.size()) {
             Player nextPlayer = inGamePlayers.next(remainingActionPlayers.get(remainingActionPlayers.size() - 1));
             remainingActionPlayers.add(nextPlayer);
         }
+        for (Player remainingActionPlayer : remainingActionPlayers) {
+            LOG.info("remainingActionPlayer : " + remainingActionPlayer.getNickname());
+        }
+    }
+
+    /* ---------------------------------------------------------------------------------*/
+    /* ------   MONEY HANDLING                                                           */
+    /* ---------------------------------------------------------------------------------*/
+
+    public void addSmallBlind(GameConfiguration gameConfiguration) {
+        addToCurrentBet(gameConfiguration.getSmallBlindAmount());
+    }
+
+    public void addBigBlind(GameConfiguration gameConfiguration) {
+        addToCurrentBet(gameConfiguration.getBigBlindAmount() - gameConfiguration.getSmallBlindAmount());
+    }
+
+    public void addBet(int amount) {
+        addToCurrentBet(amount);
+        betUpdateRemainingActionPlayers();
+    }
+
+    private void addToCurrentBet(int bet) {
+        currentBet += bet;
     }
 
     /* ---------------------------------------------------------------------------------*/
@@ -217,12 +231,14 @@ public class Table {
         return raisesRemaining;
     }
 
-    public boolean hasRemainingPlayers() {
-        return !remainingActionPlayers.isEmpty();
-    }
-
     public void decreaseRaiseRemainings() {
         raisesRemaining--;
+    }
+
+    public List<Player> getAlivePlayers() {
+        List<Player> alivePlayers = new ArrayList<Player>(inGamePlayers);
+        CollectionUtils.filter(alivePlayers, new AlivePlayerPredicate());
+        return alivePlayers;
     }
 
     private class HasMoneyPredicate implements Predicate {
@@ -239,16 +255,10 @@ public class Table {
         }
     }
 
-    public List<Player> getAlivePlayers() {
-        List<Player> alivePlayers = new ArrayList<Player>(inGamePlayers);
-        CollectionUtils.filter(alivePlayers, new AlivePlayerPredicate());
-        return alivePlayers;
-    }
-
     private class PlayerActionPredicate implements Predicate {
         @Override
         public boolean evaluate(Object o) {
-            return ((Player) o).hasChips() && !((Player) o).isFold();
+            return /*((Player) o).hasChips() &&*/ !((Player) o).isFold();
         }
     }
 

@@ -37,7 +37,13 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         assertEquals(player1, tableInfos.getDealer());
         assertEquals(player2, tableInfos.getSmallBlindPlayer());
         assertEquals(player1, tableInfos.getBigBlindPlayer());
-        assertEquals(tableInfos.getBigBlindAmount(), tableInfos.getCurrentBet());
+
+        assertEquals(0, tableInfos.getCurrentBet());
+        PlayerAction.paySmallBlind(player2, game);
+        assertEquals(5, tableInfos.getCurrentBet());
+        PlayerAction.payBigBlind(player1, game);
+        assertEquals(10, tableInfos.getCurrentBet());
+
         //----- ROUND 1 / BLINDS -----
         assertEquals(BETS_1, game.getStep());
         assertEquals(90, player1.getChips());
@@ -220,12 +226,12 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         assertEquals(player1, tableInfos.getCurrentPlayer());
         assertEquals(SHOWDOWN, game.getStep());
         assertFalse(game.isRoundOver());
-
-        //
         while (eventListener.poll() != null){
         }
+
+        //
         PlayerAction.show(player1, game);
-        assertEquals(BETS_1, game.getStep());
+        assertEquals(BLINDS, game.getStep());
         eventListener.poll();
         RoundEndEvent gameEvent = (RoundEndEvent) eventListener.poll();
         Results results = gameEvent.getResults();
@@ -238,19 +244,19 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         Loser loser = results.getLosers().get(0);
         assertEquals(player2, loser.getPlayer());
         assertEquals(TWO_PAIR, loser.getHandEvaluation());
-        assertEquals(110 - 5, player1.getChips());
-        assertEquals(90 - 10, player2.getChips());
+        assertEquals(110, player1.getChips());
+        assertEquals(90, player2.getChips());
     }
 
     @Test
     public void two_players_second_round_start() throws Exception {
         gotoStep(END);
 
-        assertEquals(BETS_1, game.getStep());
-        assertEquals(2, player1.getHand().size());
-        assertEquals(2, player2.getHand().size());
-        assertEquals(110 - 5, player1.getChips());
-        assertEquals(90 - 10, player2.getChips());
+        assertEquals(BLINDS, game.getStep());
+        assertEquals(0, player1.getHand().size());
+        assertEquals(0, player2.getHand().size());
+        assertEquals(110, player1.getChips());
+        assertEquals(90, player2.getChips());
         assertEquals(player2, tableInfos.getDealer());
         assertEquals(player1, tableInfos.getSmallBlindPlayer());
         assertEquals(player2, tableInfos.getBigBlindPlayer());
