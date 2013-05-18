@@ -8,9 +8,9 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.isma.poker.game.PokerActionEnum.*;
+import static org.isma.poker.game.actions.PlayerAction.*;
 import static org.isma.poker.game.step.StepEnum.*;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 //TODO faire PLEIN de cas de tests la
 //TODO a tester mieux !!!
@@ -24,20 +24,38 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
     }
 
     @Test
-    public void evaluate_showdown__not_fold_no_more_money(){
-        fail("todo : FOLD, SIT_OUT, SHOW");
+    public void evaluate_showdown_not_fold_no_more_money() throws Exception {
+        //Given
+        gotoStep(BETS_4);
+        check(player1, game);
+        check(player2, game);
+
+        //When
+        allIn(player3, game);
+        call(player1, game);
+        call(player2, game);
+
+        //Then - all players can show (even those with no money)
+        assertEquals(SHOWDOWN, game.getStep());
+        show(player1, game);
+        show(player2, game);
+        assertEquals(0, player3.getChips());
+        show(player3, game);
     }
 
     @Test
     public void evaluate_small_blind_player() throws Exception {
+        //Given/When
         gotoStep(BLINDS);
         assertEquals(player2, tableInfos.getSmallBlindPlayer());
         assertEquals(player2, tableInfos.getCurrentPlayer());
+
+        //Then
         List<PokerActionEnum> availablePokerActions = evaluator.evaluate(game, player2);
         assertEquals(2, availablePokerActions.size());
         assertEquals(SIT_OUT, availablePokerActions.get(0));
         assertEquals(PAY_SMALL_BLIND, availablePokerActions.get(1));
-        PlayerAction.paySmallBlind(player2, game);
+        paySmallBlind(player2, game);
     }
 
     @Test
@@ -46,7 +64,7 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
         assertEquals(player2, tableInfos.getSmallBlindPlayer());
         assertEquals(player3, tableInfos.getBigBlindPlayer());
 
-        PlayerAction.paySmallBlind(player2, game);
+        paySmallBlind(player2, game);
         assertEquals(player3, tableInfos.getCurrentPlayer());
 
         List<PokerActionEnum> availablePokerActions = evaluator.evaluate(game, player3);
@@ -73,7 +91,7 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
         assertEquals(player2, tableInfos.getSmallBlindPlayer());
         assertEquals(player3, tableInfos.getBigBlindPlayer());
 
-        PlayerAction.paySmallBlind(player2, game);
+        paySmallBlind(player2, game);
         PlayerAction.payBigBlind(player1, game);
     }
 

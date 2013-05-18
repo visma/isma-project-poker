@@ -1,6 +1,6 @@
 A duel to the death between two brothers
 
-Scenario: duel to the death
+Scenario: duel to the death between 2 players
 
 Given la table de jeu est vide, la partie commencera lorsque 2 joueurs sont presents
 Given les blindes sont à 5/10 jetons

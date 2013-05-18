@@ -3,9 +3,11 @@ package org.isma.poker.game.model;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.log4j.Logger;
+import org.isma.poker.game.step.StepEnum;
 import org.isma.poker.model.Card;
 import org.isma.poker.model.CommunityCards;
 import org.isma.poker.model.Deck;
+import org.isma.utils.StringHelper;
 import org.isma.utils.collections.CircleList;
 
 import java.util.ArrayList;
@@ -68,6 +70,8 @@ public class Table {
         }
     }
 
+
+    //TODO faire des test sur cette méthode pour bien controler les joueurs restants
     public void prepareNextBetStep(boolean firstBetStep) {
         raisesRemaining = MAX_RAISES;
         if (!firstBetStep) {
@@ -76,13 +80,26 @@ public class Table {
         }
         //TODO faux si underTheGUn est foldé
         currentPlayer = underTheGunPlayer;
-        updateRemainingActionPlayers();
+        updateCurrentPlayer(new PlayerBetPredicate());
+        updateRemainingActionPlayers(new PlayerBetPredicate());
     }
 
+    //TODO faire des test sur cette méthode pour bien controler les joueurs restants
     public void prepareShowDown() {
         //TODO faux si underTheGUn est foldé
         currentPlayer = underTheGunPlayer;
-        updateRemainingActionPlayers();
+        updateCurrentPlayer(new AlivePlayerPredicate());
+        updateRemainingActionPlayers(new AlivePlayerPredicate());
+    }
+
+    private void updateCurrentPlayer(Predicate predicate) {
+        currentPlayer = underTheGunPlayer;
+        while (!predicate.evaluate(currentPlayer)) {
+            currentPlayer = inGamePlayers.next(currentPlayer, predicate);
+            if (currentPlayer == null) {
+                return;
+            }
+        }
     }
 
     public void prepareDealHoleCardsStep(Deck deck) {
@@ -104,15 +121,21 @@ public class Table {
         return newCards;
     }
 
-    private void updateRemainingActionPlayers() {
+    private void updateRemainingActionPlayers(Predicate predicate) {
         remainingActionPlayers.add(currentPlayer);
-        while (remainingActionPlayers.size() < inGamePlayers.size()) {
-            Player nextPlayer = inGamePlayers.next(remainingActionPlayers.get(remainingActionPlayers.size() - 1));
-            remainingActionPlayers.add(nextPlayer);
+        int remainingCount = CollectionUtils.countMatches(inGamePlayers, predicate);
+        while (remainingActionPlayers.size() < remainingCount) {
+            Player nextPlayer = inGamePlayers.next(remainingActionPlayers.get(remainingActionPlayers.size() - 1), predicate);
+            if (predicate.evaluate(nextPlayer)) {
+                remainingActionPlayers.add(nextPlayer);
+            }
         }
-        for (Player remainingActionPlayer : remainingActionPlayers) {
-            LOG.info("remainingActionPlayer : " + remainingActionPlayer.getNickname());
-        }
+        LOG.debug("remainingActionPlayers : " + StringHelper.join(remainingActionPlayers, ", ", new StringHelper.JoinValueExtractor<Player>() {
+            @Override
+            public String joinValue(Player element) {
+                return element.getNickname();
+            }
+        }));
     }
 
     /* ---------------------------------------------------------------------------------*/
@@ -139,12 +162,12 @@ public class Table {
     /* ---------------------------------------------------------------------------------*/
     /* ------   STEP ROTATION                                                           */
     /* ---------------------------------------------------------------------------------*/
-    public boolean prepareNextPlayer() {
+    public boolean prepareNextPlayer(StepEnum step) {
         remainingActionPlayers.remove(currentPlayer);
         if (existNextActionPlayer()) {
             return false;
         }
-        currentPlayer = getNextPlayer();
+        currentPlayer = getNextPlayer(step);
         return true;
     }
 
@@ -157,14 +180,18 @@ public class Table {
     }
 
     private void betUpdateRemainingActionPlayers() {
-        int actionPlayersCount = CollectionUtils.countMatches(inGamePlayers, new PlayerActionPredicate());
-        Player nextPlayer = inGamePlayers.next(currentPlayer, new PlayerActionPredicate());
-        while (remainingActionPlayers.size() < actionPlayersCount) {
-            if (!remainingActionPlayers.contains(nextPlayer)) {
-                remainingActionPlayers.add(nextPlayer);
-            }
-            nextPlayer = inGamePlayers.next(nextPlayer, new PlayerActionPredicate());
+        //int actionPlayersCount = CollectionUtils.countMatches(inGamePlayers, new PlayerBetPredicate());
+        Player firstEligiblePlayer = inGamePlayers.next(currentPlayer, new PlayerBetPredicate());
+        if (firstEligiblePlayer == currentPlayer) {
+            return;
         }
+        Player currentEligiblePlayer = firstEligiblePlayer;
+        do {
+            if (!remainingActionPlayers.contains(currentEligiblePlayer)) {
+                remainingActionPlayers.add(currentEligiblePlayer);
+            }
+            currentEligiblePlayer = inGamePlayers.next(currentEligiblePlayer, new PlayerBetPredicate());
+        } while (currentEligiblePlayer != firstEligiblePlayer && currentEligiblePlayer != null);
     }
 
     /* ---------------------------------------------------------------------------------*/
@@ -191,8 +218,11 @@ public class Table {
         return currentBet == null ? 0 : currentBet;
     }
 
-    public Player getNextPlayer() {
-        return inGamePlayers.next(currentPlayer, new PlayerActionPredicate());
+    public Player getNextPlayer(StepEnum step) {
+        if (step == StepEnum.SHOWDOWN) {
+            return inGamePlayers.next(currentPlayer, new AlivePlayerPredicate());
+        }
+        return inGamePlayers.next(currentPlayer, new PlayerBetPredicate());
     }
 
     public Player getDealer() {
@@ -255,10 +285,10 @@ public class Table {
         }
     }
 
-    private class PlayerActionPredicate implements Predicate {
+    private class PlayerBetPredicate implements Predicate {
         @Override
         public boolean evaluate(Object o) {
-            return /*((Player) o).hasChips() &&*/ !((Player) o).isFold();
+            return ((Player) o).hasChips() && !((Player) o).isFold();
         }
     }
 

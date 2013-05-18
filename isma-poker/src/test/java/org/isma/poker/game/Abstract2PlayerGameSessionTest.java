@@ -14,6 +14,7 @@ import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 public abstract class Abstract2PlayerGameSessionTest extends AbstractPokerTest {
     protected final Player player1 = new Player("p1");
     protected final Player player2 = new Player("p2");
+
     protected GameEventListener eventListener;
 
     @Override

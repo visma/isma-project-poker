@@ -1,6 +1,5 @@
 package org.isma.poker.game;
 
-import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.SplitPot;
 import org.junit.Test;
@@ -9,6 +8,7 @@ import java.util.List;
 
 import static java.lang.String.format;
 import static junit.framework.Assert.assertEquals;
+import static org.isma.poker.game.actions.PlayerAction.*;
 import static org.isma.poker.game.step.StepEnum.BETS_4;
 import static org.isma.poker.game.step.StepEnum.SHOWDOWN;
 
@@ -28,19 +28,19 @@ public class GameSessionPotTest extends Abstract3PlayersGameSessionTest {
                 0, previousPot);
 
         //BET4 --> first bets
-        PlayerAction.bet(player1, game, 20);
+        bet(player1, game, 20);
         assertEquals(70, player1.getChips());
         assertCurrentBets(
                 20, 0, 0,
                 20, 20 + previousPot);
 
-        PlayerAction.call(player2, game);
+        call(player2, game);
         assertEquals(50, player2.getChips());
         assertCurrentBets(
                 20, 20, 0,
                 20, 40 + previousPot);
 
-        PlayerAction.raise(player3, game, 20);
+        raise(player3, game, 20);
         assertEquals(10, player3.getChips());
         assertEquals(2, tableInfos.getRaisesRemaining());
         assertCurrentBets(
@@ -49,20 +49,20 @@ public class GameSessionPotTest extends Abstract3PlayersGameSessionTest {
 
 
         //BET4 --> second bets (cause of a raise)
-        PlayerAction.raise(player1, game, 20);
+        raise(player1, game, 20);
         assertEquals(1, tableInfos.getRaisesRemaining());
         assertEquals(30, player1.getChips());
         assertCurrentBets(
                 60, 20, 40,
                 60, 120 + previousPot);
 
-        PlayerAction.call(player2, game);
+        call(player2, game);
         assertEquals(10, player2.getChips());
         assertCurrentBets(
                 60, 60, 40,
                 60, 160 + previousPot);
 
-        PlayerAction.allIn(player3, game);
+        allIn(player3, game);
         assertEquals(0, player3.getChips());
         assertCurrentBets(
                 60, 60, 50,

@@ -3,6 +3,7 @@ package org.isma.poker.game;
 import org.isma.poker.game.model.GameConfiguration;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Table;
+import org.isma.poker.game.step.StepEnum;
 import org.isma.poker.model.CommunityCards;
 
 import java.util.ArrayList;
@@ -55,10 +56,11 @@ public class TableInfos {
 
     /**
      * @deprecated  replaced by @link #getNextPlayerInfos()
+     * @param step
      */
     @Deprecated
-    public Player getNextPlayer() {
-        return table.getNextPlayer();
+    public Player getNextPlayer(StepEnum step) {
+        return table.getNextPlayer(step);
     }
 
     public int getCurrentBet() {
