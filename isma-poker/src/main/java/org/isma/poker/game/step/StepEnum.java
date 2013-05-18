@@ -2,13 +2,13 @@ package org.isma.poker.game.step;
 
 public enum StepEnum implements Step {
     BLINDS(1, new BlindStep()),
-    HANDS_DEALING(2, new HandsDealing()),
+    HANDS_DEALING(2, new HandsDealingStep()),
     BETS_1(3, new FirstBetStep()),
-    FLOP(4, new CommunityCardsDealing(3)),
+    FLOP(4, new CommunityCardsDealingStep(3)),
     BETS_2(5, new BetStep()),
-    TURN(6, new CommunityCardsDealing(1)),
+    TURN(6, new CommunityCardsDealingStep(1)),
     BETS_3(7, new BetStep()),
-    RIVER(8, new CommunityCardsDealing(1)),
+    RIVER(8, new CommunityCardsDealingStep(1)),
     BETS_4(9, new BetStep()),
     SHOWDOWN(10, new ShowDownStep()),
     END(11, new ResultsStep());
@@ -20,10 +20,6 @@ public enum StepEnum implements Step {
         this.order = order;
         this.step = step;
         step.setStep(this);
-    }
-
-    StepEnum(int order) {
-        this(order, null);
     }
 
     public int getOrder() {

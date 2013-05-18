@@ -1,5 +1,6 @@
-package org.isma.poker.game;
+package org.isma.poker.game.model;
 
+import org.isma.poker.game.Abstract2PlayerGameSessionTest;
 import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.step.StepEnum;
 import org.junit.Test;

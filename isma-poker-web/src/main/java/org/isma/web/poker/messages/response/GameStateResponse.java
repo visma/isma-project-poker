@@ -1,7 +1,7 @@
 package org.isma.web.poker.messages.response;
 
 import org.isma.poker.game.GameSession;
-import org.isma.poker.game.TableInfos;
+import org.isma.poker.game.model.TableInfos;
 import org.isma.web.poker.messages.AbstractObjectMessageResponse;
 
 import java.util.List;

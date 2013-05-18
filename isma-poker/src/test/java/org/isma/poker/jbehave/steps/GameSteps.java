@@ -2,8 +2,8 @@ package org.isma.poker.jbehave.steps;
 
 import junit.framework.Assert;
 import org.isma.poker.game.GameSession;
-import org.isma.poker.game.PokerActionEnum;
 import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.actions.PokerActionEnum;
 import org.isma.poker.game.event.RoundEndEvent;
 import org.isma.poker.game.event.ShowEvent;
 import org.isma.poker.game.exceptions.InvalidPlayerBetException;

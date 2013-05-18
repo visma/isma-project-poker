@@ -3,7 +3,6 @@ package org.isma.poker.game.model;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.log4j.Logger;
-import org.isma.poker.game.step.StepEnum;
 import org.isma.poker.model.Card;
 import org.isma.poker.model.CommunityCards;
 import org.isma.poker.model.Deck;
@@ -78,7 +77,6 @@ public class Table {
             currentBet = 0;
             currentStepBet.clear();
         }
-        //TODO faux si underTheGUn est foldé
         currentPlayer = underTheGunPlayer;
         updateCurrentPlayer(new PlayerBetPredicate());
         updateRemainingActionPlayers(new PlayerBetPredicate());
@@ -86,7 +84,6 @@ public class Table {
 
     //TODO faire des test sur cette méthode pour bien controler les joueurs restants
     public void prepareShowDown() {
-        //TODO faux si underTheGUn est foldé
         currentPlayer = underTheGunPlayer;
         updateCurrentPlayer(new AlivePlayerPredicate());
         updateRemainingActionPlayers(new AlivePlayerPredicate());
@@ -162,12 +159,12 @@ public class Table {
     /* ---------------------------------------------------------------------------------*/
     /* ------   STEP ROTATION                                                           */
     /* ---------------------------------------------------------------------------------*/
-    public boolean prepareNextPlayer(StepEnum step) {
+    public boolean prepareNextPlayer(boolean showdownStep) {
         remainingActionPlayers.remove(currentPlayer);
         if (existNextActionPlayer()) {
             return false;
         }
-        currentPlayer = getNextPlayer(step);
+        currentPlayer = getNextPlayer(showdownStep);
         return true;
     }
 
@@ -218,8 +215,8 @@ public class Table {
         return currentBet == null ? 0 : currentBet;
     }
 
-    public Player getNextPlayer(StepEnum step) {
-        if (step == StepEnum.SHOWDOWN) {
+    public Player getNextPlayer(boolean showdownStep) {
+        if (showdownStep) {
             return inGamePlayers.next(currentPlayer, new AlivePlayerPredicate());
         }
         return inGamePlayers.next(currentPlayer, new PlayerBetPredicate());

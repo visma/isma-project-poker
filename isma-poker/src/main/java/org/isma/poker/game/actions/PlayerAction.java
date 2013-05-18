@@ -72,8 +72,4 @@ public class PlayerAction {
         return priceToPay;
     }
 
-    //TODO gagner n'est pas une action !!
-    public static void win(Player player, int prize) {
-        player.setChips(player.getChips() + prize);
-    }
 }

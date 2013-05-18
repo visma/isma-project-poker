@@ -1,17 +1,19 @@
-package org.isma.poker.game;
+package org.isma.poker.game.actions;
 
 import org.isma.poker.game.model.Player;
+import org.isma.poker.game.model.TableInfos;
+import org.isma.poker.game.step.PokerStepGame;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.isma.poker.game.PokerActionEnum.*;
+import static org.isma.poker.game.actions.PokerActionEnum.*;
 import static org.isma.poker.game.step.StepEnum.BLINDS;
 import static org.isma.poker.game.step.StepEnum.SHOWDOWN;
 
 public class AvailableActionsEvaluator {
 
-    public List<PokerActionEnum> evaluate(PokerGameState gameSession, Player player) {
+    public List<PokerActionEnum> evaluate(PokerStepGame gameSession, Player player) {
         TableInfos tableInfos = gameSession.getTableInfos();
 
         if (player != tableInfos.getCurrentPlayer() || player.isFold()){

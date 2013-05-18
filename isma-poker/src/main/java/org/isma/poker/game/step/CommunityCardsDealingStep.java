@@ -1,9 +1,9 @@
 package org.isma.poker.game.step;
 
-public class CommunityCardsDealing extends AbstractStep {
+public class CommunityCardsDealingStep extends AbstractStep {
     private final int numberOfCards;
 
-    public CommunityCardsDealing(int numberOfCards) {
+    public CommunityCardsDealingStep(int numberOfCards) {
         this.numberOfCards = numberOfCards;
     }
 

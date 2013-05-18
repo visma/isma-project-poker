@@ -1,14 +1,14 @@
-package org.isma.poker.game;
+package org.isma.poker.game.actions;
 
-import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.Abstract3PlayersGameSessionTest;
 import org.isma.poker.game.model.InvalidPlayerTurnException;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.isma.poker.game.PokerActionEnum.*;
 import static org.isma.poker.game.actions.PlayerAction.*;
+import static org.isma.poker.game.actions.PokerActionEnum.*;
 import static org.isma.poker.game.step.StepEnum.*;
 import static org.junit.Assert.assertEquals;
 

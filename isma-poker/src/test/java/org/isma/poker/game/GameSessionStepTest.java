@@ -5,7 +5,6 @@ import org.isma.poker.game.event.RoundEndEvent;
 import org.isma.poker.game.model.Loser;
 import org.isma.poker.game.model.Winner;
 import org.isma.poker.game.results.Results;
-import org.isma.poker.game.step.StepEnum;
 import org.isma.poker.model.Card;
 import org.junit.Test;
 
@@ -21,13 +20,13 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
     public void two_players_nextPlayer() throws Exception {
         gotoStep(BETS_1);
         assertEquals(player2, tableInfos.getCurrentPlayer());
-        assertEquals(player1, tableInfos.getNextPlayer((StepEnum)game.getStep()));
+        assertEquals(player1, tableInfos.getNextBetPlayer(false));
         assertEquals(15, tableInfos.getTotalPot());
         call(player2, game);
         assertEquals(20, tableInfos.getTotalPot());
         //Player 1 check
         assertEquals(player1, tableInfos.getCurrentPlayer());
-        assertEquals(player2, tableInfos.getNextPlayer((StepEnum)game.getStep()));
+        assertEquals(player2, tableInfos.getNextBetPlayer(false));
         check(player1, game);
         assertEquals(BETS_2, game.getStep());
     }

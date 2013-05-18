@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import static junit.framework.Assert.*;
-import static org.isma.poker.game.step.StepEnum.BETS_1;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
@@ -90,11 +89,11 @@ public class TableTest {
     public void prepare_next_player() throws Exception {
         table.prepareBlindsStep();
         assertEquals(toto, table.getCurrentPlayer());
-        assertTrue(table.prepareNextPlayer(BETS_1));
+        assertTrue(table.prepareNextPlayer(false));
         assertEquals(tata, table.getCurrentPlayer());
-        assertTrue(table.prepareNextPlayer(BETS_1));
+        assertTrue(table.prepareNextPlayer(false));
         assertEquals(titi, table.getCurrentPlayer());
-        assertFalse(table.prepareNextPlayer(BETS_1));
+        assertFalse(table.prepareNextPlayer(false));
     }
 
     @Test
@@ -103,7 +102,7 @@ public class TableTest {
         table.prepareBlindsStep();
         assertEquals(toto, table.getCurrentPlayer());
         table.removeFromRound(toto);
-        table.prepareNextPlayer(BETS_1);
+        table.prepareNextPlayer(false);
     }
 
 }

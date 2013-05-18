@@ -1,6 +1,6 @@
 package org.isma.poker.jbehave.steps;
 
-import org.isma.poker.game.PokerActionEnum;
+import org.isma.poker.game.actions.PokerActionEnum;
 import org.isma.poker.game.step.StepEnum;
 import org.isma.poker.helper.CardHelper;
 import org.isma.poker.model.Card;

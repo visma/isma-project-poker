@@ -1,9 +1,5 @@
-package org.isma.poker.game;
+package org.isma.poker.game.model;
 
-import org.isma.poker.game.model.GameConfiguration;
-import org.isma.poker.game.model.Player;
-import org.isma.poker.game.model.Table;
-import org.isma.poker.game.step.StepEnum;
 import org.isma.poker.model.CommunityCards;
 
 import java.util.ArrayList;
@@ -23,7 +19,7 @@ public class TableInfos {
     }
 
     /**
-     * @deprecated  replaced by @link #getDealerInfos()
+     * @deprecated replaced by @link #getDealerInfos()
      */
     @Deprecated
     public Player getDealer() {
@@ -31,7 +27,7 @@ public class TableInfos {
     }
 
     /**
-     * @deprecated  replaced by @link #getSmallBlindPlayerInfos()
+     * @deprecated replaced by @link #getSmallBlindPlayerInfos()
      */
     @Deprecated
     public Player getSmallBlindPlayer() {
@@ -39,7 +35,7 @@ public class TableInfos {
     }
 
     /**
-     * @deprecated  replaced by @link #getBigBlindPlayerInfos()
+     * @deprecated replaced by @link #getBigBlindPlayerInfos()
      */
     @Deprecated
     public Player getBigBlindPlayer() {
@@ -47,20 +43,16 @@ public class TableInfos {
     }
 
     /**
-     * @deprecated  replaced by @link #getCurrentPlayerInfos()
+     * @deprecated replaced by @link #getCurrentPlayerInfos()
      */
     @Deprecated
     public Player getCurrentPlayer() {
         return table.getCurrentPlayer();
     }
 
-    /**
-     * @deprecated  replaced by @link #getNextPlayerInfos()
-     * @param step
-     */
-    @Deprecated
-    public Player getNextPlayer(StepEnum step) {
-        return table.getNextPlayer(step);
+
+    public Player getNextBetPlayer(boolean showdown) {
+        return table.getNextPlayer(showdown);
     }
 
     public int getCurrentBet() {
@@ -129,10 +121,14 @@ public class TableInfos {
 
     public PlayerInfos getPlayerInfos(String nickname) {
         for (PlayerInfos playerInfos : getPlayersInfos()) {
-            if (playerInfos.getPlayer().getNickname().equals(nickname)){
+            if (playerInfos.getPlayer().getNickname().equals(nickname)) {
                 return playerInfos;
             }
         }
         return null;
+    }
+
+    public boolean isRoundOver() {
+        return table.isRoundOver();
     }
 }

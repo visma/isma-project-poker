@@ -1,6 +1,4 @@
-package org.isma.poker.game;
-
-import org.isma.poker.game.model.Player;
+package org.isma.poker.game.model;
 
 public class PlayerInfos {
     private final Player player;

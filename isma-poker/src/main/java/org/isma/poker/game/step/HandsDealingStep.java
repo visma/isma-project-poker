@@ -1,6 +1,6 @@
 package org.isma.poker.game.step;
 
-public class HandsDealing extends AbstractStep {
+public class HandsDealingStep extends AbstractStep {
     @Override
     public void doSetUp(PokerStepGame game) throws InvalidStepActionException {
         game.executeHandsDealingStep();

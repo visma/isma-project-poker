@@ -1,7 +1,7 @@
 package org.isma.web.poker.actions;
 
 import org.isma.poker.game.GameSession;
-import org.isma.poker.game.TableInfos;
+import org.isma.poker.game.model.TableInfos;
 import org.isma.web.poker.messages.AbstractPokerAction;
 import org.isma.web.poker.messages.response.PlayerStateResponse;
 

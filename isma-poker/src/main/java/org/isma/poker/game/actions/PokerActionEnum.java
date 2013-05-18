@@ -1,4 +1,4 @@
-package org.isma.poker.game;
+package org.isma.poker.game.actions;
 
 public enum PokerActionEnum {
     SIT_OUT,

@@ -1,9 +1,9 @@
 package org.isma.web.poker.actions;
 
 import org.isma.poker.game.GameSession;
-import org.isma.poker.game.PlayerInfos;
 import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.model.Player;
+import org.isma.poker.game.model.PlayerInfos;
 import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.web.poker.messages.AbstractPokerAction;
 import org.isma.web.poker.messages.request.JoinMessageRequest;
