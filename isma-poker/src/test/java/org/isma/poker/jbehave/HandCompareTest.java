@@ -14,7 +14,7 @@ public class HandCompareTest extends AbstractStory {
     protected List<String> storyPaths() {
         return new StoryFinder().findPaths(
                 CodeLocations.codeLocationFromClass(getClass()),
-                "org/isma/poker/jbehave/hand_comparaison_*.story",
+                "org/isma/poker/jbehave/scenarios/hand/hand_comparaison_*.story",
                 "*KO*");
     }
 

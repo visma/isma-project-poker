@@ -6,7 +6,7 @@ public class HoldeCardEvent extends GameEvent {
     private final Player player;
 
     public HoldeCardEvent(Player player) {
-        this.player = player;
+        this.player = player.clone();
     }
 
     @Override

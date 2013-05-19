@@ -7,7 +7,7 @@ public class BetEvent extends GameEvent{
     private final int bet;
 
     public BetEvent(Player player, int bet) {
-        this.player = player;
+        this.player = player.clone();
         this.bet = bet;
     }
 

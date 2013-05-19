@@ -6,7 +6,7 @@ public class CallEvent extends GameEvent{
     private final Player player;
 
     public CallEvent(Player player){
-        this.player = player;
+        this.player = player.clone();
     }
     @Override
     public String getDescription() {

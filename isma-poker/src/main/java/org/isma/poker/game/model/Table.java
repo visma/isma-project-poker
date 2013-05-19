@@ -1,6 +1,5 @@
 package org.isma.poker.game.model;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.log4j.Logger;
 import org.isma.poker.model.Card;
@@ -13,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.apache.commons.collections.CollectionUtils.*;
 
 public class Table {
     private static final Logger LOG = Logger.getLogger(Table.class);
@@ -56,8 +57,9 @@ public class Table {
     /* ---------------------------------------------------------------------------------*/
     public void prepareBlindsStep() {
         pot.clear();
+        communityCards.clear();
         inGamePlayers.clear();
-        inGamePlayers.addAll(CollectionUtils.select(players, new HasMoneyPredicate()));
+        inGamePlayers.addAll(select(players, new HasMoneyPredicate()));
         for (Player inGamePlayer : inGamePlayers) {
             inGamePlayer.setFold(false);
         }
@@ -79,7 +81,9 @@ public class Table {
         }
         currentPlayer = underTheGunPlayer;
         updateCurrentPlayer(new PlayerBetPredicate());
-        updateRemainingActionPlayers(new PlayerBetPredicate());
+        if (currentPlayer != null) {
+            updateRemainingActionPlayers(new PlayerBetPredicate());
+        }
     }
 
     //TODO faire des test sur cette méthode pour bien controler les joueurs restants
@@ -120,7 +124,7 @@ public class Table {
 
     private void updateRemainingActionPlayers(Predicate predicate) {
         remainingActionPlayers.add(currentPlayer);
-        int remainingCount = CollectionUtils.countMatches(inGamePlayers, predicate);
+        int remainingCount = countMatches(inGamePlayers, predicate);
         while (remainingActionPlayers.size() < remainingCount) {
             Player nextPlayer = inGamePlayers.next(remainingActionPlayers.get(remainingActionPlayers.size() - 1), predicate);
             if (predicate.evaluate(nextPlayer)) {
@@ -173,13 +177,13 @@ public class Table {
     }
 
     public boolean isRoundOver() {
-        return CollectionUtils.countMatches(inGamePlayers, new AlivePlayerPredicate()) == 1;
+        return countMatches(inGamePlayers, new AlivePlayerPredicate()) == 1;
     }
 
     private void betUpdateRemainingActionPlayers() {
         //int actionPlayersCount = CollectionUtils.countMatches(inGamePlayers, new PlayerBetPredicate());
         Player firstEligiblePlayer = inGamePlayers.next(currentPlayer, new PlayerBetPredicate());
-        if (firstEligiblePlayer == currentPlayer) {
+        if (firstEligiblePlayer == currentPlayer || firstEligiblePlayer == null) {
             return;
         }
         Player currentEligiblePlayer = firstEligiblePlayer;
@@ -262,9 +266,15 @@ public class Table {
         raisesRemaining--;
     }
 
+    public List<Player> getAliveWithChipsPlayers() {
+        List<Player> alivePlayers = new ArrayList<Player>(inGamePlayers);
+        filter(alivePlayers, new PlayerBetPredicate());
+        return alivePlayers;
+    }
+
     public List<Player> getAlivePlayers() {
         List<Player> alivePlayers = new ArrayList<Player>(inGamePlayers);
-        CollectionUtils.filter(alivePlayers, new AlivePlayerPredicate());
+        filter(alivePlayers, new AlivePlayerPredicate());
         return alivePlayers;
     }
 

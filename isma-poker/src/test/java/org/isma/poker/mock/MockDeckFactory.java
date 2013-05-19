@@ -14,6 +14,7 @@ public class MockDeckFactory implements IDeckFactory {
     private final Hand forceHand = new Hand();
 
     public MockDeck buildPokerDeck(DeckTypeEnum deckTypeEnum) {
+        LOG.debug("build new mock deck");
         lastMockedDeck = new MockDeck();
         if (deckTypeEnum == DeckTypeEnum.FIFTY_TWO_CARDS_DECK) {
             FiftyTwoCardsEnum.values();
@@ -35,11 +36,17 @@ public class MockDeckFactory implements IDeckFactory {
         lastMockedDeck.prepareCards(card1, card2, card3);
     }
 
+    public void clearForceHand() {
+        LOG.debug(format("clearForceHand()"));
+        forceHand.clear();
+    }
+
     public void forceHands(Card... cards) {
         LOG.debug(format("forceHands(%s)", cards));
         for (Card card : cards) {
             forceHand.add(card);
         }
+        //lastMockedDeck.prepareCards(Arrays.asList(cards));
     }
 
     public void forceHands(FiftyTwoCardsEnum player1Card1, FiftyTwoCardsEnum player1Card2,

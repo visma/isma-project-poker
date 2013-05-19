@@ -1,20 +1,21 @@
 package org.isma.poker.game.step;
 
 import org.isma.poker.game.event.GameEvent;
+import org.isma.poker.game.exceptions.PokerGameException;
 import org.isma.poker.game.model.TableInfos;
 
 public interface PokerStepGame {
     void beginRoundIfPossible() throws InvalidStepActionException;
 
-    void nextStep() throws InvalidStepActionException;
+    void nextStep() throws PokerGameException;
 
     void finishStep() throws InvalidStepActionException;
 
-    void executeFirstBetStep();
+    void executeFirstBetStep() throws InvalidStepActionException;
 
-    void executeBetStep();
+    void executeBetStep() throws InvalidStepActionException;
 
-    void executeBlindStep() throws InvalidStepActionException;
+    void executeBlindStep();
 
     void executeHandsDealingStep() throws InvalidStepActionException;
 

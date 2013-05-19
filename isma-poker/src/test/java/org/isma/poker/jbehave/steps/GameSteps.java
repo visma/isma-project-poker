@@ -6,13 +6,12 @@ import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.actions.PokerActionEnum;
 import org.isma.poker.game.event.RoundEndEvent;
 import org.isma.poker.game.event.ShowEvent;
-import org.isma.poker.game.exceptions.InvalidPlayerBetException;
+import org.isma.poker.game.exceptions.PokerGameException;
 import org.isma.poker.game.factory.TableFactory;
 import org.isma.poker.game.model.*;
 import org.isma.poker.game.results.Results;
-import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.poker.game.step.StepEnum;
-import org.isma.poker.jbehave.utils.TestResultEventListner;
+import org.isma.poker.jbehave.utils.TestResultEventListener;
 import org.isma.poker.jbehave.utils.TestShowEventListner;
 import org.isma.poker.mock.MockDeckFactory;
 import org.isma.poker.model.Card;
@@ -42,7 +41,7 @@ public class GameSteps extends AbstractPokerSteps {
         assertTrue(current().game.getTableInfos().getPlayersInfos().isEmpty());
         current().game.init(minPlayers);
         current().showEventListener = new TestShowEventListner();
-        current().resultEventListner = new TestResultEventListner();
+        current().resultEventListner = new TestResultEventListener();
         current().game.addEventListener(current().showEventListener);
         current().game.addEventListener(current().resultEventListner);
     }
@@ -55,6 +54,8 @@ public class GameSteps extends AbstractPokerSteps {
 
     @Given("les prochaines cartes du deck sont : $cards")
     public void givenDeck(Card... cards) throws Exception {
+//        System.out.println("isma les prochaines cartes du deck sont : " + Arrays.asList(cards));
+        current().deckFactory.clearForceHand();
         current().deckFactory.forceHands(cards);
     }
 
@@ -67,12 +68,17 @@ public class GameSteps extends AbstractPokerSteps {
 
     @When("la partie démarre")
     public void givenStart() throws Exception {
-        //TODO supprimer ?
-        // current().game.start();
+        current().resultEventListner.clear();
     }
 
+    @Given("un nouveau round va démarrer")
+    public void givenRound() throws Exception {
+        current().resultEventListner.clear();
+    }
+
+
     @When("$nickname call")
-    public void whenCall(String nickname) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException {
+    public void whenCall(String nickname) throws PokerGameException {
         Player player = getPlayer(nickname);
         PlayerAction.call(player, current().game);
     }
@@ -168,7 +174,7 @@ public class GameSteps extends AbstractPokerSteps {
     }
 
     @When("$nickname montre $handEvaluation : $card1, $card2, $card3, $card4, $card5")
-    public void givenShow(String nickname, HandEvaluation handEvaluation, Card card1, Card card2, Card card3, Card card4, Card card5) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException {
+    public void givenShow(String nickname, HandEvaluation handEvaluation, Card card1, Card card2, Card card3, Card card4, Card card5) throws PokerGameException {
         GameSession game = current().game;
         Player player = getPlayer(nickname);
 
@@ -177,6 +183,7 @@ public class GameSteps extends AbstractPokerSteps {
         ShowEvent showEvent = (ShowEvent) current().showEventListener.poll();
         Hand hand = showEvent.getHand();
         assertEquals(nickname, showEvent.getPlayer());
+        assertEquals(7, hand.size());
         assertEquals(handEvaluation, showEvent.getHandEvaluation());
         assertEquals(card1, hand.get(0));
         assertEquals(card2, hand.get(1));
@@ -223,7 +230,7 @@ public class GameSteps extends AbstractPokerSteps {
         private MockDeckFactory deckFactory;
         public GameSession game;
         public TestShowEventListner showEventListener;
-        public TestResultEventListner resultEventListner;
+        public TestResultEventListener resultEventListner;
 
         public static GameContext current() {
             return current.get();

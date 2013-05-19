@@ -59,14 +59,26 @@ public abstract class AbstractPlayerAction {
             gameSession.executeEndStep();
             table.prepareBlindsStep();
         } else {
-            //TODO cast pas beau
             StepEnum step = (StepEnum) gameSession.getStep();
-            if (!table.prepareNextPlayer(step == SHOWDOWN)) {
-                gameSession.finishStep();
-                if (gameSession.getStep() == StepEnum.END) {
-                    gameSession.beginRoundIfPossible();
+            if (step != SHOWDOWN){
+                boolean nextPlayerReady = table.prepareNextPlayer(false);
+                //int aliveWithChipsCount = table.getAliveWithChipsPlayers().size();
+                if (!nextPlayerReady /*|| aliveWithChipsCount < 2*/){
+                    endStep();
+                }
+            } else {
+                boolean nextPlayerReady = table.prepareNextPlayer(true);
+                if (!nextPlayerReady){
+                    endStep();
                 }
             }
+        }
+    }
+
+    private void endStep() throws InvalidStepActionException {
+        gameSession.finishStep();
+        if (gameSession.getStep() == StepEnum.END) {
+            gameSession.beginRoundIfPossible();
         }
     }
 

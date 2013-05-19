@@ -1,7 +1,5 @@
 package org.isma.poker.game.model;
 
-import org.isma.poker.game.model.Player;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,5 +11,4 @@ abstract class AbstractPot {
     public void clear() {
         potMap.clear();
     }
-
 }

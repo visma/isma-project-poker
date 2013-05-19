@@ -324,6 +324,7 @@ public class HandEvaluator {
 
     private class HandComparator implements Comparator<Hand> {
         private final CardValueComparator CARD_VALUE_COMPARATOR = new CardValueComparator();
+        private static final int MAX_CARD_COMPARAISON = 5;
 
         @Override
         public int compare(Hand hand1, Hand hand2) {
@@ -336,7 +337,7 @@ public class HandEvaluator {
             }
 
             //Same combination : compare strongest card values
-            for (int i = 0; i < hand1.size(); i++) {
+            for (int i = 0; i < MAX_CARD_COMPARAISON; i++) {
                 Card card1 = hand1.get(i);
                 Card card2 = hand2.get(i);
                 compare = CARD_VALUE_COMPARATOR.compare(card1, card2);

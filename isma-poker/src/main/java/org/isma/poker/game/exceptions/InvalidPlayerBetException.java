@@ -1,6 +1,6 @@
 package org.isma.poker.game.exceptions;
 
-public class InvalidPlayerBetException extends Exception {
+public class InvalidPlayerBetException extends PokerGameException {
     public enum InvalidBetEnum {
         CHECK_FORBIDDEN,
         BET_FORBIDDEN,

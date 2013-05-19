@@ -5,34 +5,20 @@ import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.collections.Predicate;
 import org.isma.poker.HandEvaluator;
 import org.isma.poker.game.comparators.PlayerHandComparator;
-import org.isma.poker.game.model.*;
 import org.isma.poker.game.comparators.PlayerStateComparator;
+import org.isma.poker.game.model.*;
 import org.isma.utils.collections.CollectionHelper;
 
 import java.util.*;
 
 import static org.apache.commons.collections.ComparatorUtils.reversedComparator;
 
-public class Results {
+public class Results implements Cloneable {
     private final HandEvaluator handEvaluator = new HandEvaluator();
     private static final PlayerHandComparator COMPARATOR = new PlayerHandComparator();
 
     private final Map<Player, Winner> winners = new HashMap<Player, Winner>();
     private final Map<Player, Loser> losers = new HashMap<Player, Loser>();
-
-
-    private class PlayerEngagedOnSplitPot implements Predicate {
-        private final SplitPot splitPot;
-
-        PlayerEngagedOnSplitPot(SplitPot splitPot) {
-            this.splitPot = splitPot;
-        }
-
-        @Override
-        public boolean evaluate(Object object) {
-            return splitPot.getPlayers().contains(object);
-        }
-    }
 
     public Results(Pot pot, List<Player> inGamePlayers) {
         List<SplitPot> splitPots = pot.buildSplitPots();
@@ -43,6 +29,17 @@ public class Results {
             winnerRank++;
         }
         buildLosers(inGamePlayers);
+    }
+
+    private Results(Results toClone) {
+        for (Player player : toClone.winners.keySet()) {
+            Winner winner = toClone.winners.get(player);
+            winners.put(player.clone(), winner.clone());
+        }
+        for (Player player : toClone.losers.keySet()) {
+            Loser loser = toClone.losers.get(player);
+            losers.put(player.clone(), loser.clone());
+        }
     }
 
     private void buildLosers(List<Player> inGamePlayers) {
@@ -69,12 +66,32 @@ public class Results {
             }
         }
     }
+
     private void deliverPrize(final Player winnerPlayer, int prize) {
         if (winners.get(winnerPlayer) == null) {
             Winner winner = new Winner(winnerPlayer, handEvaluator.evaluate(winnerPlayer.getHand()));
             winners.put(winnerPlayer, winner);
         }
         winners.get(winnerPlayer).addPrize(prize);
+    }
+
+    private <E extends AbstractFinalPlayerState> List<E> getPlayersStates(Map<Player, E> map) {
+        List<E> list = new ArrayList<E>(map.values());
+        Collections.sort(list, ComparatorUtils.reversedComparator(new PlayerStateComparator()));
+        return list;
+    }
+
+    private class PlayerEngagedOnSplitPot implements Predicate {
+        private final SplitPot splitPot;
+
+        PlayerEngagedOnSplitPot(SplitPot splitPot) {
+            this.splitPot = splitPot;
+        }
+
+        @Override
+        public boolean evaluate(Object object) {
+            return splitPot.getPlayers().contains(object);
+        }
     }
 
     public List<Winner> getWinners() {
@@ -85,10 +102,9 @@ public class Results {
         return getPlayersStates(losers);
     }
 
-    private <E extends AbstractFinalPlayerState> List<E> getPlayersStates(Map<Player, E> map) {
-        List<E> list = new ArrayList<E>(map.values());
-        Collections.sort(list, ComparatorUtils.reversedComparator(new PlayerStateComparator()));
-        return list;
+    //TODO TU
+    @Override
+    public Results clone() {
+        return new Results(this);
     }
-
 }

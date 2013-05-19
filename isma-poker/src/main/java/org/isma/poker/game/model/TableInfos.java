@@ -128,7 +128,4 @@ public class TableInfos {
         return null;
     }
 
-    public boolean isRoundOver() {
-        return table.isRoundOver();
-    }
 }

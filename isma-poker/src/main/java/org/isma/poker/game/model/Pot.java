@@ -2,7 +2,7 @@ package org.isma.poker.game.model;
 
 import java.util.*;
 
-public class Pot extends AbstractPot {
+public class Pot extends AbstractPot implements Cloneable{
 
     public int getTotal() {
         return getTotal(buildSplitPots());
@@ -60,5 +60,15 @@ public class Pot extends AbstractPot {
 
     public int getTotalBet(Player player) {
         return potMap.get(player);
+    }
+
+    //TODO TU
+    @Override
+    public Pot clone() {
+        Pot clone = new Pot();
+        for (Player player : potMap.keySet()) {
+            clone.potMap.put(player.clone(), potMap.get(player));
+        }
+        return clone;
     }
 }

@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class Deck implements IHand {
     private static final Logger LOG = Logger.getLogger(Deck.class);
     //Inner composition : not exposing Collection method
@@ -27,6 +29,7 @@ public class Deck implements IHand {
     }
 
     public List<Card> deal(int amount) {
+        LOG.debug(format("deal %s cards", amount));
         burn();
         List<Card> cards = new ArrayList<Card>();
         for (int i = 0; i < amount; i++) {

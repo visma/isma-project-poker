@@ -6,7 +6,7 @@ public class PlayerSitEvent extends GameEvent {
     private Player player;
 
     public PlayerSitEvent(Player player) {
-        this.player = player;
+        this.player = player.clone();
     }
 
     @Override

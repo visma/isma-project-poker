@@ -8,7 +8,7 @@ public class BlindEvent extends GameEvent {
     private final int amount;
 
     public BlindEvent(Player player, boolean small, int amount) {
-        this.player = player;
+        this.player = player.clone();
         this.small = small;
         this.amount = amount;
     }

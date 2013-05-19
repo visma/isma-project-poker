@@ -6,7 +6,7 @@ public class CheckEvent extends GameEvent {
     private Player player;
 
     public CheckEvent(Player player) {
-        this.player = player;
+        this.player = player.clone();
     }
 
     @Override
