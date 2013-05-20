@@ -94,12 +94,12 @@ public class GameSteps extends AbstractPokerSteps {
         Assert.assertEquals(nickname, current().game.getTableInfos().getDealerInfos().getPlayer().getNickname());
     }
 
-    @Then("$nickname paie la petite blinde")
+    @When("$nickname paie la petite blinde")
     public void givenSmallBlindPaid(String nickname) throws Exception {
         PlayerAction.paySmallBlind(getPlayer(nickname), current().game);
     }
 
-    @Then("$nickname paie la grosse blinde")
+    @When("$nickname paie la grosse blinde")
     public void givenBigBlindPaid(String nickname) throws Exception {
         PlayerAction.payBigBlind(getPlayer(nickname), current().game);
     }
@@ -110,6 +110,11 @@ public class GameSteps extends AbstractPokerSteps {
         assertEquals(2, player.getHand().size());
         assertEquals(card1, player.getHand().get(0));
         assertEquals(card2, player.getHand().get(1));
+    }
+
+    @Then("le montant de l'enchere en cours est de $chips jetons")
+    public void thenCurrentBet(int chips){
+        assertEquals(chips, current().game.getTableInfos().getCurrentBet());
     }
 
     @Then("$nickname est le prochain joueur à parler")
@@ -140,6 +145,9 @@ public class GameSteps extends AbstractPokerSteps {
                 break;
             case FOLD:
                 PlayerAction.fold(player, game);
+                break;
+            case SIT_OUT:
+                PlayerAction.sitOut(player, game);
                 break;
             default:
                 throw new Exception("action non gere dans le test :" + pokerAction);

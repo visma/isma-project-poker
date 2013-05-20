@@ -11,8 +11,8 @@ Given le joueur luigi dispose de 100 jetons et rentre dans la partie
 When la partie démarre
 
 Then mario est au bouton
-Then luigi paie la petite blinde
-Then mario paie la grosse blinde
+When luigi paie la petite blinde
+When mario paie la grosse blinde
 Then luigi reçoit les cartes cachees : 7-D, 2-S
 Then mario reçoit les cartes cachees : 10-H, 9-H
 
@@ -44,8 +44,8 @@ Given un nouveau round va démarrer
 
 Then etape en cours : BLINDS (pot : 0)
 Then luigi est au bouton
-Then mario paie la petite blinde
-Then luigi paie la grosse blinde
+When mario paie la petite blinde
+When luigi paie la grosse blinde
 Then mario reçoit les cartes cachees : 2-H, 3-H
 Then luigi reçoit les cartes cachees : A-C, A-S
 
@@ -79,8 +79,8 @@ Given un nouveau round va démarrer
 
 Then etape en cours : BLINDS (pot : 0)
 Then mario est au bouton
-Then luigi paie la petite blinde
-Then mario paie la grosse blinde
+When luigi paie la petite blinde
+When mario paie la grosse blinde
 Then luigi reçoit les cartes cachees : A-H, Q-H
 Then mario reçoit les cartes cachees : K-H, J-H
 

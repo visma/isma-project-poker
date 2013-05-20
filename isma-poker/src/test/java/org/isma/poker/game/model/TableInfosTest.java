@@ -1,13 +1,13 @@
 package org.isma.poker.game.model;
 
-import org.isma.poker.game.Abstract2PlayerGameSessionTest;
+import org.isma.poker.game.Abstract2PlayersGameSessionTest;
 import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.step.StepEnum;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-public class TableInfosTest extends Abstract2PlayerGameSessionTest {
+public class TableInfosTest extends Abstract2PlayersGameSessionTest {
 
     @Test
     public void remaining_to_pay() throws Exception {

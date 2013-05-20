@@ -13,4 +13,9 @@ public interface PokerActionStepGame {
     void finishStep() throws InvalidStepActionException;
 
     void notifyEvent(GameEvent event);
+
+    /**
+     * game is freeze if there is less than 2 players with chips
+     */
+    void freeze();
 }

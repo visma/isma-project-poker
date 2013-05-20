@@ -13,8 +13,8 @@ When la partie démarre
 
 Then etape en cours : BLINDS (pot : 0)
 Then mario est au bouton
-Then luigi paie la petite blinde
-Then peach paie la grosse blinde
+When luigi paie la petite blinde
+When peach paie la grosse blinde
 Then etape en cours : BETS_1 (pot : 15)
 Then mario reçoit les cartes cachees : 7-D, 2-S
 Then luigi reçoit les cartes cachees : 10-H, 9-H

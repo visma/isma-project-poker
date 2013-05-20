@@ -53,6 +53,11 @@ public class PlayerAction {
         game.sitIn(player);
     }
 
+    public static void sitOut(Player player, PlayerBetListener game) throws PokerGameException {
+        game.sitOut(player);
+    }
+
+
     //TODO a deplacer dans le GameSession
     public static int payChips(Player player, int priceToPay) {
         if (!player.hasChips()) {

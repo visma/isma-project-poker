@@ -25,4 +25,6 @@ public interface PlayerBetListener {
     void payBigBlind(Player player) throws PokerGameException;
 
     void sitIn(Player player) throws PokerGameException;
+
+    void sitOut(Player player) throws PokerGameException;
 }

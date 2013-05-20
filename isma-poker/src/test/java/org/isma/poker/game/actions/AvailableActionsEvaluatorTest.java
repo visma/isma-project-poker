@@ -11,6 +11,7 @@ import static org.isma.poker.game.actions.PlayerAction.*;
 import static org.isma.poker.game.actions.PokerActionEnum.*;
 import static org.isma.poker.game.step.StepEnum.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 //TODO faire PLEIN de cas de tests la
 //TODO a tester mieux !!!
@@ -21,6 +22,11 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
     @Before
     public void setUp() throws Exception {
         super.setUp();
+    }
+
+    @Test
+    public void no_raise_available_if_max_reached(){
+        fail("todo");
     }
 
     @Test

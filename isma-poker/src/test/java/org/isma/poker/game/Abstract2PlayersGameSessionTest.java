@@ -11,7 +11,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.isma.poker.game.step.StepEnum.*;
 import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 
-public abstract class Abstract2PlayerGameSessionTest extends AbstractPokerTest {
+public abstract class Abstract2PlayersGameSessionTest extends AbstractPokerTest {
     protected final Player player1 = new Player("p1");
     protected final Player player2 = new Player("p2");
 

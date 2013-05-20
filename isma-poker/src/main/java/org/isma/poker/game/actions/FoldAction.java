@@ -15,6 +15,6 @@ public class FoldAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
-        table.removeFromRound(player);
+        table.handleFold(player);
     }
 }

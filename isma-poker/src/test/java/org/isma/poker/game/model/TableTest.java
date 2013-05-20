@@ -101,7 +101,7 @@ public class TableTest {
     public void remove_folding_player() throws Exception {
         table.prepareBlindsStep();
         assertEquals(toto, table.getCurrentPlayer());
-        table.removeFromRound(toto);
+        table.handleFold(toto);
         table.prepareNextPlayer(false);
     }
 

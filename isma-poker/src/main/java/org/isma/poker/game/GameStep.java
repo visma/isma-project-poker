@@ -29,6 +29,9 @@ class GameStep {
         step.setUp(game);
     }
 
+    public void freeze(){
+        step = StepEnum.END;
+    }
 
     public StepEnum getStep() {
         return step;

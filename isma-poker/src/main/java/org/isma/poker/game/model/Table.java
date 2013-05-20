@@ -52,10 +52,40 @@ public class Table {
         currentPlayer = smallBlindPlayer;
     }
 
+    public void smallBlindSitOut(){
+        Player oldSmallBlindPlayer = smallBlindPlayer;
+        smallBlindPlayer = bigBlindPlayer;
+        bigBlindPlayer = inGamePlayers.next(smallBlindPlayer);
+        underTheGunPlayer = inGamePlayers.next(bigBlindPlayer);
+        if (underTheGunPlayer == oldSmallBlindPlayer){
+            underTheGunPlayer = inGamePlayers.next(underTheGunPlayer);
+        }
+        remainingActionPlayers.clear();
+        remainingActionPlayers.add(currentPlayer);
+        remainingActionPlayers.add(smallBlindPlayer);
+        remainingActionPlayers.add(bigBlindPlayer);
+    }
+
+    public void bigBlindSitOut(){
+        bigBlindPlayer = inGamePlayers.next(bigBlindPlayer);
+        underTheGunPlayer = inGamePlayers.next(bigBlindPlayer);
+        remainingActionPlayers.clear();
+        remainingActionPlayers.add(currentPlayer);
+        remainingActionPlayers.add(bigBlindPlayer);
+    }
+
     /* ---------------------------------------------------------------------------------*/
     /* ------   STEPS PREPARATION                                                       */
     /* ---------------------------------------------------------------------------------*/
     public void prepareBlindsStep() {
+        clearTable();
+        moveButton();
+        remainingActionPlayers.add(smallBlindPlayer);
+        remainingActionPlayers.add(bigBlindPlayer);
+
+    }
+
+    private void clearTable() {
         pot.clear();
         communityCards.clear();
         inGamePlayers.clear();
@@ -63,9 +93,7 @@ public class Table {
         for (Player inGamePlayer : inGamePlayers) {
             inGamePlayer.setFold(false);
         }
-        moveButton();
-        remainingActionPlayers.add(smallBlindPlayer);
-        remainingActionPlayers.add(bigBlindPlayer);
+        remainingActionPlayers.clear();
         for (Player player : players) {
             player.getHand().clear();
         }
@@ -84,7 +112,6 @@ public class Table {
         if (currentPlayer != null) {
             updateRemainingActionPlayers(new PlayerBetPredicate());
         }
-        //System.out.println("prepareNextBetStep("+firstBetStep+").currentPlayer=" + currentPlayer);
     }
 
     //TODO faire des test sur cette méthode pour bien controler les joueurs restants
@@ -108,18 +135,9 @@ public class Table {
     public void prepareDealHoleCardsStep(Deck deck) {
         int cardAmount = 2;
         List<Card> cards = deck.deal(inGamePlayers.size() * cardAmount);
-//        System.out.println("lol.currentPlayer : " + currentPlayer);
-//        System.out.println("lol2.underTheGunPlayer : " + underTheGunPlayer);
-//        System.out.println("lol3.smallBlindPlayer : " + smallBlindPlayer);
-//        System.out.println("lol3.dealer : " + dealer);
-//        System.out.println("dealer : " + dealer);
-//        System.out.println("cartes a distribuer : " + cards.size());
-
         for (int i = 0; i < cardAmount; i++) {
-            //System.out.printf("distribution a underTheGunPlayer %s \n", underTheGunPlayer);
             underTheGunPlayer.getHand().add(cards.remove(0));
             for (Player currPlayer : inGamePlayers.nextList(underTheGunPlayer)) {
-                //System.out.printf("distribution a %s \n", currPlayer);
                 currPlayer.getHand().add(cards.remove(0));
             }
         }
@@ -217,8 +235,21 @@ public class Table {
 
     }
 
-    public void removeFromRound(Player player) {
+    public void handleFold(Player player) {
         player.setFold(true);
+    }
+
+    public void handleSitOut(Player player) {
+        players.remove(players.indexOf(player));
+        inGamePlayers.remove(inGamePlayers.indexOf(player));
+        if (inGamePlayers.size() < 2){
+            clearTable();
+            dealer = null;
+            currentPlayer = null;
+            smallBlindPlayer = null;
+            bigBlindPlayer = null;
+            underTheGunPlayer = null;
+        }
     }
     /* ---------------------------------------------------------------------------------*/
 

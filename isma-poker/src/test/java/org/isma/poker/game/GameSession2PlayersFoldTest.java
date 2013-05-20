@@ -9,7 +9,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.isma.poker.game.step.StepEnum.*;
 
-public class GameSession2PlayersFoldTest extends Abstract2PlayerGameSessionTest {
+public class GameSession2PlayersFoldTest extends Abstract2PlayersGameSessionTest {
 
     @Override
     public void setUp() throws Exception {

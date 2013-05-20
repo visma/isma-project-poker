@@ -11,7 +11,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.isma.poker.game.step.StepEnum.BETS_1;
 
 //TODO compléter ce test avec d'autres cas
-public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest {
+public class GameSessionInvalidMovesTest extends Abstract2PlayersGameSessionTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -45,7 +45,7 @@ public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest 
     }
 
     @Test
-    public void two_Players_raises_do_not_exceed_limit() throws Exception, InvalidPlayerBetException {
+    public void two_Players_raises_do_not_exceed_limit() throws Exception {
         gotoStep(BETS_1);
         PlayerAction.raise(player2, game, 10);
         PlayerAction.raise(player1, game, 10);
@@ -53,7 +53,7 @@ public class GameSessionInvalidMovesTest extends Abstract2PlayerGameSessionTest 
     }
 
     @Test(expected = InvalidPlayerBetException.class)
-    public void two_Players_raises_exceed_limit() throws Exception, InvalidPlayerBetException {
+    public void two_Players_raises_exceed_limit() throws Exception {
         gotoStep(BETS_1);
         PlayerAction.raise(player2, game, 10);
         PlayerAction.raise(player1, game, 10);

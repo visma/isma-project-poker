@@ -15,7 +15,7 @@ import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 import static org.isma.poker.model.HandEvaluation.STRAIGHT;
 import static org.isma.poker.model.HandEvaluation.TWO_PAIR;
 
-public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
+public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
 
     @Test
     public void two_players_nextPlayer() throws Exception {

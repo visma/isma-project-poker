@@ -2,6 +2,7 @@ package org.isma.poker.game.actions;
 
 import org.apache.log4j.Logger;
 import org.isma.poker.game.exceptions.InvalidPlayerBetException;
+import org.isma.poker.game.exceptions.PokerGameException;
 import org.isma.poker.game.model.InvalidPlayerTurnException;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Table;
@@ -39,7 +40,7 @@ public abstract class AbstractPlayerAction {
     }
 
 
-    public void execute(Player player) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException {
+    public void execute(Player player) throws PokerGameException {
         Step cloneStep = game.getStep();
         LOG.debug(format("execute(%s, %s).begin(%s)",
                 player.getNickname(),
@@ -47,14 +48,14 @@ public abstract class AbstractPlayerAction {
                 cloneStep));
         checkAvailableAction(player);
         doAction(player);
-        endPlayerTurn();
+        endPlayerTurn(player);
         LOG.debug(format("execute(%s, %s).end(%s)",
                 player.getNickname(),
                 action,
                 cloneStep));
     }
 
-    private void endPlayerTurn() throws InvalidStepActionException {
+    protected void endPlayerTurn(Player player) throws InvalidStepActionException {
         if (table.isRoundOver()) {
             game.gotoEndStep();
         } else {

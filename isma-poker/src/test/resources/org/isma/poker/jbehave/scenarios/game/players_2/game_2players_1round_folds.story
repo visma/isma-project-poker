@@ -11,8 +11,8 @@ When la partie démarre
 
 Then etape en cours : BLINDS (pot : 0)
 Then mario est au bouton
-Then luigi paie la petite blinde
-Then mario paie la grosse blinde
+When luigi paie la petite blinde
+When mario paie la grosse blinde
 Then etape en cours : BETS_1 (pot : 15)
 
 When luigi effectue l'action : FOLD()
@@ -22,8 +22,8 @@ Given un nouveau round va démarrer
 
 Then etape en cours : BLINDS (pot : 0)
 Then luigi est au bouton
-Then mario paie la petite blinde
-Then luigi paie la grosse blinde
+When mario paie la petite blinde
+When luigi paie la grosse blinde
 Then etape en cours : BETS_1 (pot : 15)
 
 When mario effectue l'action : FOLD()
@@ -33,8 +33,8 @@ Given un nouveau round va démarrer
 
 Then etape en cours : BLINDS (pot : 0)
 Then mario est au bouton
-Then luigi paie la petite blinde
-Then mario paie la grosse blinde
+When luigi paie la petite blinde
+When mario paie la grosse blinde
 Then etape en cours : BETS_1 (pot : 15)
 
 When luigi effectue l'action : FOLD()
@@ -54,8 +54,8 @@ When la partie démarre
 
 Then etape en cours : BLINDS (pot : 0)
 Then mario est au bouton
-Then luigi paie la petite blinde
-Then mario paie la grosse blinde
+When luigi paie la petite blinde
+When mario paie la grosse blinde
 Then etape en cours : BETS_1 (pot : 15)
 
 When luigi effectue l'action : CALL()
@@ -70,8 +70,8 @@ Given un nouveau round va démarrer
 
 Then etape en cours : BLINDS (pot : 0)
 Then luigi est au bouton
-Then mario paie la petite blinde
-Then luigi paie la grosse blinde
+When mario paie la petite blinde
+When luigi paie la grosse blinde
 Then etape en cours : BETS_1 (pot : 15)
 
 When mario effectue l'action : CALL()
@@ -86,8 +86,8 @@ Given un nouveau round va démarrer
 
 Then etape en cours : BLINDS (pot : 0)
 Then mario est au bouton
-Then luigi paie la petite blinde
-Then mario paie la grosse blinde
+When luigi paie la petite blinde
+When mario paie la grosse blinde
 Then etape en cours : BETS_1 (pot : 15)
 
 When luigi effectue l'action : CALL()

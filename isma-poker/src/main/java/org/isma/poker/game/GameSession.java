@@ -96,6 +96,11 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
         gameStep.finish();
     }
 
+    @Override
+    public void freeze() {
+        gameStep.freeze();
+    }
+
     // ********************************************************************************
     // **** PlayerBetListener implementation
     // ********************************************************************************
@@ -109,11 +114,15 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
 
     @Override
     public void sitIn(Player player) throws PokerGameException {
-        notifyEvent(new PlayerSitEvent(player));
+        notifyEvent(new PlayerSitInEvent(player));
         table.add(player);
         beginRoundIfPossible();
     }
 
+    @Override
+    public void sitOut(Player player) throws PokerGameException {
+        new SitOutAction(this, table).execute(player);
+    }
 
     @Override
     public void paySmallBlind(Player player) throws PokerGameException {
