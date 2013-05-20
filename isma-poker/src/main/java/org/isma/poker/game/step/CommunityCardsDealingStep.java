@@ -8,7 +8,7 @@ public class CommunityCardsDealingStep extends AbstractStep {
     }
 
     @Override
-    public void doSetUp(PokerStepExecutable game) throws InvalidStepActionException {
-        game.executeCommunityCardsDealingStep(numberOfCards);
+    public void doRun(PokerStepRunner runner) throws InvalidStepActionException {
+        runner.executeCommunityCardsDealingStep(numberOfCards);
     }
 }

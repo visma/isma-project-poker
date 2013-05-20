@@ -29,7 +29,7 @@ public abstract class Abstract3PlayersGameSessionTest extends AbstractPokerTest 
 
         game = buildGame();
         game.addEventListener(eventListener);
-        tableInfos = game.getTableInfos();
+        tableFacade = game.getTableFacade();
         deck = (MockDeck) game.getDeck();
         deckFactory.forceHands(EIGHT_OF_CLUBS, NINE_OF_CLUBS, TEN_OF_DIAMONDS, KNAVE_OF_DIAMONDS, TWO_OF_CLUBS, SEVEN_OF_HEARTS);
 
@@ -42,19 +42,19 @@ public abstract class Abstract3PlayersGameSessionTest extends AbstractPokerTest 
     }
 
     protected void gotoStep(StepEnum step) throws Exception {
-        assertEquals(5, tableInfos.getSmallBlindAmount());
-        assertEquals(10, tableInfos.getBigBlindAmount());
-        assertEquals(player1, tableInfos.getDealer());
-        assertEquals(player2, tableInfos.getSmallBlindPlayer());
-        assertEquals(player3, tableInfos.getBigBlindPlayer());
-        assertEquals(tableInfos.getSmallBlindPlayer(), tableInfos.getCurrentPlayer());
+        assertEquals(5, tableFacade.getSmallBlindAmount());
+        assertEquals(10, tableFacade.getBigBlindAmount());
+        assertEquals(player1, tableFacade.getDealer());
+        assertEquals(player2, tableFacade.getSmallBlindPlayer());
+        assertEquals(player3, tableFacade.getBigBlindPlayer());
+        assertEquals(tableFacade.getSmallBlindPlayer(), tableFacade.getCurrentPlayer());
         assertEquals(BLINDS, game.getStep());
         if (step.getOrder() > BLINDS.getOrder()) {
             PlayerAction.paySmallBlind(player2, game);
             PlayerAction.payBigBlind(player3, game);
-            assertEquals(15, tableInfos.getTotalPot());
+            assertEquals(15, tableFacade.getTotalPot());
             assertEquals(BETS_1, game.getStep());
-            assertEquals(player1, tableInfos.getCurrentPlayer());
+            assertEquals(player1, tableFacade.getCurrentPlayer());
         }
         if (step.getOrder() > BETS_1.getOrder()) {
             deckFactory.forceFlop(TEN_OF_SPADES, TWO_OF_HEARTS, THREE_OF_HEARTS);

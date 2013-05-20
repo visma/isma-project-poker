@@ -21,14 +21,14 @@ public class GameSessionInvalidMovesTest extends Abstract2PlayersGameSessionTest
         thrown.expectMessage("invalid action :BET");
 
         gotoStep(BETS_1);
-        assertEquals(player2, tableInfos.getCurrentPlayer());
+        assertEquals(player2, tableFacade.getCurrentPlayer());
         PlayerAction.bet(player2, game, 4);
     }
 
     @Test(expected = InvalidPlayerTurnException.class)
     public void two_Players_player_bet_at_wrong_position() throws Exception {
         gotoStep(BETS_1);
-        assertEquals(player2, tableInfos.getCurrentPlayer());
+        assertEquals(player2, tableFacade.getCurrentPlayer());
         PlayerAction.call(player1, game);
     }
 
@@ -39,7 +39,7 @@ public class GameSessionInvalidMovesTest extends Abstract2PlayersGameSessionTest
         thrown.expectMessage("invalid action :BET");
 
         gotoStep(BETS_1);
-        assertEquals(player2, tableInfos.getCurrentPlayer());
+        assertEquals(player2, tableFacade.getCurrentPlayer());
         PlayerAction.bet(player2, game, 50);
         PlayerAction.check(player2, game);
     }

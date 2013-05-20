@@ -101,7 +101,7 @@ public class Table {
 
 
     //TODO faire des test sur cette méthode pour bien controler les joueurs restants
-    public void prepareNextBetStep(boolean firstBetStep) {
+    public void prepareBetStep(boolean firstBetStep) {
         raisesRemaining = MAX_RAISES;
         if (!firstBetStep) {
             currentBet = 0;

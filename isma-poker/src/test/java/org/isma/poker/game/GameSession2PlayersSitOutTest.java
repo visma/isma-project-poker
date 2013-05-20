@@ -13,24 +13,24 @@ public class GameSession2PlayersSitOutTest extends Abstract2PlayersGameSessionTe
     public void small_blind_sitout_and_new_challenger() throws Exception {
         //Given
         gotoStep(BLINDS);
-        assertEquals(player2, tableInfos.getSmallBlindPlayer());
-        assertEquals(player1, tableInfos.getBigBlindPlayer());
+        assertEquals(player2, tableFacade.getSmallBlindPlayer());
+        assertEquals(player1, tableFacade.getBigBlindPlayer());
 
         //When
         sitOut(player2, game);
 
         //Then
         assertEquals(END, game.getStep());
-        assertEquals(null, game.getTableInfos().getCurrentPlayer());
+        assertEquals(null, game.getTableFacade().getCurrentPlayer());
 
         Player nouveau = new Player("nouveau");
         nouveau.setChips(200);
         sitIn(nouveau, game);
 
-        assertEquals(player1, game.getTableInfos().getDealer());
-        assertEquals(nouveau, game.getTableInfos().getSmallBlindPlayer());
-        assertEquals(player1, game.getTableInfos().getBigBlindPlayer());
-        assertEquals(nouveau, game.getTableInfos().getCurrentPlayer());
+        assertEquals(player1, game.getTableFacade().getDealer());
+        assertEquals(nouveau, game.getTableFacade().getSmallBlindPlayer());
+        assertEquals(player1, game.getTableFacade().getBigBlindPlayer());
+        assertEquals(nouveau, game.getTableFacade().getCurrentPlayer());
         assertEquals(BLINDS, game.getStep());
 
         paySmallBlind(nouveau, game);
@@ -42,8 +42,8 @@ public class GameSession2PlayersSitOutTest extends Abstract2PlayersGameSessionTe
     public void big_blind_sitout_and_new_challenger() throws Exception {
         //Given
         gotoStep(BLINDS);
-        assertEquals(player2, tableInfos.getSmallBlindPlayer());
-        assertEquals(player1, tableInfos.getBigBlindPlayer());
+        assertEquals(player2, tableFacade.getSmallBlindPlayer());
+        assertEquals(player1, tableFacade.getBigBlindPlayer());
 
 
         //When
@@ -52,16 +52,16 @@ public class GameSession2PlayersSitOutTest extends Abstract2PlayersGameSessionTe
 
         //Then
         assertEquals(END, game.getStep());
-        assertEquals(null, game.getTableInfos().getCurrentPlayer());
+        assertEquals(null, game.getTableFacade().getCurrentPlayer());
 
         Player nouveau = new Player("nouveau");
         nouveau.setChips(200);
         sitIn(nouveau, game);
 
-        assertEquals(player2, game.getTableInfos().getDealer());
-        assertEquals(nouveau, game.getTableInfos().getSmallBlindPlayer());
-        assertEquals(player2, game.getTableInfos().getBigBlindPlayer());
-        assertEquals(nouveau, game.getTableInfos().getCurrentPlayer());
+        assertEquals(player2, game.getTableFacade().getDealer());
+        assertEquals(nouveau, game.getTableFacade().getSmallBlindPlayer());
+        assertEquals(player2, game.getTableFacade().getBigBlindPlayer());
+        assertEquals(nouveau, game.getTableFacade().getCurrentPlayer());
         assertEquals(BLINDS, game.getStep());
 
         paySmallBlind(nouveau, game);

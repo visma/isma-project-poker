@@ -22,7 +22,7 @@ public class GameSessionPotTest extends Abstract3PlayersGameSessionTest {
         assertEquals(90, player1.getChips());
         assertEquals(70, player2.getChips());
         assertEquals(50, player3.getChips());
-        assertEquals(3, tableInfos.getRaisesRemaining());
+        assertEquals(3, tableFacade.getRaisesRemaining());
         assertCurrentBets(
                 0, 0, 0,
                 0, previousPot);
@@ -42,7 +42,7 @@ public class GameSessionPotTest extends Abstract3PlayersGameSessionTest {
 
         raise(player3, game, 20);
         assertEquals(10, player3.getChips());
-        assertEquals(2, tableInfos.getRaisesRemaining());
+        assertEquals(2, tableFacade.getRaisesRemaining());
         assertCurrentBets(
                 20, 20, 40,
                 40, 80 + previousPot);
@@ -50,7 +50,7 @@ public class GameSessionPotTest extends Abstract3PlayersGameSessionTest {
 
         //BET4 --> second bets (cause of a raise)
         raise(player1, game, 20);
-        assertEquals(1, tableInfos.getRaisesRemaining());
+        assertEquals(1, tableFacade.getRaisesRemaining());
         assertEquals(30, player1.getChips());
         assertCurrentBets(
                 60, 20, 40,
@@ -89,12 +89,12 @@ public class GameSessionPotTest extends Abstract3PlayersGameSessionTest {
         assertCurrentBet(expectedPlayer1CurrentBet, player1);
         assertCurrentBet(expectedPlayer2CurrentBet, player2);
         assertCurrentBet(expectedPlayer3CurrentBet, player3);
-        assertEquals(currentBet, tableInfos.getCurrentBet());
-        assertEquals(totalPot, tableInfos.getTotalPot());
+        assertEquals(currentBet, tableFacade.getCurrentBet());
+        assertEquals(totalPot, tableFacade.getTotalPot());
     }
 
     private void assertCurrentBet(int expectedPlayerCurrentBet, Player player) {
-        int actualPlayerCurrentBet = tableInfos.getCurrentStepBet(player);
+        int actualPlayerCurrentBet = tableFacade.getCurrentStepBet(player);
         String message = format("Player %s current bet - expected  : %s, actual : %s",
                 player.getNickname(),
                 expectedPlayerCurrentBet,

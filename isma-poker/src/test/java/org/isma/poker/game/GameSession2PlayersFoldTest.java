@@ -49,7 +49,7 @@ public class GameSession2PlayersFoldTest extends Abstract2PlayersGameSessionTest
 
 
     private void player2FoldPlayer1Win() throws Exception {
-        assertEquals(player2, tableInfos.getCurrentPlayer());
+        assertEquals(player2, tableFacade.getCurrentPlayer());
 
         while (eventListener.poll() != null){
         }

@@ -28,7 +28,7 @@ public abstract class Abstract2PlayersGameSessionTest extends AbstractPokerTest 
 
         game = buildGame();
         game.addEventListener(eventListener);
-        tableInfos = game.getTableInfos();
+        tableFacade = game.getTableFacade();
         deck = (MockDeck) game.getDeck();
         deckFactory.forceHands(EIGHT_OF_CLUBS, NINE_OF_CLUBS, TEN_OF_DIAMONDS, KNAVE_OF_DIAMONDS);
 
@@ -39,17 +39,17 @@ public abstract class Abstract2PlayersGameSessionTest extends AbstractPokerTest 
     }
 
     protected void gotoStep(StepEnum step) throws Exception {
-        assertEquals(5, tableInfos.getSmallBlindAmount());
-        assertEquals(10, tableInfos.getBigBlindAmount());
+        assertEquals(5, tableFacade.getSmallBlindAmount());
+        assertEquals(10, tableFacade.getBigBlindAmount());
         assertEquals(BLINDS, game.getStep());
-        assertEquals(player1, tableInfos.getDealer());
-        assertEquals(player2, tableInfos.getSmallBlindPlayer());
-        assertEquals(player1, tableInfos.getBigBlindPlayer());
-        assertEquals(player2, tableInfos.getCurrentPlayer());
+        assertEquals(player1, tableFacade.getDealer());
+        assertEquals(player2, tableFacade.getSmallBlindPlayer());
+        assertEquals(player1, tableFacade.getBigBlindPlayer());
+        assertEquals(player2, tableFacade.getCurrentPlayer());
         if (step.getOrder() > BLINDS.getOrder()) {
             PlayerAction.paySmallBlind(player2, game);
             PlayerAction.payBigBlind(player1, game);
-            assertEquals(15, tableInfos.getTotalPot());
+            assertEquals(15, tableFacade.getTotalPot());
             assertEquals(BETS_1, game.getStep());
         }
         if (step.getOrder() > BETS_1.getOrder()) {

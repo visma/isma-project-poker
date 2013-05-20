@@ -1,13 +1,13 @@
 package org.isma.web.poker.actions;
 
 import org.isma.poker.game.GameSession;
-import org.isma.poker.game.model.TableInfos;
+import org.isma.poker.game.model.TableFacade;
 import org.isma.web.poker.messages.AbstractPokerAction;
 import org.isma.web.poker.messages.response.GameStateResponse;
 
 import java.util.Map;
 
-public class GameStartAction extends AbstractPokerAction<TableInfos> {
+public class GameStartAction extends AbstractPokerAction<TableFacade> {
     protected GameStartAction() {
         super(null, new GameStateResponse());
     }
@@ -22,8 +22,8 @@ public class GameStartAction extends AbstractPokerAction<TableInfos> {
     }
 
     @Override
-    protected TableInfos execute(GameSession game, Map<String, String> messageMap) throws Exception {
+    protected TableFacade execute(GameSession game, Map<String, String> messageMap) throws Exception {
         game.init(3);
-        return game.getTableInfos();
+        return game.getTableFacade();
     }
 }

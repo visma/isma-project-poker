@@ -20,14 +20,14 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
     @Test
     public void two_players_nextPlayer() throws Exception {
         gotoStep(BETS_1);
-        assertEquals(player2, tableInfos.getCurrentPlayer());
-        assertEquals(player1, tableInfos.getNextBetPlayer(false));
-        assertEquals(15, tableInfos.getTotalPot());
+        assertEquals(player2, tableFacade.getCurrentPlayer());
+        assertEquals(player1, tableFacade.getNextBetPlayer(false));
+        assertEquals(15, tableFacade.getTotalPot());
         call(player2, game);
-        assertEquals(20, tableInfos.getTotalPot());
+        assertEquals(20, tableFacade.getTotalPot());
         //Player 1 check
-        assertEquals(player1, tableInfos.getCurrentPlayer());
-        assertEquals(player2, tableInfos.getNextBetPlayer(false));
+        assertEquals(player1, tableFacade.getCurrentPlayer());
+        assertEquals(player2, tableFacade.getNextBetPlayer(false));
         check(player1, game);
         assertEquals(BETS_2, game.getStep());
     }
@@ -36,21 +36,21 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
     public void two_players_step_blinds() throws Exception {
         gotoStep(BLINDS);
         //
-        assertEquals(player1, tableInfos.getDealer());
-        assertEquals(player2, tableInfos.getSmallBlindPlayer());
-        assertEquals(player1, tableInfos.getBigBlindPlayer());
+        assertEquals(player1, tableFacade.getDealer());
+        assertEquals(player2, tableFacade.getSmallBlindPlayer());
+        assertEquals(player1, tableFacade.getBigBlindPlayer());
 
-        assertEquals(0, tableInfos.getCurrentBet());
+        assertEquals(0, tableFacade.getCurrentBet());
         PlayerAction.paySmallBlind(player2, game);
-        assertEquals(5, tableInfos.getCurrentBet());
+        assertEquals(5, tableFacade.getCurrentBet());
         PlayerAction.payBigBlind(player1, game);
-        assertEquals(10, tableInfos.getCurrentBet());
+        assertEquals(10, tableFacade.getCurrentBet());
 
         //----- ROUND 1 / BLINDS -----
         assertEquals(BETS_1, game.getStep());
         assertEquals(90, player1.getChips());
         assertEquals(95, player2.getChips());
-        assertEquals(15, tableInfos.getTotalPot());
+        assertEquals(15, tableFacade.getTotalPot());
     }
 
     @Test
@@ -66,23 +66,23 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
         assertEquals(TEN_OF_DIAMONDS.getCard(), player1.getHand().get(0));
         assertEquals(KNAVE_OF_DIAMONDS.getCard(), player1.getHand().get(1));
 
-        assertTrue(tableInfos.getCommunityCards().isEmpty());
+        assertTrue(tableFacade.getCommunityCards().isEmpty());
     }
 
     @Test
     public void two_players_step_bet1() throws Exception {
         gotoStep(BETS_1);
         // Player 2 call big blind
-        assertEquals(player2, tableInfos.getCurrentPlayer());
+        assertEquals(player2, tableFacade.getCurrentPlayer());
         call(player2, game);
         assertEquals(90, player2.getChips());
         //Player 1 check
-        assertEquals(player1, tableInfos.getCurrentPlayer());
+        assertEquals(player1, tableFacade.getCurrentPlayer());
         assertFalse(game.isStepOver());
         check(player1, game);
         assertEquals(BETS_2, game.getStep());
         assertEquals(90, player1.getChips());
-        assertEquals(20, tableInfos.getTotalPot());
+        assertEquals(20, tableFacade.getTotalPot());
     }
 
     @Test
@@ -103,20 +103,20 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
         assertEquals(BETS_2, game.getStep());
         assertEquals(60, player1.getChips());
         assertEquals(60, player1.getChips());
-        assertEquals(80, tableInfos.getTotalPot());
+        assertEquals(80, tableFacade.getTotalPot());
     }
 
     @Test
     public void two_players_step_flop() throws Exception {
         gotoStep(FLOP);
         assertEquals(BETS_2, game.getStep());
-        assertEquals(3, tableInfos.getCommunityCards().size());
+        assertEquals(3, tableFacade.getCommunityCards().size());
         assertEquals(5, player1.getHand().size());
         assertEquals(5, player2.getHand().size());
 
-        Card flopCard1 = tableInfos.getCommunityCards().get(0);
-        Card flopCard2 = tableInfos.getCommunityCards().get(1);
-        Card flopCard3 = tableInfos.getCommunityCards().get(2);
+        Card flopCard1 = tableFacade.getCommunityCards().get(0);
+        Card flopCard2 = tableFacade.getCommunityCards().get(1);
+        Card flopCard3 = tableFacade.getCommunityCards().get(2);
 
         assertEquals("10 of Spades", flopCard1.toString());
         assertEquals("2 of Hearts", flopCard2.toString());
@@ -132,32 +132,32 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
     @Test
     public void two_players_step_bet2() throws Exception {
         gotoStep(BETS_2);
-        assertEquals(20, tableInfos.getTotalPot());
+        assertEquals(20, tableFacade.getTotalPot());
         //
-        assertEquals(player1, tableInfos.getDealer());
-        assertEquals(player2, tableInfos.getCurrentPlayer());
+        assertEquals(player1, tableFacade.getDealer());
+        assertEquals(player2, tableFacade.getCurrentPlayer());
         //Player 2 check
         check(player2, game);
         assertEquals(BETS_2, game.getStep());
         assertEquals(90, player2.getChips());
         //Player 1 check
-        assertEquals(player1, tableInfos.getCurrentPlayer());
+        assertEquals(player1, tableFacade.getCurrentPlayer());
         assertEquals(BETS_2, game.getStep());
         check(player1, game);
         assertEquals(90, player1.getChips());
         assertEquals(BETS_3, game.getStep());
-        assertEquals(20, tableInfos.getTotalPot());
+        assertEquals(20, tableFacade.getTotalPot());
     }
 
     @Test
     public void two_players_step_turn() throws Exception {
         gotoStep(TURN);
         assertEquals(BETS_3, game.getStep());
-        assertEquals(4, tableInfos.getCommunityCards().size());
+        assertEquals(4, tableFacade.getCommunityCards().size());
         assertEquals(6, player1.getHand().size());
         assertEquals(6, player2.getHand().size());
 
-        Card turn = tableInfos.getCommunityCards().get(3);
+        Card turn = tableFacade.getCommunityCards().get(3);
 
         assertEquals("Knave of Clubs", turn.toString());
         assertEquals(turn, player1.getHand().get(5));
@@ -167,33 +167,33 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
     @Test
     public void two_players_step_bet3() throws Exception {
         gotoStep(BETS_3);
-        assertEquals(20, tableInfos.getTotalPot());
+        assertEquals(20, tableFacade.getTotalPot());
         //
-        assertEquals(player1, tableInfos.getDealer());
-        assertEquals(player2, tableInfos.getCurrentPlayer());
+        assertEquals(player1, tableFacade.getDealer());
+        assertEquals(player2, tableFacade.getCurrentPlayer());
 
         //Player 2 check
         check(player2, game);
         assertEquals(90, player2.getChips());
-        assertEquals(player1, tableInfos.getCurrentPlayer());
+        assertEquals(player1, tableFacade.getCurrentPlayer());
         assertEquals(BETS_3, game.getStep());
 
         //Player 1 check
         check(player1, game);
         assertEquals(90, player1.getChips());
         assertEquals(BETS_4, game.getStep());
-        assertEquals(20, tableInfos.getTotalPot());
+        assertEquals(20, tableFacade.getTotalPot());
     }
 
     @Test
     public void two_players_step_river() throws Exception {
         gotoStep(RIVER);
         assertEquals(BETS_4, game.getStep());
-        assertEquals(5, tableInfos.getCommunityCards().size());
+        assertEquals(5, tableFacade.getCommunityCards().size());
         assertEquals(7, player1.getHand().size());
         assertEquals(7, player2.getHand().size());
 
-        Card river = tableInfos.getCommunityCards().get(4);
+        Card river = tableFacade.getCommunityCards().get(4);
 
         assertEquals("Queen of Hearts", river.toString());
         assertEquals(river, player1.getHand().get(6));
@@ -203,32 +203,32 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
     @Test
     public void two_players_step_bet4() throws Exception {
         gotoStep(BETS_4);
-        assertEquals(20, tableInfos.getTotalPot());
+        assertEquals(20, tableFacade.getTotalPot());
         //
-        assertEquals(player1, tableInfos.getDealer());
-        assertEquals(player2, tableInfos.getCurrentPlayer());
+        assertEquals(player1, tableFacade.getDealer());
+        assertEquals(player2, tableFacade.getCurrentPlayer());
 
         //Player 2 check
         check(player2, game);
         assertEquals(90, player2.getChips());
-        assertEquals(player1, tableInfos.getCurrentPlayer());
+        assertEquals(player1, tableFacade.getCurrentPlayer());
         assertEquals(BETS_4, game.getStep());
 
         //Player 1 check
         check(player1, game);
         assertEquals(90, player1.getChips());
         assertEquals(SHOWDOWN, game.getStep());
-        assertEquals(20, tableInfos.getTotalPot());
+        assertEquals(20, tableFacade.getTotalPot());
     }
 
     @Test
     public void two_players_step_showdown() throws Exception {
         gotoStep(SHOWDOWN);
-        assertEquals(player2, tableInfos.getCurrentPlayer());
+        assertEquals(player2, tableFacade.getCurrentPlayer());
 
         //
         show(player2, game);
-        assertEquals(player1, tableInfos.getCurrentPlayer());
+        assertEquals(player1, tableFacade.getCurrentPlayer());
         assertEquals(SHOWDOWN, game.getStep());
         assertFalse(game.isRoundOver());
         while (eventListener.poll() != null) {
@@ -268,21 +268,21 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
         assertEquals(110, player2.getChips());
         assertEquals(90, player1.getChips());
 
-        assertEquals(player2, tableInfos.getDealer());
-        assertEquals(player1, tableInfos.getSmallBlindPlayer());
-        assertEquals(player2, tableInfos.getBigBlindPlayer());
-        assertEquals(0, tableInfos.getCurrentBet());
+        assertEquals(player2, tableFacade.getDealer());
+        assertEquals(player1, tableFacade.getSmallBlindPlayer());
+        assertEquals(player2, tableFacade.getBigBlindPlayer());
+        assertEquals(0, tableFacade.getCurrentBet());
 
         //When
         paySmallBlind(player1, game);
-        assertEquals(5, game.getTableInfos().getCurrentBet());
+        assertEquals(5, game.getTableFacade().getCurrentBet());
         payBigBlind(player2, game);
-        assertEquals(10, game.getTableInfos().getCurrentBet());
+        assertEquals(10, game.getTableFacade().getCurrentBet());
 
         //Then
         assertEquals(100, player2.getChips());
         assertEquals(85, player1.getChips());
-        assertEquals(15, tableInfos.getTotalPot());
+        assertEquals(15, tableFacade.getTotalPot());
     }
 
 }

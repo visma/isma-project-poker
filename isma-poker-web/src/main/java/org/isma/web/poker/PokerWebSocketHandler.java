@@ -25,7 +25,7 @@ public class PokerWebSocketHandler extends WebSocketHandler {
     public PokerWebSocketHandler(GameSession game) {
         this.game = game;
         GAME_STATE_MESSAGE_RESPONSE.setObject(game);
-        PLAYER_STATE_MESSAGE_RESPONSE.setObject(game.getTableInfos());
+        PLAYER_STATE_MESSAGE_RESPONSE.setObject(game.getTableFacade());
         gameSessionHandler = new PokerGameSessionHandler();
     }
 

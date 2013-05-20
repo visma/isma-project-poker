@@ -33,14 +33,14 @@ public class JoinAction extends AbstractPokerAction<String> {
     }
 
     private void checkMaxPlayers(GameSession game) throws Exception {
-        if (game.getTableInfos().isTableFull()) {
-            throw new Exception("maximum players reached : " + game.getTableInfos().getMaxPlayers());
+        if (game.getTableFacade().isTableFull()) {
+            throw new Exception("maximum players reached : " + game.getTableFacade().getMaxPlayers());
         }
     }
 
 
     private void checkUniqueNickName(GameSession game, String nickname) throws Exception {
-        for (PlayerInfos playerInfos : game.getTableInfos().getPlayersInfos()) {
+        for (PlayerInfos playerInfos : game.getTableFacade().getPlayersInfos()) {
             if (playerInfos.getPlayer().getNickname().equals(nickname)) {
                 throw new Exception("nickname already exists : " + nickname);
             }
@@ -55,7 +55,7 @@ public class JoinAction extends AbstractPokerAction<String> {
     @Override
     public List<AbstractPokerAction> nextActions(GameSession game) {
         List<AbstractPokerAction> list = new ArrayList<AbstractPokerAction>();
-        if (game.getTableInfos().isTableFull()) {
+        if (game.getTableFacade().isTableFull()) {
             list.add(new GameStartAction());
         }
         return list;

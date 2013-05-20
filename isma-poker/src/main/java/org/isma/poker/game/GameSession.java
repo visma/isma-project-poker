@@ -8,7 +8,10 @@ import org.isma.poker.game.exceptions.PokerGameException;
 import org.isma.poker.game.factory.ITableFactory;
 import org.isma.poker.game.model.*;
 import org.isma.poker.game.results.Results;
-import org.isma.poker.game.step.*;
+import org.isma.poker.game.step.InvalidStepActionException;
+import org.isma.poker.game.step.PokerActionStepGame;
+import org.isma.poker.game.step.PokerStepRunner;
+import org.isma.poker.game.step.Step;
 import org.isma.poker.model.Card;
 import org.isma.poker.model.Deck;
 
@@ -17,43 +20,47 @@ import java.util.List;
 
 import static java.lang.String.format;
 import static org.isma.poker.factory.IDeckFactory.DeckTypeEnum.FIFTY_TWO_CARDS_DECK;
+import static org.isma.poker.game.step.StepEnum.END;
 
-public class GameSession implements PlayerBetListener, PokerActionStepGame, PokerStepExecutable {
+public class GameSession implements PlayerBetListener, PokerActionStepGame, PokerStepRunner {
     private static final Logger LOG = Logger.getLogger(GameSession.class);
     private final GameConfiguration configuration;
     private final IDeckFactory deckFactory;
 
-    private Deck deck;
-    private final GameStep gameStep;
-    private final Table table;
-    private final TableInfos tableInfos;
     private final List<GameEventListener> eventListeners = new ArrayList<GameEventListener>();
 
-    //Bidouille pour tests
+    private final GameStepRunner stepRunner;
+    private final Table table;
+    private final TableFacade tableFacade;
+    private Deck deck;
+
     private int firstRoundMinimumPlayers;
 
     public GameSession(GameConfiguration configuration, IDeckFactory deckFactory, ITableFactory tableFactory) {
         this.configuration = configuration;
         this.deckFactory = deckFactory;
         this.table = tableFactory.buildTable();
-        this.tableInfos = new TableInfos(table, configuration);
-        this.gameStep = new GameStep(this);
+        this.tableFacade = new TableFacade(table, configuration);
+        this.stepRunner = new GameStepRunner(this);
     }
 
+    /**
+     * Game doesn't begin until a minimum players is reached
+     * @param firstRoundMinimumPlayers
+     */
     public void init(int firstRoundMinimumPlayers) {
         this.firstRoundMinimumPlayers = firstRoundMinimumPlayers;
-        //deck = deckFactory.buildPokerDeck(FIFTY_TWO_CARDS_DECK);
     }
 
 
     public void beginRoundIfPossible() throws InvalidStepActionException {
         int playersWithCash = 0;
-        for (PlayerInfos player : tableInfos.getPlayersInfos()) {
+        for (PlayerInfos player : tableFacade.getPlayersInfos()) {
             if (player.getPlayer().hasChips()) {
                 playersWithCash++;
             }
         }
-        if (playersWithCash >= firstRoundMinimumPlayers && gameStep.getStep() == StepEnum.END) {
+        if (playersWithCash >= firstRoundMinimumPlayers && stepRunner.getStep() == END) {
             firstRoundMinimumPlayers = 2;
             nextStep();
         }
@@ -63,8 +70,8 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
     // ********************************************************************************
     // **** Facade avec table
     // ********************************************************************************
-    public TableInfos getTableInfos() {
-        return tableInfos;
+    public TableFacade getTableFacade() {
+        return tableFacade;
     }
 
 
@@ -72,39 +79,37 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
     // **** Facade avec step
     // ********************************************************************************
     public boolean isStepOver() {
-        return gameStep.isOver();
+        return stepRunner.isOver();
     }
 
-
     public Step getStep() {
-        return gameStep.getStep();
+        return stepRunner.getStep();
     }
 
     public boolean isRoundOver() {
-        return gameStep.isOver() && gameStep.getStep() == StepEnum.END;
+        return stepRunner.isOver() && stepRunner.getStep() == END;
     }
 
-    public void nextStep() throws InvalidStepActionException {
-        gameStep.nextStep();
+    private void nextStep() throws InvalidStepActionException {
+        stepRunner.nextStep();
     }
 
     public void gotoEndStep() throws InvalidStepActionException {
-        gameStep.gotoEnd();
+        stepRunner.gotoEnd();
     }
 
     public void finishStep() throws InvalidStepActionException {
-        gameStep.finish();
+        stepRunner.finish();
     }
 
     @Override
     public void freeze() {
-        gameStep.freeze();
+        stepRunner.freeze();
     }
 
     // ********************************************************************************
     // **** PlayerBetListener implementation
     // ********************************************************************************
-
 
     @Override
     public boolean buy(Player player, int chips) {
@@ -200,7 +205,7 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
     public void executeFirstBetStep() throws InvalidStepActionException {
         LOG.debug("executeFirstBetStep");
         if (table.getAliveWithChipsPlayers().size() > 1) {
-            table.prepareNextBetStep(true);
+            table.prepareBetStep(true);
         } else {
             nextStep();
         }
@@ -209,7 +214,7 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
     public void executeBetStep() throws InvalidStepActionException {
         LOG.debug("executeBetStep");
         if (table.getAliveWithChipsPlayers().size() > 1) {
-            table.prepareNextBetStep(false);
+            table.prepareBetStep(false);
         } else {
             nextStep();
         }
@@ -267,10 +272,10 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
         }
     }
 
-
+    //TODO a foutre dans action comme les action joueurs
     public abstract class AbstractDealerAction {
         void execute() throws InvalidStepActionException {
-            Step cloneStep = GameSession.this.gameStep.getStep();
+            Step cloneStep = GameSession.this.stepRunner.getStep();
             LOG.debug(format("execute(%s).begin()", cloneStep));
             doAction();
             GameSession.this.finishStep();

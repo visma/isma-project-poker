@@ -11,17 +11,17 @@ public class GameSession3PlayersSitOutTest extends Abstract3PlayersGameSessionTe
     public void small_blind_sitout() throws Exception {
         //Given
         gotoStep(BLINDS);
-        assertEquals(player2, game.getTableInfos().getSmallBlindPlayer());
-        assertEquals(player2, game.getTableInfos().getCurrentPlayer());
-        assertEquals(player3, game.getTableInfos().getBigBlindPlayer());
+        assertEquals(player2, game.getTableFacade().getSmallBlindPlayer());
+        assertEquals(player2, game.getTableFacade().getCurrentPlayer());
+        assertEquals(player3, game.getTableFacade().getBigBlindPlayer());
 
         //When
         sitOut(player2, game);
 
         //Then
-        assertEquals(player3, game.getTableInfos().getCurrentPlayer());
-        assertEquals(player3, game.getTableInfos().getSmallBlindPlayer());
-        assertEquals(player1, game.getTableInfos().getBigBlindPlayer());
+        assertEquals(player3, game.getTableFacade().getCurrentPlayer());
+        assertEquals(player3, game.getTableFacade().getSmallBlindPlayer());
+        assertEquals(player1, game.getTableFacade().getBigBlindPlayer());
 
         paySmallBlind(player3, game);
         payBigBlind(player1, game);
@@ -38,15 +38,15 @@ public class GameSession3PlayersSitOutTest extends Abstract3PlayersGameSessionTe
     public void big_blind_sitout() throws Exception {
         //Given
         gotoStep(BLINDS);
-        assertEquals(player2, game.getTableInfos().getSmallBlindPlayer());
+        assertEquals(player2, game.getTableFacade().getSmallBlindPlayer());
 
         //When
         paySmallBlind(player2, game);
         sitOut(player3, game);
 
         //Then
-        assertEquals(player1, game.getTableInfos().getCurrentPlayer());
-        assertEquals(player1, game.getTableInfos().getBigBlindPlayer());
+        assertEquals(player1, game.getTableFacade().getCurrentPlayer());
+        assertEquals(player1, game.getTableFacade().getBigBlindPlayer());
 
         payBigBlind(player1, game);
 

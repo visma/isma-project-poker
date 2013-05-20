@@ -3,14 +3,14 @@ package org.isma.poker.game.step;
 public abstract class AbstractStep {
     private Step step;
 
-    public void setUp(PokerStepExecutable game) throws InvalidStepActionException {
-        if (game.getStep() != step) {
-            throw new InvalidStepActionException(step, game.getStep());
+    public void run(PokerStepRunner runner) throws InvalidStepActionException {
+        if (runner.getStep() != step) {
+            throw new InvalidStepActionException(step, runner.getStep());
         }
-        doSetUp(game);
+        doRun(runner);
     }
 
-    protected abstract void doSetUp(PokerStepExecutable game) throws InvalidStepActionException;
+    protected abstract void doRun(PokerStepRunner game) throws InvalidStepActionException;
 
     public void setStep(Step step) {
         this.step = step;

@@ -38,7 +38,7 @@ public class GameSteps extends AbstractPokerSteps {
 
     @Given("la table de jeu est vide, la partie commencera lorsque $minPlayers joueurs sont presents")
     public void givenTable(int minPlayers) throws Exception {
-        assertTrue(current().game.getTableInfos().getPlayersInfos().isEmpty());
+        assertTrue(current().game.getTableFacade().getPlayersInfos().isEmpty());
         current().game.init(minPlayers);
         current().showEventListener = new TestShowEventListner();
         current().resultEventListner = new TestResultEventListener();
@@ -48,8 +48,8 @@ public class GameSteps extends AbstractPokerSteps {
 
     @Given("les blindes sont à $smallBlind/$bigBlind jetons")
     public void givenBlinds(int smallBlind, int bigBlind) throws Exception {
-        Assert.assertEquals(smallBlind, current().game.getTableInfos().getSmallBlindAmount());
-        Assert.assertEquals(bigBlind, current().game.getTableInfos().getBigBlindAmount());
+        Assert.assertEquals(smallBlind, current().game.getTableFacade().getSmallBlindAmount());
+        Assert.assertEquals(bigBlind, current().game.getTableFacade().getBigBlindAmount());
     }
 
     @Given("les prochaines cartes du deck sont : $cards")
@@ -91,7 +91,7 @@ public class GameSteps extends AbstractPokerSteps {
 
     @Then("$nickname est au bouton")
     public void givenButtonPlayer(String nickname) throws Exception {
-        Assert.assertEquals(nickname, current().game.getTableInfos().getDealerInfos().getPlayer().getNickname());
+        Assert.assertEquals(nickname, current().game.getTableFacade().getDealerInfos().getPlayer().getNickname());
     }
 
     @When("$nickname paie la petite blinde")
@@ -114,12 +114,12 @@ public class GameSteps extends AbstractPokerSteps {
 
     @Then("le montant de l'enchere en cours est de $chips jetons")
     public void thenCurrentBet(int chips){
-        assertEquals(chips, current().game.getTableInfos().getCurrentBet());
+        assertEquals(chips, current().game.getTableFacade().getCurrentBet());
     }
 
     @Then("$nickname est le prochain joueur à parler")
     public void givenCurrentPlayer(String nickname) throws Exception {
-        Assert.assertEquals(nickname, current().game.getTableInfos().getCurrentPlayerInfos().getPlayer().getNickname());
+        Assert.assertEquals(nickname, current().game.getTableFacade().getCurrentPlayerInfos().getPlayer().getNickname());
     }
 
     @When("$nickname effectue l'action : $action($chipsStr)")
@@ -156,7 +156,7 @@ public class GameSteps extends AbstractPokerSteps {
 
     @Then("le croupier distribue le flop : $card1, $card2, $card3")
     public void givenFlop(Card card1, Card card2, Card card3) throws Exception {
-        CommunityCards communityCards = current().game.getTableInfos().getCommunityCards();
+        CommunityCards communityCards = current().game.getTableFacade().getCommunityCards();
         assertEquals(3, communityCards.size());
         assertEquals(card1, communityCards.get(0));
         assertEquals(card2, communityCards.get(1));
@@ -165,7 +165,7 @@ public class GameSteps extends AbstractPokerSteps {
 
     @Then("le croupier distribue le turn : $card1, $card2, $card3, $card4")
     public void givenTurn(Card card1, Card card2, Card card3, Card card4) throws Exception {
-        CommunityCards communityCards = current().game.getTableInfos().getCommunityCards();
+        CommunityCards communityCards = current().game.getTableFacade().getCommunityCards();
         assertEquals(4, communityCards.size());
         assertEquals(card1, communityCards.get(0));
         assertEquals(card2, communityCards.get(1));
@@ -175,7 +175,7 @@ public class GameSteps extends AbstractPokerSteps {
 
     @Then("le croupier distribue la river : $card1, $card2, $card3, $card4, $card5")
     public void givenRiver(Card card1, Card card2, Card card3, Card card4, Card card5) throws Exception {
-        CommunityCards communityCards = current().game.getTableInfos().getCommunityCards();
+        CommunityCards communityCards = current().game.getTableFacade().getCommunityCards();
         assertEquals(5, communityCards.size());
         assertEquals(card1, communityCards.get(0));
         assertEquals(card2, communityCards.get(1));
@@ -275,6 +275,6 @@ public class GameSteps extends AbstractPokerSteps {
     }
 
     private Player getPlayer(String nickname){
-        return current().game.getTableInfos().getPlayerInfos(nickname).getPlayer();
+        return current().game.getTableFacade().getPlayerInfos(nickname).getPlayer();
     }
 }

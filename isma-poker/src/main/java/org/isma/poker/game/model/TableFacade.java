@@ -5,11 +5,11 @@ import org.isma.poker.model.CommunityCards;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TableInfos {
+public class TableFacade {
     private final Table table;
     private final GameConfiguration configuration;
 
-    public TableInfos(Table table, GameConfiguration configuration) {
+    public TableFacade(Table table, GameConfiguration configuration) {
         this.table = table;
         this.configuration = configuration;
     }

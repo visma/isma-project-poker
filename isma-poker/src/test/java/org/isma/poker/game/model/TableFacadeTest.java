@@ -7,14 +7,14 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-public class TableInfosTest extends Abstract2PlayersGameSessionTest {
+public class TableFacadeTest extends Abstract2PlayersGameSessionTest {
 
     @Test
     public void remaining_to_pay() throws Exception {
         gotoStep(StepEnum.BETS_2);
         PlayerAction.bet(player2, game, 60);
         PlayerAction.raise(player1, game, 25);
-        assertEquals(25, tableInfos.getRemainingChipsToPay(player2));
-        assertEquals(0, tableInfos.getRemainingChipsToPay(player1));
+        assertEquals(25, tableFacade.getRemainingChipsToPay(player2));
+        assertEquals(0, tableFacade.getRemainingChipsToPay(player1));
     }
 }

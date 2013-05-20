@@ -20,7 +20,7 @@ public class JoinActionTest extends AbstractPokerTest {
     @Before
     public void setUp() throws Exception {
         game = buildGame();
-        assertEquals(2, game.getTableInfos().getMaxPlayers());
+        assertEquals(2, game.getTableFacade().getMaxPlayers());
     }
 
     @Test
@@ -29,12 +29,12 @@ public class JoinActionTest extends AbstractPokerTest {
         Map<String, String> messageMap = new HashMap<String, String>();
         messageMap.put(JoinMessageRequest.NICKNAME, "toto");
 
-        assertEquals(0, game.getTableInfos().getPlayersInfos().size());
+        assertEquals(0, game.getTableFacade().getPlayersInfos().size());
 
         action.execute(game, messageMap);
 
-        assertEquals(1, game.getTableInfos().getPlayersInfos().size());
-        assertFalse(game.getTableInfos().isTableFull());
+        assertEquals(1, game.getTableFacade().getPlayersInfos().size());
+        assertFalse(game.getTableFacade().isTableFull());
         assertTrue(action.nextActions(game).isEmpty());
         assertEquals(StepEnum.END, game.getStep());
     }
@@ -49,8 +49,8 @@ public class JoinActionTest extends AbstractPokerTest {
         messageMap.put(JoinMessageRequest.NICKNAME, "tata");
         action.execute(game, messageMap);
 
-        assertEquals(2, game.getTableInfos().getPlayersInfos().size());
-        assertTrue(game.getTableInfos().isTableFull());
+        assertEquals(2, game.getTableFacade().getPlayersInfos().size());
+        assertTrue(game.getTableFacade().isTableFull());
         List<AbstractPokerAction> nextActions = action.nextActions(game);
         assertFalse(nextActions.isEmpty());
         assertEquals(GameStartAction.class, nextActions.get(0).getClass());

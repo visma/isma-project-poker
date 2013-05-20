@@ -1,6 +1,6 @@
 package org.isma.poker.game.step;
 
-public interface PokerStepExecutable {
+public interface PokerStepRunner {
     Step getStep();
 
     void executeFirstBetStep() throws InvalidStepActionException;

@@ -1,7 +1,7 @@
 package org.isma.web.poker.messages.response;
 
 import org.isma.poker.game.GameSession;
-import org.isma.poker.game.model.TableInfos;
+import org.isma.poker.game.model.TableFacade;
 import org.isma.web.poker.messages.AbstractObjectMessageResponse;
 
 import java.util.List;
@@ -29,19 +29,19 @@ public class GameStateResponse extends AbstractObjectMessageResponse<GameSession
 
     @Override
     public String getAttributeValue(GameSession game, String attributeKey) {
-        TableInfos tableInfos = game.getTableInfos();
+        TableFacade tableFacade = game.getTableFacade();
         if (attributeKey.equals(SMALL_BLIND)) {
-            return Integer.toString(tableInfos.getSmallBlindAmount());
+            return Integer.toString(tableFacade.getSmallBlindAmount());
         } else if (attributeKey.equals(BIG_BLIND)) {
-            return Integer.toString(tableInfos.getBigBlindAmount());
+            return Integer.toString(tableFacade.getBigBlindAmount());
         } else if (attributeKey.equals(POT)) {
-            return Integer.toString(tableInfos.getTotalPot());
+            return Integer.toString(tableFacade.getTotalPot());
         } else if (attributeKey.equals(STEP)) {
             return game.getStep().name();
         } else if (attributeKey.equals(BUTTON)) {
-            return tableInfos.getDealerInfos().getPlayer().getNickname();
+            return tableFacade.getDealerInfos().getPlayer().getNickname();
         } else if (attributeKey.equals(CURRENT_PLAYER)) {
-            return tableInfos.getCurrentPlayerInfos().getPlayer().getNickname();
+            return tableFacade.getCurrentPlayerInfos().getPlayer().getNickname();
         }
         return throwUnexpectedAttributeValue(attributeKey);
     }
