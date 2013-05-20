@@ -4,7 +4,7 @@ import org.isma.poker.game.exceptions.InvalidPlayerBetException;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Table;
 import org.isma.poker.game.step.InvalidStepActionException;
-import org.isma.poker.game.step.PokerStepGame;
+import org.isma.poker.game.step.PokerActionStepGame;
 
 import static org.isma.poker.game.actions.PokerActionEnum.RAISE;
 import static org.isma.poker.game.exceptions.InvalidPlayerBetException.InvalidBetEnum.*;
@@ -13,7 +13,7 @@ public class RaiseAction extends AbstractPlayerAction {
     private final int additionalChips;
     private final int minBetAllowed;
 
-    public RaiseAction(PokerStepGame gameSession, Table table, int additionalChips, int minBetAllowed) {
+    public RaiseAction(PokerActionStepGame gameSession, Table table, int additionalChips, int minBetAllowed) {
         super(RAISE, gameSession, table);
         this.additionalChips = additionalChips;
         this.minBetAllowed = minBetAllowed;

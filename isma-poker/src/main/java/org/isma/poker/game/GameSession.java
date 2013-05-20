@@ -8,10 +8,7 @@ import org.isma.poker.game.exceptions.PokerGameException;
 import org.isma.poker.game.factory.ITableFactory;
 import org.isma.poker.game.model.*;
 import org.isma.poker.game.results.Results;
-import org.isma.poker.game.step.InvalidStepActionException;
-import org.isma.poker.game.step.PokerStepGame;
-import org.isma.poker.game.step.Step;
-import org.isma.poker.game.step.StepEnum;
+import org.isma.poker.game.step.*;
 import org.isma.poker.model.Card;
 import org.isma.poker.model.Deck;
 
@@ -21,7 +18,7 @@ import java.util.List;
 import static java.lang.String.format;
 import static org.isma.poker.factory.IDeckFactory.DeckTypeEnum.FIFTY_TWO_CARDS_DECK;
 
-public class GameSession implements PlayerBetListener, PokerStepGame {
+public class GameSession implements PlayerBetListener, PokerActionStepGame, PokerStepExecutable {
     private static final Logger LOG = Logger.getLogger(GameSession.class);
     private final GameConfiguration configuration;
     private final IDeckFactory deckFactory;
@@ -91,7 +88,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame {
         gameStep.nextStep();
     }
 
-    public void gotoEnd() throws InvalidStepActionException {
+    public void gotoEndStep() throws InvalidStepActionException {
         gameStep.gotoEnd();
     }
 
@@ -112,7 +109,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame {
 
     @Override
     public void sitIn(Player player) throws PokerGameException {
-        notify(new PlayerSitEvent(player));
+        notifyEvent(new PlayerSitEvent(player));
         table.add(player);
         beginRoundIfPossible();
     }
@@ -184,7 +181,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame {
 
     public void executeEndStep() throws InvalidStepActionException {
         Results results = new Results(table.getPot(), table.getAlivePlayers());
-        notify(new RoundEndEvent(results));
+        notifyEvent(new RoundEndEvent(results));
         for (Winner winner : results.getWinners()) {
             winner.getPlayer().setChips(winner.getPlayer().getChips() + winner.getPrize());
         }
@@ -223,7 +220,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame {
 
                 table.prepareDealHoleCardsStep(deck);
                 for (Player player : table.getAlivePlayers()) {
-                    GameSession.this.notify(new HoldeCardEvent(player));
+                    GameSession.this.notifyEvent(new HoldeCardEvent(player));
                 }
             }
         }.execute();
@@ -235,7 +232,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame {
             protected void doAction() {
                 List<Card> newCards = table.prepapreDealCommunityCardStep(deck, number);
                 for (Card newCard : newCards) {
-                    GameSession.this.notify(new CommunityCardEvent(newCard));
+                    GameSession.this.notifyEvent(new CommunityCardEvent(newCard));
                 }
             }
         }.execute();
@@ -254,7 +251,7 @@ public class GameSession implements PlayerBetListener, PokerStepGame {
         eventListeners.add(eventListener);
     }
 
-    public void notify(GameEvent event) {
+    public void notifyEvent(GameEvent event) {
         event.log();
         for (GameEventListener eventListener : eventListeners) {
             eventListener.add(event);

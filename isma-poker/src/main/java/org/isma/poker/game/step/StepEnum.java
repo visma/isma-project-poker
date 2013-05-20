@@ -55,7 +55,7 @@ public enum StepEnum implements Step {
         return null;
     }
 
-    public void setUp(PokerStepGame game) throws InvalidStepActionException {
+    public void setUp(PokerStepExecutable game) throws InvalidStepActionException {
         if (step != null) {
             step.setUp(game);
         }

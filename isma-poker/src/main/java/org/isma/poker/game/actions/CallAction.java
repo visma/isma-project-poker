@@ -5,12 +5,12 @@ import org.isma.poker.game.exceptions.InvalidPlayerBetException;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Table;
 import org.isma.poker.game.step.InvalidStepActionException;
-import org.isma.poker.game.step.PokerStepGame;
+import org.isma.poker.game.step.PokerActionStepGame;
 
 import static org.isma.poker.game.actions.PokerActionEnum.CALL;
 
 public class CallAction extends AbstractPlayerAction {
-    public CallAction(PokerStepGame gameSession, Table table) {
+    public CallAction(PokerActionStepGame gameSession, Table table) {
         super(CALL, gameSession, table);
     }
 
@@ -20,6 +20,6 @@ public class CallAction extends AbstractPlayerAction {
         int remainingToPay = table.getCurrentBet() - currentPlayerBet;
         int paid = PlayerAction.payChips(player, remainingToPay);
         table.addToPot(player, paid);
-        gameSession.notify(new CallEvent(player));
+        game.notifyEvent(new CallEvent(player));
     }
 }

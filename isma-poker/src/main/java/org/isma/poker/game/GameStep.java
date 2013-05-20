@@ -2,16 +2,16 @@ package org.isma.poker.game;
 
 import org.apache.log4j.Logger;
 import org.isma.poker.game.step.InvalidStepActionException;
-import org.isma.poker.game.step.PokerStepGame;
+import org.isma.poker.game.step.PokerStepExecutable;
 import org.isma.poker.game.step.StepEnum;
 
 class GameStep {
     private StepEnum step;
-    private final PokerStepGame game;
+    private final PokerStepExecutable game;
     private boolean stepOver;
     private static final Logger LOG = Logger.getLogger(GameStep.class);
 
-    public GameStep(PokerStepGame stepGame) {
+    public GameStep(PokerStepExecutable stepGame) {
         this.game = stepGame;
         step = StepEnum.END;
     }

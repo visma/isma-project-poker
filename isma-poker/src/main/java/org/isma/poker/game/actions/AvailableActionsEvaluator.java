@@ -2,7 +2,7 @@ package org.isma.poker.game.actions;
 
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.TableInfos;
-import org.isma.poker.game.step.PokerStepGame;
+import org.isma.poker.game.step.PokerActionStepGame;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import static org.isma.poker.game.step.StepEnum.SHOWDOWN;
 
 public class AvailableActionsEvaluator {
 
-    public List<PokerActionEnum> evaluate(PokerStepGame gameSession, Player player) {
+    public List<PokerActionEnum> evaluate(PokerActionStepGame gameSession, Player player) {
         TableInfos tableInfos = gameSession.getTableInfos();
 
         if (player != tableInfos.getCurrentPlayer() || player.isFold()){

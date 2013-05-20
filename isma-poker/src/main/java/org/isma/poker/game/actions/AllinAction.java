@@ -4,14 +4,14 @@ import org.isma.poker.game.exceptions.InvalidPlayerBetException;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Table;
 import org.isma.poker.game.step.InvalidStepActionException;
-import org.isma.poker.game.step.PokerStepGame;
+import org.isma.poker.game.step.PokerActionStepGame;
 
 import static java.lang.String.format;
 import static org.isma.poker.game.actions.PokerActionEnum.ALLIN;
 import static org.isma.poker.game.exceptions.InvalidPlayerBetException.InvalidBetEnum.RAISE_FORBIDDEN;
 
 public class AllinAction extends AbstractPlayerAction {
-    public AllinAction(PokerStepGame gameSession, Table table) {
+    public AllinAction(PokerActionStepGame gameSession, Table table) {
         super(ALLIN, gameSession, table);
     }
 

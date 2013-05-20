@@ -6,7 +6,7 @@ import org.isma.poker.game.model.InvalidPlayerTurnException;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Table;
 import org.isma.poker.game.step.InvalidStepActionException;
-import org.isma.poker.game.step.PokerStepGame;
+import org.isma.poker.game.step.PokerActionStepGame;
 import org.isma.poker.game.step.Step;
 import org.isma.poker.game.step.StepEnum;
 
@@ -19,13 +19,13 @@ public abstract class AbstractPlayerAction {
     private static final AvailableActionsEvaluator AVAILABLE_ACTIONS_EVALUATOR = new AvailableActionsEvaluator();
 
     private final PokerActionEnum action;
-    protected final PokerStepGame gameSession;
+    protected final PokerActionStepGame game;
     protected final Table table;
 
 
-    AbstractPlayerAction(PokerActionEnum action, PokerStepGame gameSession, Table table) {
+    AbstractPlayerAction(PokerActionEnum action, PokerActionStepGame game, Table table) {
         this.action = action;
-        this.gameSession = gameSession;
+        this.game = game;
         this.table = table;
     }
 
@@ -33,14 +33,14 @@ public abstract class AbstractPlayerAction {
         if (action != SIT_OUT && table.getCurrentPlayer() != player) {
             throw new InvalidPlayerTurnException(player);
         }
-        if (!AVAILABLE_ACTIONS_EVALUATOR.evaluate(gameSession, player).contains(action)) {
+        if (!AVAILABLE_ACTIONS_EVALUATOR.evaluate(game, player).contains(action)) {
             throw new IllegalArgumentException("invalid action :" + action);
         }
     }
 
 
     public void execute(Player player) throws InvalidPlayerTurnException, InvalidPlayerBetException, InvalidStepActionException {
-        Step cloneStep = gameSession.getStep();
+        Step cloneStep = game.getStep();
         LOG.debug(format("execute(%s, %s).begin(%s)",
                 player.getNickname(),
                 action,
@@ -56,9 +56,9 @@ public abstract class AbstractPlayerAction {
 
     private void endPlayerTurn() throws InvalidStepActionException {
         if (table.isRoundOver()) {
-            gameSession.gotoEnd();
+            game.gotoEndStep();
         } else {
-            StepEnum step = (StepEnum) gameSession.getStep();
+            StepEnum step = (StepEnum) game.getStep();
             if (step != SHOWDOWN) {
                 if (!table.prepareNextPlayer(false)) {
                     endStep();
@@ -72,7 +72,7 @@ public abstract class AbstractPlayerAction {
     }
 
     private void endStep() throws InvalidStepActionException {
-        gameSession.finishStep();
+        game.finishStep();
     }
 
     protected abstract void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException;
