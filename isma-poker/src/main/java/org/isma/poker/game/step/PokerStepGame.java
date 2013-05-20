@@ -9,6 +9,8 @@ public interface PokerStepGame {
 
     void nextStep() throws PokerGameException;
 
+    void gotoEnd() throws InvalidStepActionException;
+
     void finishStep() throws InvalidStepActionException;
 
     void executeFirstBetStep() throws InvalidStepActionException;

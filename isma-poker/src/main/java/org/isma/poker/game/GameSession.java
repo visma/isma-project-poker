@@ -88,11 +88,11 @@ public class GameSession implements PlayerBetListener, PokerStepGame {
     }
 
     public void nextStep() throws InvalidStepActionException {
-        if (table.isRoundOver()) {
-            gameStep.gotoEnd();
-        } else {
-            gameStep.nextStep();
-        }
+        gameStep.nextStep();
+    }
+
+    public void gotoEnd() throws InvalidStepActionException {
+        gameStep.gotoEnd();
     }
 
     public void finishStep() throws InvalidStepActionException {
@@ -178,6 +178,19 @@ public class GameSession implements PlayerBetListener, PokerStepGame {
     // **** Step executions
     // ********************************************************************************
 
+    public void executeShowDownStep() {
+        table.prepareShowDown();
+    }
+
+    public void executeEndStep() throws InvalidStepActionException {
+        Results results = new Results(table.getPot(), table.getAlivePlayers());
+        notify(new RoundEndEvent(results));
+        for (Winner winner : results.getWinners()) {
+            winner.getPlayer().setChips(winner.getPlayer().getChips() + winner.getPrize());
+        }
+        beginRoundIfPossible();
+    }
+
     public void executeFirstBetStep() throws InvalidStepActionException {
         LOG.debug("executeFirstBetStep");
         if (table.getAliveWithChipsPlayers().size() > 1) {
@@ -226,18 +239,6 @@ public class GameSession implements PlayerBetListener, PokerStepGame {
                 }
             }
         }.execute();
-    }
-
-    public void executeShowDownStep() {
-        table.prepareShowDown();
-    }
-
-    public void executeEndStep() throws InvalidStepActionException {
-        notify(new RoundEndEvent(new Results(table.getPot(), table.getAlivePlayers())));
-        for (Winner winner : new Results(table.getPot(), table.getAlivePlayers()).getWinners()) {
-            winner.getPlayer().setChips(winner.getPlayer().getChips() + winner.getPrize());
-        }
-        gameStep.gotoEnd();
     }
 
     // ********************************************************************************

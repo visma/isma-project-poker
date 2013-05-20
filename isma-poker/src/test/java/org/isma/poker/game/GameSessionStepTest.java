@@ -11,6 +11,7 @@ import org.junit.Test;
 import static junit.framework.Assert.*;
 import static org.isma.poker.game.actions.PlayerAction.*;
 import static org.isma.poker.game.step.StepEnum.*;
+import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 import static org.isma.poker.model.HandEvaluation.STRAIGHT;
 import static org.isma.poker.model.HandEvaluation.TWO_PAIR;
 
@@ -58,10 +59,13 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         assertEquals(BETS_1, game.getStep());
         assertEquals(2, player1.getHand().size());
         assertEquals(2, player2.getHand().size());
-        assertEquals("8 of Clubs", player1.getHand().get(0).toString());
-        assertEquals("9 of Clubs", player1.getHand().get(1).toString());
-        assertEquals("10 of Diamonds", player2.getHand().get(0).toString());
-        assertEquals("Knave of Diamonds", player2.getHand().get(1).toString());
+
+        assertEquals(EIGHT_OF_CLUBS.getCard(), player2.getHand().get(0));
+        assertEquals(NINE_OF_CLUBS.getCard(), player2.getHand().get(1));
+
+        assertEquals(TEN_OF_DIAMONDS.getCard(), player1.getHand().get(0));
+        assertEquals(KNAVE_OF_DIAMONDS.getCard(), player1.getHand().get(1));
+
         assertTrue(tableInfos.getCommunityCards().isEmpty());
     }
 
@@ -223,30 +227,33 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         assertEquals(player2, tableInfos.getCurrentPlayer());
 
         //
-        PlayerAction.show(player2, game);
+        show(player2, game);
         assertEquals(player1, tableInfos.getCurrentPlayer());
         assertEquals(SHOWDOWN, game.getStep());
         assertFalse(game.isRoundOver());
-        while (eventListener.poll() != null){
+        while (eventListener.poll() != null) {
         }
 
         //
-        PlayerAction.show(player1, game);
+        show(player1, game);
         assertEquals(BLINDS, game.getStep());
         eventListener.poll();
         RoundEndEvent gameEvent = (RoundEndEvent) eventListener.poll();
         Results results = gameEvent.getResults();
         assertEquals(1, results.getWinners().size());
         Winner winner = results.getWinners().get(0);
-        assertEquals(player1, winner.getPlayer());
+
+        assertEquals(player2, winner.getPlayer());
         assertEquals(20, winner.getPrize());
         assertEquals(STRAIGHT, winner.getHandEvaluation());
         assertEquals(1, results.getLosers().size());
+
         Loser loser = results.getLosers().get(0);
-        assertEquals(player2, loser.getPlayer());
+        assertEquals(player1, loser.getPlayer());
         assertEquals(TWO_PAIR, loser.getHandEvaluation());
-        assertEquals(110, player1.getChips());
-        assertEquals(90, player2.getChips());
+
+        assertEquals(110, player2.getChips());
+        assertEquals(90, player1.getChips());
     }
 
     @Test
@@ -257,8 +264,10 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         assertEquals(BLINDS, game.getStep());
         assertEquals(0, player1.getHand().size());
         assertEquals(0, player2.getHand().size());
-        assertEquals(110, player1.getChips());
-        assertEquals(90, player2.getChips());
+
+        assertEquals(110, player2.getChips());
+        assertEquals(90, player1.getChips());
+
         assertEquals(player2, tableInfos.getDealer());
         assertEquals(player1, tableInfos.getSmallBlindPlayer());
         assertEquals(player2, tableInfos.getBigBlindPlayer());
@@ -271,8 +280,8 @@ public class GameSessionStepTest extends Abstract2PlayerGameSessionTest {
         assertEquals(10, game.getTableInfos().getCurrentBet());
 
         //Then
-        assertEquals(105, player1.getChips());
-        assertEquals(80, player2.getChips());
+        assertEquals(100, player2.getChips());
+        assertEquals(85, player1.getChips());
         assertEquals(15, tableInfos.getTotalPot());
     }
 

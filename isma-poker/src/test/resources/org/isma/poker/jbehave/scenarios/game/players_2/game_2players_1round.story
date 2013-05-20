@@ -15,14 +15,11 @@ Then mario est au bouton
 Then luigi paie la petite blinde
 Then mario paie la grosse blinde
 Then etape en cours : BETS_1 (pot : 15)
-Then mario reçoit les cartes cachees : 7-D, 2-S
-Then luigi reçoit les cartes cachees : 10-H, 9-H
+Then luigi reçoit les cartes cachees : 7-D, 2-S
+Then mario reçoit les cartes cachees : 10-H, 9-H
 
 When luigi effectue l'action : CALL()
-
-Then etape en cours : BETS_1 (pot : 20)
 Then mario est le prochain joueur à parler
-
 When mario effectue l'action : CHECK()
 
 Then etape en cours : BETS_2 (pot : 20)
@@ -46,7 +43,7 @@ When luigi effectue l'action : CALL()
 
 Then etape en cours : SHOWDOWN (pot : 120)
 
-When luigi montre TWO_PAIR : 10-S, 10-H, 7-S, 7-H, A-H
-When mario montre THREE_OF_A_KIND : 7-S, 7-H, 7-D, A-H, Q-D
-Then mario est vainqueur avec THREE_OF_A_KIND et gagne 120 jetons
-Then luigi a perdu avec TWO_PAIR
+When luigi montre THREE_OF_A_KIND : 7-S, 7-H, 7-D, A-H, Q-D
+When mario montre TWO_PAIR : 10-S, 10-H, 7-S, 7-H, A-H
+Then luigi est vainqueur avec THREE_OF_A_KIND et gagne 120 jetons
+Then mario a perdu avec TWO_PAIR

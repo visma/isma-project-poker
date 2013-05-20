@@ -19,13 +19,14 @@ class GameStep {
     public void nextStep() throws InvalidStepActionException {
         stepOver = false;
         step = step.getNextStep();
+        LOG.debug("nextStep : " + step);
         step.setUp(game);
-        LOG.debug("step : " + step);
     }
 
-    public void gotoEnd() {
+    public void gotoEnd() throws InvalidStepActionException {
+        LOG.debug("gotoEnd : " + step);
         step = StepEnum.END;
-        LOG.debug("step : " + step);
+        step.setUp(game);
     }
 
 

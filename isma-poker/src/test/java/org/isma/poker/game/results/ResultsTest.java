@@ -3,6 +3,7 @@ package org.isma.poker.game.results;
 import org.isma.poker.game.AbstractPokerTest;
 import org.isma.poker.game.GameSession;
 import org.isma.poker.game.actions.PlayerAction;
+import org.isma.poker.game.model.Loser;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Pot;
 import org.isma.poker.game.model.Winner;
@@ -14,7 +15,6 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
 import static org.isma.poker.model.FiftyTwoCardsEnum.*;
 import static org.isma.poker.model.HandEvaluation.PAIR;
 import static org.isma.poker.model.HandEvaluation.STRAIGHT;
@@ -65,8 +65,30 @@ public class ResultsTest extends AbstractPokerTest {
     }
 
     @Test
-    public void two_winners_equality(){
-        fail("todo");
+    public void winners_equality(){
+        //Given
+        Pot pot = getPot();
+        List<FiftyTwoCardsEnum> communityCards = asList(THREE_OF_CLUBS, FOUR_OF_CLUBS, FIVE_OF_CLUBS, SIX_OF_CLUBS, SEVEN_OF_CLUBS);
+        player1.getHand().clear();
+        player2.getHand().clear();
+        player3.getHand().clear();
+        player1.getHand().addAll(asList(ACE_OF_DIAMONDS, KING_OF_DIAMONDS));
+        player1.getHand().addAll(communityCards);
+        player2.getHand().addAll(asList(KING_OF_HEARTS, QUEEN_OF_HEARTS));
+        player2.getHand().addAll(communityCards);
+
+        //When
+        Results results = new Results(pot, asList(player1, player2));
+        List<Winner> winners = results.getWinners();
+        List<Loser> losers = results.getLosers();
+
+        //Then
+        assertEquals(2, winners.size());
+        assertEquals(0, losers.size());
+        assertEquals(player2, winners.get(0).getPlayer());
+        assertEquals(145, winners.get(0).getPrize());
+        assertEquals(player1, winners.get(1).getPlayer());
+        assertEquals(145, winners.get(1).getPrize());
     }
 
     private List<Player> getPlayers() {

@@ -13,8 +13,8 @@ When la partie démarre
 Then mario est au bouton
 Then luigi paie la petite blinde
 Then mario paie la grosse blinde
-Then mario reçoit les cartes cachees : 7-D, 2-S
-Then luigi reçoit les cartes cachees : 10-H, 9-H
+Then luigi reçoit les cartes cachees : 7-D, 2-S
+Then mario reçoit les cartes cachees : 10-H, 9-H
 
 When luigi effectue l'action : CALL()
 When mario effectue l'action : CHECK()
@@ -32,12 +32,12 @@ When luigi effectue l'action : BET(10)
 When mario effectue l'action : RAISE(20)
 When luigi effectue l'action : CALL()
 
-When luigi montre TWO_PAIR : 10-S, 10-H, 7-S, 7-H, A-H
-When mario montre THREE_OF_A_KIND : 7-S, 7-H, 7-D, A-H, Q-D
-Then mario est vainqueur avec THREE_OF_A_KIND et gagne 120 jetons
-Then luigi a perdu avec TWO_PAIR
-Then mario a 160 jetons
-Then luigi a 40 jetons
+When luigi montre THREE_OF_A_KIND : 7-S, 7-H, 7-D, A-H, Q-D
+When mario montre TWO_PAIR : 10-S, 10-H, 7-S, 7-H, A-H
+Then luigi est vainqueur avec THREE_OF_A_KIND et gagne 120 jetons
+Then mario a perdu avec TWO_PAIR
+Then luigi a 160 jetons
+Then mario a 40 jetons
 
 Given les prochaines cartes du deck sont : 2-H, A-C, 3-H, A-S, 4-H, 5-H, 6-H, 7-H, 8-H
 Given un nouveau round va démarrer

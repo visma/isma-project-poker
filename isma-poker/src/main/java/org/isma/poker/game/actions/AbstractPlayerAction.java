@@ -56,19 +56,15 @@ public abstract class AbstractPlayerAction {
 
     private void endPlayerTurn() throws InvalidStepActionException {
         if (table.isRoundOver()) {
-            gameSession.executeEndStep();
-            table.prepareBlindsStep();
+            gameSession.gotoEnd();
         } else {
             StepEnum step = (StepEnum) gameSession.getStep();
-            if (step != SHOWDOWN){
-                boolean nextPlayerReady = table.prepareNextPlayer(false);
-                //int aliveWithChipsCount = table.getAliveWithChipsPlayers().size();
-                if (!nextPlayerReady /*|| aliveWithChipsCount < 2*/){
+            if (step != SHOWDOWN) {
+                if (!table.prepareNextPlayer(false)) {
                     endStep();
                 }
             } else {
-                boolean nextPlayerReady = table.prepareNextPlayer(true);
-                if (!nextPlayerReady){
+                if (!table.prepareNextPlayer(true)) {
                     endStep();
                 }
             }
@@ -77,9 +73,6 @@ public abstract class AbstractPlayerAction {
 
     private void endStep() throws InvalidStepActionException {
         gameSession.finishStep();
-        if (gameSession.getStep() == StepEnum.END) {
-            gameSession.beginRoundIfPossible();
-        }
     }
 
     protected abstract void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException;

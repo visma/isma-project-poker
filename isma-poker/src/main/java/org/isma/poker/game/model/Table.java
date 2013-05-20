@@ -84,6 +84,7 @@ public class Table {
         if (currentPlayer != null) {
             updateRemainingActionPlayers(new PlayerBetPredicate());
         }
+        System.out.println("prepareNextBetStep("+firstBetStep+").currentPlayer=" + currentPlayer);
     }
 
     //TODO faire des test sur cette méthode pour bien controler les joueurs restants
@@ -103,12 +104,23 @@ public class Table {
         }
     }
 
+    //TODO TU pour controler l'ordre de distribution en fonction du bouton
     public void prepareDealHoleCardsStep(Deck deck) {
         int cardAmount = 2;
         List<Card> cards = deck.deal(inGamePlayers.size() * cardAmount);
+//        System.out.println("lol.currentPlayer : " + currentPlayer);
+//        System.out.println("lol2.underTheGunPlayer : " + underTheGunPlayer);
+//        System.out.println("lol3.smallBlindPlayer : " + smallBlindPlayer);
+//        System.out.println("lol3.dealer : " + dealer);
+//        System.out.println("dealer : " + dealer);
+//        System.out.println("cartes a distribuer : " + cards.size());
+
         for (int i = 0; i < cardAmount; i++) {
-            for (Player inGamePlayer : inGamePlayers) {
-                inGamePlayer.getHand().add(cards.remove(0));
+            System.out.printf("distribution a underTheGunPlayer %s \n", underTheGunPlayer);
+            underTheGunPlayer.getHand().add(cards.remove(0));
+            for (Player currPlayer : inGamePlayers.nextList(underTheGunPlayer)) {
+                System.out.printf("distribution a %s \n", currPlayer);
+                currPlayer.getHand().add(cards.remove(0));
             }
         }
     }

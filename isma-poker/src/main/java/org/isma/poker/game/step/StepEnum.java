@@ -11,7 +11,7 @@ public enum StepEnum implements Step {
     RIVER(8, new CommunityCardsDealingStep(1)),
     BETS_4(9, new BetStep()),
     SHOWDOWN(10, new ShowDownStep()),
-    END(11, new ResultsStep());
+    END(11, new EndStep());
 
     private final int order;
     private final AbstractStep step;

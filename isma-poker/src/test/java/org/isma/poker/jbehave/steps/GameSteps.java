@@ -138,6 +138,9 @@ public class GameSteps extends AbstractPokerSteps {
             case ALLIN:
                 PlayerAction.allIn(player, game);
                 break;
+            case FOLD:
+                PlayerAction.fold(player, game);
+                break;
             default:
                 throw new Exception("action non gere dans le test :" + pokerAction);
         }
@@ -190,6 +193,20 @@ public class GameSteps extends AbstractPokerSteps {
         assertEquals(card3, hand.get(2));
         assertEquals(card4, hand.get(3));
         assertEquals(card5, hand.get(4));
+    }
+
+    @Then("$nickname est vainqueur sans rien montrer gagne $prize jetons")
+    public void thenWinnerBeforeShowdown(String nickname, int prize){
+        RoundEndEvent event = (RoundEndEvent) current().resultEventListner.peek();
+        Results results = event.getResults();
+        for (Winner winner : results.getWinners()) {
+            if (winner.getPlayer().getNickname().equals(nickname)){
+                //assertEquals(handEvaluation, winner.getHandEvaluation());
+                assertEquals(prize, winner.getPrize());
+                return;
+            }
+        }
+        fail(nickname + " not win");
     }
 
     @Then("$nickname est vainqueur avec $handEvaluation et gagne $prize jetons")
