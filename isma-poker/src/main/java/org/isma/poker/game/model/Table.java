@@ -84,7 +84,7 @@ public class Table {
         if (currentPlayer != null) {
             updateRemainingActionPlayers(new PlayerBetPredicate());
         }
-        System.out.println("prepareNextBetStep("+firstBetStep+").currentPlayer=" + currentPlayer);
+        //System.out.println("prepareNextBetStep("+firstBetStep+").currentPlayer=" + currentPlayer);
     }
 
     //TODO faire des test sur cette méthode pour bien controler les joueurs restants
@@ -116,10 +116,10 @@ public class Table {
 //        System.out.println("cartes a distribuer : " + cards.size());
 
         for (int i = 0; i < cardAmount; i++) {
-            System.out.printf("distribution a underTheGunPlayer %s \n", underTheGunPlayer);
+            //System.out.printf("distribution a underTheGunPlayer %s \n", underTheGunPlayer);
             underTheGunPlayer.getHand().add(cards.remove(0));
             for (Player currPlayer : inGamePlayers.nextList(underTheGunPlayer)) {
-                System.out.printf("distribution a %s \n", currPlayer);
+                //System.out.printf("distribution a %s \n", currPlayer);
                 currPlayer.getHand().add(cards.remove(0));
             }
         }

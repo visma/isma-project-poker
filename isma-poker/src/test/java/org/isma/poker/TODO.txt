@@ -1,4 +1,4 @@
-- vérifier que le tour d'un joueur est skyppé s'il a plus de jetons (allin)
+- vérifier que le tour d'un joueur est skippé s'il a plus de jetons (allin)
 - tester les allins et vérifier s'ils constituent des raises ou non
 - faire des tests avec des allins AVANT le dernier tour de mises
-- refactorer/simplifier Table/TableInfos et eliminer les cycles
+- refactorer/simplifier Table/TableInfos
