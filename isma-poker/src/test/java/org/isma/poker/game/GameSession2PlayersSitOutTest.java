@@ -8,7 +8,7 @@ import static org.isma.poker.game.actions.PlayerAction.*;
 import static org.isma.poker.game.step.StepEnum.BLINDS;
 import static org.isma.poker.game.step.StepEnum.END;
 
-public class GameSession2PlayersSitOutTest extends Abstract2PlayersGameSessionTest {
+public class  GameSession2PlayersSitOutTest extends Abstract2PlayersGameSessionTest {
     @Test
     public void small_blind_sitout_and_new_challenger() throws Exception {
         //Given
@@ -53,6 +53,7 @@ public class GameSession2PlayersSitOutTest extends Abstract2PlayersGameSessionTe
         //Then
         assertEquals(END, game.getStep());
         assertEquals(null, game.getTableFacade().getCurrentPlayer());
+        assertEquals(100, player2.getChips());
 
         Player nouveau = new Player("nouveau");
         nouveau.setChips(200);

@@ -7,6 +7,8 @@ import org.isma.poker.HandEvaluator;
 import org.isma.poker.game.comparators.PlayerHandComparator;
 import org.isma.poker.game.comparators.PlayerStateComparator;
 import org.isma.poker.game.model.*;
+import org.isma.poker.model.Hand;
+import org.isma.poker.model.HandEvaluation;
 import org.isma.utils.collections.CollectionHelper;
 
 import java.util.*;
@@ -45,7 +47,9 @@ public class Results implements Cloneable {
     private void buildLosers(List<Player> inGamePlayers) {
         for (Player player : inGamePlayers) {
             if (!winners.containsKey(player)) {
-                losers.put(player, new Loser(player, handEvaluator.evaluate(player.getHand())));
+                Hand hand = player.getHand();
+                HandEvaluation evaluation = hand.isEmpty() ? null : handEvaluator.evaluate(hand);
+                losers.put(player, new Loser(player, evaluation));
             }
         }
     }
@@ -69,7 +73,9 @@ public class Results implements Cloneable {
 
     private void deliverPrize(final Player winnerPlayer, int prize) {
         if (winners.get(winnerPlayer) == null) {
-            Winner winner = new Winner(winnerPlayer, handEvaluator.evaluate(winnerPlayer.getHand()));
+            Hand hand = winnerPlayer.getHand();
+            HandEvaluation evaluation = hand.isEmpty() ? null : handEvaluator.evaluate(hand);
+            Winner winner = new Winner(winnerPlayer, evaluation);
             winners.put(winnerPlayer, winner);
         }
         winners.get(winnerPlayer).addPrize(prize);

@@ -18,6 +18,7 @@ public class SitOutAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
+        table.handleFold(player);
         Step step = game.getStep();
         LOG.debug(String.format("SitOutAction.doAction(%s, %s)", player.getNickname(), step));
 
@@ -39,7 +40,7 @@ public class SitOutAction extends AbstractPlayerAction {
     }
 
     private void playerSitOut(Player player) {
-        throw new RuntimeException("not implemented");
+        table.handleFold(player);
     }
 
     private void blindPlayerSitOut(Player player) {

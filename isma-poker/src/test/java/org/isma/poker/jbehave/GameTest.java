@@ -14,8 +14,8 @@ public class GameTest extends AbstractStory {
     protected List<String> storyPaths() {
         return new StoryFinder().findPaths(
                 CodeLocations.codeLocationFromClass(getClass()),
-                "org/isma/poker/jbehave/scenarios/game/*/game_*.story",
-//                "org/isma/poker/jbehave/scenarios/game/*/game_2players_1round.story",
+//                "org/isma/poker/jbehave/scenarios/game/*/game_*.story",
+                "org/isma/poker/jbehave/scenarios/game/*/game_2players_1round_sitout.story",
                 //TODO a remettre bien en *
                 "*KO*");
     }

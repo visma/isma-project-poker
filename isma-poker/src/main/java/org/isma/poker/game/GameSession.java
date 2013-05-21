@@ -126,7 +126,16 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
 
     @Override
     public void sitOut(Player player) throws PokerGameException {
-        new SitOutAction(this, table).execute(player);
+        try {
+            new SitOutAction(this, table).execute(player);
+        } catch (Exception e) {
+            throw new PokerGameException(e);
+        }
+    }
+
+    @Override
+    public void fold(Player player) throws PokerGameException {
+        new FoldAction(this, table).execute(player);
     }
 
     @Override
@@ -179,10 +188,6 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
     }
 
 
-    @Override
-    public void fold(Player player) throws PokerGameException {
-        new FoldAction(this, table).execute(player);
-    }
 
 
     // ********************************************************************************
@@ -270,6 +275,10 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
         for (GameEventListener eventListener : eventListeners) {
             eventListener.add(event);
         }
+    }
+
+    public boolean isFreeze() {
+        return getStep() == END && tableFacade.getCurrentPlayer() == null;
     }
 
     //TODO a foutre dans action comme les action joueurs

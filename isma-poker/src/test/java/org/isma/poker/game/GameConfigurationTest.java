@@ -1,9 +1,10 @@
 package org.isma.poker.game;
 
-import org.isma.poker.game.model.InvalidGameConfigurationException;
 import org.isma.poker.game.model.GameConfiguration;
-import org.junit.Assert;
+import org.isma.poker.game.model.InvalidGameConfigurationException;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class GameConfigurationTest {
 
@@ -19,8 +20,8 @@ public class GameConfigurationTest {
         int smallBlindAmount = 5;
         int bigBlindAmount = 10;
         GameConfiguration conf = new GameConfiguration(smallBlindAmount, bigBlindAmount, false, false);
-        Assert.assertEquals(10, conf.getMinimumBetAllowed());
+        assertEquals(10, conf.getMinimumBetAllowed());
         conf = new GameConfiguration(smallBlindAmount, 52, false, false);
-        Assert.assertEquals(52, conf.getMinimumBetAllowed());
+        assertEquals(52, conf.getMinimumBetAllowed());
     }
 }

@@ -74,7 +74,16 @@ public class GameSteps extends AbstractPokerSteps {
     @Given("un nouveau round va démarrer")
     public void givenRound() throws Exception {
         current().resultEventListner.clear();
+        assertFalse(current().game.isFreeze());
     }
+
+    @Then("la partie est en standby")
+    public void thenFreeze() throws Exception {
+        current().resultEventListner.clear();
+        assertTrue(current().game.isFreeze());
+        assertNull(current().game.getTableFacade().getCurrentPlayer());
+    }
+
 
 
     @When("$nickname call")
