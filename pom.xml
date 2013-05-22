@@ -24,6 +24,7 @@
         <jbehave.core.version>3.6.6</jbehave.core.version>
         <jbehave.site.version>3.1.1</jbehave.site.version>
         <jbehave.runner.version>1.0.1</jbehave.runner.version>
+        <springframework-version>3.1.0.RELEASE</springframework-version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -34,8 +35,39 @@
             </dependency>
             <dependency>
                 <groupId>org.isma</groupId>
+                <artifactId>isma-poker-services</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.isma</groupId>
                 <artifactId>isma-poker-web</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <!-- SPRING -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${springframework-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-web</artifactId>
+                <version>${springframework-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -79,7 +111,9 @@
     </build>
     <modules>
         <module>isma-poker</module>
-        <module>isma-poker-web</module>
+        <module>isma-poker-services</module>
+        <module>isma-poker-rest-app</module>
+        <!--<module>isma-poker-web</module>-->
     </modules>
     <scm>
         <connection>scm:git:https://github.com/visma/isma-project-poker.git</connection>

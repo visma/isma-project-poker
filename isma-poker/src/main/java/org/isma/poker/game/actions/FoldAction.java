@@ -1,5 +1,6 @@
 package org.isma.poker.game.actions;
 
+import org.isma.poker.game.event.FoldEvent;
 import org.isma.poker.game.exceptions.InvalidPlayerBetException;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Table;
@@ -15,6 +16,7 @@ public class FoldAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
+        game.notifyEvent(new FoldEvent(player));
         table.handleFold(player);
     }
 }

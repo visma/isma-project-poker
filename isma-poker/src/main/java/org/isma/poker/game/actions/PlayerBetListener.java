@@ -2,9 +2,10 @@ package org.isma.poker.game.actions;
 
 import org.isma.poker.game.exceptions.PokerGameException;
 import org.isma.poker.game.model.Player;
+import org.isma.poker.game.step.InvalidStepActionException;
 
 public interface PlayerBetListener {
-    boolean buy(Player player, int chips);
+    boolean buy(Player player, int chips) throws InvalidStepActionException;
 
     void call(Player player) throws PokerGameException;
 

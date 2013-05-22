@@ -46,6 +46,7 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
 
     /**
      * Game doesn't begin until a minimum players is reached
+     *
      * @param firstRoundMinimumPlayers
      */
     public void init(int firstRoundMinimumPlayers) {
@@ -112,8 +113,10 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
     // ********************************************************************************
 
     @Override
-    public boolean buy(Player player, int chips) {
+    public boolean buy(Player player, int chips) throws InvalidStepActionException {
+        notifyEvent(new BuyEvent(player, chips));
         player.setChips(player.getChips() + chips);
+        beginRoundIfPossible();
         return true;
     }
 
@@ -186,8 +189,6 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
             throw new PokerGameException(e);
         }
     }
-
-
 
 
     // ********************************************************************************
@@ -270,6 +271,10 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
         eventListeners.add(eventListener);
     }
 
+    public void removeEventListener(GameEventListener eventListener) {
+        eventListeners.remove(eventListener);
+    }
+
     public void notifyEvent(GameEvent event) {
         event.log();
         for (GameEventListener eventListener : eventListeners) {
@@ -279,6 +284,11 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
 
     public boolean isFreeze() {
         return getStep() == END && tableFacade.getCurrentPlayer() == null;
+    }
+
+    public List<PokerActionEnum> getAvailableActions(Player player) {
+        AvailableActionsEvaluator actionsEvaluator = new AvailableActionsEvaluator();
+        return actionsEvaluator.evaluate(this, player);
     }
 
     //TODO a foutre dans action comme les action joueurs

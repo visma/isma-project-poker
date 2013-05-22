@@ -1,4 +1,4 @@
-package org.isma.poker.jbehave.utils;
+package org.isma.poker.game.test;
 
 import org.isma.poker.game.event.GameEvent;
 import org.isma.poker.game.event.GameEventListener;

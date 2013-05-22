@@ -2,6 +2,7 @@ package org.isma.poker.game.model;
 
 import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.actions.PlayerBetListener;
+import org.isma.poker.game.step.InvalidStepActionException;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -32,7 +33,7 @@ public class TableTest {
         setUp_player(titi, game);
     }
 
-    private void setUp_player(Player player, PlayerBetListener game) {
+    private void setUp_player(Player player, PlayerBetListener game) throws InvalidStepActionException {
         PlayerAction.buyChips(player, game, 100);
         table.add(player);
     }

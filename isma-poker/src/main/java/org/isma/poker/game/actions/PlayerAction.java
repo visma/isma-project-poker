@@ -3,12 +3,13 @@ package org.isma.poker.game.actions;
 import org.apache.log4j.Logger;
 import org.isma.poker.game.exceptions.PokerGameException;
 import org.isma.poker.game.model.Player;
+import org.isma.poker.game.step.InvalidStepActionException;
 
 public class PlayerAction {
     private static final Logger LOG = Logger.getLogger(Player.class);
 
-
-    public static void buyChips(Player player, PlayerBetListener game, int chips) {
+    //TODO faire un TU ou le 2 joueur s'assoit avec 0 jetons, en achete et verifier que la partie demarre
+    public static void buyChips(Player player, PlayerBetListener game, int chips) throws InvalidStepActionException {
         game.buy(player, chips);
     }
 
@@ -74,5 +75,6 @@ public class PlayerAction {
         LOG.debug(String.format("Player{%s}.payChips(%s)", player.getNickname(), priceToPay));
         return priceToPay;
     }
+
 
 }

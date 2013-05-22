@@ -1,5 +1,6 @@
 package org.isma.poker.game.actions;
 
+import org.isma.poker.game.event.RaiseEvent;
 import org.isma.poker.game.exceptions.InvalidPlayerBetException;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Table;
@@ -23,6 +24,19 @@ public class RaiseAction extends AbstractPlayerAction {
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
         int currentBet = table.getCurrentBet();
         int currentPaid = table.getCurrentStepBet(player);
+        int raiseCost = (currentBet - currentPaid) + additionalChips;
+
+        checkLegalRaiseMove(player, currentBet, raiseCost);
+
+        game.notifyEvent(new RaiseEvent(player, additionalChips));
+
+        table.decreaseRaiseRemainings();
+        PlayerAction.payChips(player, raiseCost);
+        table.addToPot(player, raiseCost);
+        table.addBet(additionalChips);
+    }
+
+    private void checkLegalRaiseMove(Player player, int currentBet, int raiseCost) throws InvalidPlayerBetException {
         if (table.getRaisesRemaining() == 0) {
             throw new InvalidPlayerBetException(RAISE_FORBIDDEN);
         }
@@ -32,13 +46,8 @@ public class RaiseAction extends AbstractPlayerAction {
         if (additionalChips < minBetAllowed) {
             throw new InvalidPlayerBetException(TO_CHEAP_BET);
         }
-        int raiseCost = (currentBet - currentPaid) + additionalChips;
         if (player.getChips() < raiseCost) {
             throw new InvalidPlayerBetException(NOT_ENOUGH_CHIPS);
         }
-        table.decreaseRaiseRemainings();
-        PlayerAction.payChips(player, raiseCost);
-        table.addToPot(player, raiseCost);
-        table.addBet(additionalChips);
     }
 }

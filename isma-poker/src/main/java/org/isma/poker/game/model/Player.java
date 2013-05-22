@@ -4,8 +4,8 @@ import org.isma.poker.model.Hand;
 
 public class Player implements Cloneable {
     private final String nickname;
-    private int chips;
     private final Hand hand = new Hand();
+    private int chips;
     private boolean fold = false;
 
     public Player(String nickname) {

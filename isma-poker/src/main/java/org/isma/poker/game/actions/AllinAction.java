@@ -21,7 +21,6 @@ public class AllinAction extends AbstractPlayerAction {
         int currentPaid = table.getCurrentStepBet(player);
         int additionalChips = player.getChips() - currentBet;
         int toPay = player.getChips();
-        //additionalChips = additionalChips < 0 ? 0 : additionalChips;
 
         LOG.debug(format("currentBet : %s", currentBet));
         LOG.debug(format("currentPaid : %s", currentPaid));

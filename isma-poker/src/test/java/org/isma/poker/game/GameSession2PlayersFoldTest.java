@@ -1,20 +1,24 @@
 package org.isma.poker.game;
 
-import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.event.RoundEndEvent;
 import org.isma.poker.game.results.Results;
+import org.isma.poker.game.test.TestResultEventListener;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.isma.poker.game.actions.PlayerAction.fold;
 import static org.isma.poker.game.step.StepEnum.*;
 
 public class GameSession2PlayersFoldTest extends Abstract2PlayersGameSessionTest {
+    private TestResultEventListener resultEventListener;
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        game.addEventListener(eventListener);
+        game.removeEventListener(resultEventListener);
+        resultEventListener = new TestResultEventListener();
+        game.addEventListener(resultEventListener);
     }
 
     @Test
@@ -51,12 +55,13 @@ public class GameSession2PlayersFoldTest extends Abstract2PlayersGameSessionTest
     private void player2FoldPlayer1Win() throws Exception {
         assertEquals(player2, tableFacade.getCurrentPlayer());
 
-        while (eventListener.poll() != null){
-        }
-        PlayerAction.fold(player2, game);
+        //When
+        fold(player2, game);
+
+        //Then
         assertEquals(BLINDS, game.getStep());
-        assertTrue(eventListener.hasEvents());
-        RoundEndEvent endEvent = (RoundEndEvent)eventListener.poll();
+        assertTrue(resultEventListener.hasEvents());
+        RoundEndEvent endEvent = (RoundEndEvent)resultEventListener.poll();
         Results res = endEvent.getResults();
         assertEquals(1, res.getWinners().size());
         assertEquals(player1, res.getWinners().get(0).getPlayer());

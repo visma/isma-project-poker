@@ -1,5 +1,6 @@
 package org.isma.poker.game.actions;
 
+import org.isma.poker.game.event.SitOutEvent;
 import org.isma.poker.game.exceptions.InvalidPlayerBetException;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.Table;
@@ -18,6 +19,8 @@ public class SitOutAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
+        game.notifyEvent(new SitOutEvent(player));
+
         table.handleFold(player);
         Step step = game.getStep();
         LOG.debug(String.format("SitOutAction.doAction(%s, %s)", player.getNickname(), step));
