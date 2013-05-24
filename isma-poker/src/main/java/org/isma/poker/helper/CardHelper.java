@@ -9,9 +9,13 @@ public class CardHelper {
 
     public static Card toCard(String valueAndSuit) {
         String[] strs = valueAndSuit.split(SEPARATOR);
-        ValueEnum value = ValueHelper.parse(strs[0]);
-        SuitEnum suit = SuitHelper.parse(strs[1]);
+        ValueEnum value = ValueHelper.toValue(strs[0]);
+        SuitEnum suit = SuitHelper.toValue(strs[1]);
         return new Card(value, suit);
     }
 
+    //TODO TU
+    public static String toString(Card card) {
+        return ValueHelper.toString(card.getValue()) + SEPARATOR + SuitHelper.toString(card.getSuit());
+    }
 }

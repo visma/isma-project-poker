@@ -19,8 +19,6 @@ public class SitOutAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
-        game.notifyEvent(new SitOutEvent(player));
-
         table.handleFold(player);
         Step step = game.getStep();
         LOG.debug(String.format("SitOutAction.doAction(%s, %s)", player.getNickname(), step));
@@ -30,6 +28,8 @@ public class SitOutAction extends AbstractPlayerAction {
         }else {
             playerSitOut(player);
         }
+
+        game.notifyEvent(new SitOutEvent(player));
     }
 
     @Override

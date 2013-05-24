@@ -16,7 +16,7 @@ public class FoldAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
-        game.notifyEvent(new FoldEvent(player));
         table.handleFold(player);
+        game.notifyEvent(new FoldEvent(player));
     }
 }

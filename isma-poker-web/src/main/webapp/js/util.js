@@ -29,30 +29,6 @@ tpl = {
         loadTemplateOld(0);
         jQuery.ajaxSetup({async:true});
 
-
-//        var loadTemplate = function (index) {
-//            var name = names[index];
-//            console.log("\t\t\tloadTemplate() start");
-//            console.log('\t\t\tLoading template: ' + name);
-//            var data = function (data) {
-//                that.templates[name] = data;
-//                index++;
-//                if (index < names.length) {
-//                    loadTemplate(index);
-//                } else {
-//                    callback();
-//                }
-//            };
-//            return jQuery.ajax({
-//                type:"get",
-//                url:'templates/' + name + '.html',
-//                data:undefined,
-//                success:data(data),
-//                dataType:undefined
-//            });
-//            console.log("\t\t\tloadTemplate() end");
-//        };
-//        loadTemplate(0);
         console.log("\t\tloadTemplates() end");
     },
 

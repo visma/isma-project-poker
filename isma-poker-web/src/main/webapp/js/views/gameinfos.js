@@ -1,8 +1,8 @@
 GameInfosView = Backbone.View.extend({
     initialize:function () {
-        console.log("initialize gameinfos");
+        console.debug("initialize gameinfos");
         this.template = _.template(tpl.get('gameinfos-template'));
-        console.log("initialize gameinfos ended");
+        console.debug("initialize gameinfos ended");
     },
     render:function () {
         this.$el.html( this.template() );

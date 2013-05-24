@@ -1,16 +1,15 @@
 LoginModel = Backbone.Model.extend({
     initialize:function () {
-        console.log("initialize LoginModel");
+        console.debug("initialize LoginModel");
     },
     connect:function () {
-        console.log("LoginModel.connect()");
+        console.debug("LoginModel.connect()");
         game.connect();
     },
     login:function () {
-        console.log("LoginModel.login()");
         var nickname = $('#nicknameText').val();
-        console.log("nickname = " + nickname);
-        game.join(nickname);
+        game.sitIn(nickname);
+        game.buyChips(nickname, 100);
         $('#nicknameText').attr("disabled", true);
         $('#loginButton').attr("disabled", true);
     },

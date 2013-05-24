@@ -1,6 +1,7 @@
 package org.isma.poker.game.actions;
 
 import org.apache.log4j.Logger;
+import org.isma.poker.game.event.PlayerTurnEvent;
 import org.isma.poker.game.exceptions.InvalidPlayerBetException;
 import org.isma.poker.game.exceptions.PokerGameException;
 import org.isma.poker.game.model.InvalidPlayerTurnException;
@@ -63,10 +64,14 @@ public abstract class AbstractPlayerAction {
             if (step != SHOWDOWN) {
                 if (!table.prepareNextPlayer(false)) {
                     endStep();
+                }else {
+                    game.notifyEvent(new PlayerTurnEvent(table.getCurrentPlayer()));
                 }
             } else {
                 if (!table.prepareNextPlayer(true)) {
                     endStep();
+                }else {
+                    game.notifyEvent(new PlayerTurnEvent(table.getCurrentPlayer()));
                 }
             }
         }

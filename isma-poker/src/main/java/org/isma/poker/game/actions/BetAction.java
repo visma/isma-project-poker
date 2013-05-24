@@ -22,7 +22,6 @@ public class BetAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
-        game.notifyEvent(new BetEvent(player, chips));
         if (table.getCurrentBet() != 0) {
             throw new InvalidPlayerBetException(BET_FORBIDDEN);
         }
@@ -35,5 +34,6 @@ public class BetAction extends AbstractPlayerAction {
         PlayerAction.payChips(player, chips);
         table.addToPot(player, chips);
         table.addBet(chips);
+        game.notifyEvent(new BetEvent(player, chips));
     }
 }

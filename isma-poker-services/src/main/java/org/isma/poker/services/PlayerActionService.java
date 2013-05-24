@@ -1,10 +1,12 @@
 package org.isma.poker.services;
 
+import org.isma.poker.HandEvaluator;
 import org.isma.poker.game.GameSession;
 import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.exceptions.PokerGameException;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.step.InvalidStepActionException;
+import org.isma.poker.model.HandEvaluation;
 
 public class PlayerActionService {
 
@@ -53,8 +55,9 @@ public class PlayerActionService {
         PlayerAction.allIn(player, game);
     }
 
-    public void show(GameSession game, Player player) throws PokerGameException {
+    public HandEvaluation show(GameSession game, Player player) throws PokerGameException {
         PlayerAction.show(player, game);
+        return new HandEvaluator().evaluate(player.getHand());
     }
 
 

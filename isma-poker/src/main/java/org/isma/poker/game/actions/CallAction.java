@@ -16,10 +16,10 @@ public class CallAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
-        game.notifyEvent(new CallEvent(player));
         int currentPlayerBet = table.getCurrentStepBet(player);
         int remainingToPay = table.getCurrentBet() - currentPlayerBet;
         int paid = PlayerAction.payChips(player, remainingToPay);
         table.addToPot(player, paid);
+        game.notifyEvent(new CallEvent(player));
     }
 }

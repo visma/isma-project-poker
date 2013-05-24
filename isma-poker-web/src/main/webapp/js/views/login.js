@@ -1,8 +1,8 @@
 LoginView = Backbone.View.extend({
     initialize:function () {
-        console.log("initialize LoginView");
+        console.debug("initialize LoginView");
         this.template = _.template(tpl.get('login-template'));
-        console.log("initialize LoginView ended");
+        console.debug("initialize LoginView ended");
     },
     render:function () {
         this.$el.html( this.template() );

@@ -1,0 +1,91 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <!-- POM's layout - http://www.javaworld.com/javaworld/jw-05-2006/jw-0529-maven.html -->
+
+    <!--
+    | Project Information
+    -->
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>isma-poker-server</artifactId>
+    <packaging>jar</packaging>
+    <version>0.1</version>
+    <name>module poker server</name>
+    <!--
+     | POM Relationships
+     -->
+    <parent>
+        <groupId>org.isma</groupId>
+        <artifactId>isma-project-poker</artifactId>
+        <version>0.1</version>
+    </parent>
+
+    <properties>
+        <jetty.version>8.1.5.v20120716</jetty.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <!-- JETTY -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-continuation</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-http</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-io</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-util</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-websocket</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+        <!-- JETTY CLIENT -->
+        <!--<dependency>-->
+            <!--<groupId>org.eclipse.jetty</groupId>-->
+            <!--<artifactId>jetty-client</artifactId>-->
+            <!--<version>${jetty.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.eclipse.jetty</groupId>-->
+            <!--<artifactId>jetty-servlet</artifactId>-->
+            <!--<version>${jetty.version}</version>-->
+        <!--</dependency>-->
+    </dependencies>
+
+
+    <!--
+    | Build Settings
+    -->
+    <build>
+        <finalName>isma-poker-web</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources-filtered</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+</project>

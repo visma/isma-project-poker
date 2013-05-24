@@ -106,6 +106,15 @@ public class TableFacade {
         return buildPlayerInfo(getDealer());
     }
 
+    public PlayerInfos getSmallBlindPlayerInfos() {
+        return buildPlayerInfo(getSmallBlindPlayer());
+    }
+
+    public PlayerInfos getBigBlindPlayerInfos() {
+        return buildPlayerInfo(getBigBlindPlayer());
+    }
+
+
     private PlayerInfos buildPlayerInfo(Player player) {
         return new PlayerInfos(player, table.getAllPlayers().indexOf(player));
     }

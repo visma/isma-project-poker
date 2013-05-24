@@ -17,11 +17,11 @@ public class CheckAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
-        game.notifyEvent(new CheckEvent(player));
         int currentPlayerBet = table.getCurrentStepBet(player);
         int remainingToPay = table.getCurrentBet() - currentPlayerBet;
         if (remainingToPay != 0) {
             throw new InvalidPlayerBetException(CHECK_FORBIDDEN);
         }
+        game.notifyEvent(new CheckEvent(player));
     }
 }

@@ -6,4 +6,14 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
+
+    <!--	Debut de la configuration AOP -->
+    <!--<bean name="monLogger" class="org.isma.poker.rest.aop.MonLoggerAopAop"/>-->
+    <!--<aop:config>-->
+        <!--<aop:pointcut id="servicePointcut"  expression="execution(* org.isma.poker.rest.service.PlayerActionRestService(..))"/>-->
+        <!--<aop:aspect id="loggingAspect" ref="monLogger">-->
+            <!--<aop:before method="onEnter"  pointcut-ref="servicePointcut"/>-->
+            <!--<aop:after-returning method="onExit" returning="result" pointcut-ref="servicePointcut"/>-->
+        <!--</aop:aspect>-->
+    <!--</aop:config>-->
 </beans>

@@ -16,6 +16,11 @@
         <level value="debug" />
     </logger>
 
+    <logger name="org.isma.poker.game.event">
+        <level value="debug" />
+    </logger>
+
+
     <!-- 3rdparty Loggers -->
     <logger name="org.springframework">
         <level value="info" />

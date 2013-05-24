@@ -36,7 +36,7 @@
           <stringProp name="HTTPSampler.response_timeout">500</stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">poker/room/1/reset</stringProp>
+          <stringProp name="HTTPSampler.path">poker/room/1/createroom</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>

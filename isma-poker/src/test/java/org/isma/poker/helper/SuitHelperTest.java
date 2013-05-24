@@ -10,14 +10,14 @@ public class SuitHelperTest {
 
     @Test
     public void parse_ok() {
-        assertEquals(SuitEnum.CLUBS, SuitHelper.parse("C"));
-        assertEquals(SuitEnum.DIAMONDS, SuitHelper.parse("D"));
-        assertEquals(SuitEnum.SPADES, SuitHelper.parse("S"));
-        assertEquals(SuitEnum.HEARTS, SuitHelper.parse("H"));
+        assertEquals(SuitEnum.CLUBS, SuitHelper.toValue("C"));
+        assertEquals(SuitEnum.DIAMONDS, SuitHelper.toValue("D"));
+        assertEquals(SuitEnum.SPADES, SuitHelper.toValue("S"));
+        assertEquals(SuitEnum.HEARTS, SuitHelper.toValue("H"));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void parse_ko() {
-        assertNull(SuitHelper.parse("TOTO"));
+        assertNull(SuitHelper.toValue("TOTO"));
     }
 }

@@ -64,6 +64,7 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
         if (playersWithCash >= firstRoundMinimumPlayers && stepRunner.getStep() == END) {
             firstRoundMinimumPlayers = 2;
             nextStep();
+            notifyEvent(new PlayerTurnEvent(tableFacade.getCurrentPlayer()));
         }
     }
 
@@ -114,17 +115,19 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
 
     @Override
     public boolean buy(Player player, int chips) throws InvalidStepActionException {
-        notifyEvent(new BuyEvent(player, chips));
         player.setChips(player.getChips() + chips);
         beginRoundIfPossible();
+
+        notifyEvent(new BuyEvent(player, chips));
         return true;
     }
 
     @Override
     public void sitIn(Player player) throws PokerGameException {
-        notifyEvent(new PlayerSitInEvent(player));
         table.add(player);
         beginRoundIfPossible();
+
+        notifyEvent(new PlayerSitInEvent(player));
     }
 
     @Override

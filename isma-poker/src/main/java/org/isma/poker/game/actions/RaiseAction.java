@@ -28,12 +28,12 @@ public class RaiseAction extends AbstractPlayerAction {
 
         checkLegalRaiseMove(player, currentBet, raiseCost);
 
-        game.notifyEvent(new RaiseEvent(player, additionalChips));
-
         table.decreaseRaiseRemainings();
         PlayerAction.payChips(player, raiseCost);
         table.addToPot(player, raiseCost);
         table.addBet(additionalChips);
+
+        game.notifyEvent(new RaiseEvent(player, additionalChips));
     }
 
     private void checkLegalRaiseMove(Player player, int currentBet, int raiseCost) throws InvalidPlayerBetException {

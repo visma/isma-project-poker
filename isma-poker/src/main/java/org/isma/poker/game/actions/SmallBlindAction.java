@@ -20,9 +20,10 @@ public class SmallBlindAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
-        game.notifyEvent(new BlindEvent(player, true, configuration.getSmallBlindAmount()));
         table.addSmallBlind(configuration);
         int paid = PlayerAction.payChips(player, configuration.getSmallBlindAmount());
         table.addToPot(player, paid);
+
+        game.notifyEvent(new BlindEvent(player, true, configuration.getSmallBlindAmount()));
     }
 }

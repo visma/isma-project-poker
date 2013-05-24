@@ -3,17 +3,9 @@
          xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          id="WebApp_ID" version="2.5">
-    <display-name>poker-webapp</display-name>
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>
-            classpath:applicationContext.xml
-        </param-value>
-    </context-param>
+
+    <display-name>poker front</display-name>
     <welcome-file-list>
-        <welcome-file>poker.jsp</welcome-file>
+        <welcome-file>poker.html</welcome-file>
     </welcome-file-list>
-    <listener>
-        <listener-class>org.isma.web.poker.PokerServerServletContextListener</listener-class>
-    </listener>
 </web-app>

@@ -1,20 +1,14 @@
 package org.isma.poker.rest.controller;
 
 import org.apache.log4j.Logger;
-import org.isma.poker.HandEvaluator;
-import org.isma.poker.factory.DeckFactory;
-import org.isma.poker.game.GameSession;
 import org.isma.poker.game.actions.PokerActionEnum;
 import org.isma.poker.game.exceptions.PokerGameException;
-import org.isma.poker.game.factory.TableFactory;
-import org.isma.poker.game.model.GameConfiguration;
-import org.isma.poker.game.model.InvalidGameConfigurationException;
-import org.isma.poker.game.model.Player;
-import org.isma.poker.game.model.PlayerInfos;
 import org.isma.poker.game.step.InvalidStepActionException;
-import org.isma.poker.game.step.Step;
 import org.isma.poker.model.HandEvaluation;
-import org.isma.poker.services.PlayerActionService;
+import org.isma.poker.rest.dto.PlayerDTO;
+import org.isma.poker.rest.dto.TableDTO;
+import org.isma.poker.rest.service.GameRestService;
+import org.isma.poker.rest.service.PlayerActionRestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.inject.Inject;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -31,161 +24,138 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = "/poker")
 public class PlayerController {
     private static final Logger logger = Logger.getLogger(PlayerController.class);
-    private GameSession gameSession;
 
     @Inject
-    private PlayerActionService playerActionService;
+    private PlayerActionRestService playerActionRestService;
 
-    public PlayerController() throws InvalidGameConfigurationException {
-        GameConfiguration configuration = new GameConfiguration(5, 10, false, true);
-        gameSession = new GameSession(configuration, new DeckFactory(), new TableFactory());
-        gameSession.init(2);
-    }
+    @Inject
+    private GameRestService gameRestService;
 
-    /************************************************************************************
+
+//    public PlayerController() {
+//    }
+
+    /**
+     * *********************************************************************************
      * INFOS TABLE
-     ************************************************************************************/
-    //TODO pour jmeter : a supprimer
-    @RequestMapping(method = POST, value = "/room/{roomId}/reset")
+     * **********************************************************************************
+     */
+    @RequestMapping(method = POST, value = "/room/{roomId}/createroom")
     @ResponseBody
-    public String reset(
-            @PathVariable Integer roomId) throws InvalidGameConfigurationException {
-        GameConfiguration configuration = new GameConfiguration(5, 10, false, true);
-        gameSession = new GameSession(configuration, new DeckFactory(), new TableFactory());
-        gameSession.init(2);
+    public String createRoom(@PathVariable Integer roomId) throws Exception {
+        gameRestService.createRoom(roomId);
         return "OK";
     }
 
     @RequestMapping(method = GET, value = "/room/{roomId}/status")
     @ResponseBody
-    public Step getTableStatus(
-            @PathVariable Integer roomId) {
-        return gameSession.getStep();
+    public TableDTO getTableStatus(@PathVariable Integer roomId) {
+      return gameRestService.getTable(roomId);
     }
 
     @RequestMapping(method = GET, value = "/room/{roomId}/players")
     @ResponseBody
-    public List<PlayerInfos> getPlayers(
-            @PathVariable Integer roomId) {
-        return gameSession.getTableFacade().getPlayersInfos();
+    public List<PlayerDTO> getPlayers(@PathVariable Integer roomId) {
+        return gameRestService.getPlayers(roomId);
     }
-    /************************************************************************************
+
+    /**
+     * *********************************************************************************
      * ACTIONS JOUEURS
-     ************************************************************************************/
+     * **********************************************************************************
+     */
 
     @RequestMapping(method = GET, value = "/room/{roomId}/actions/{nickname}")
     @ResponseBody
     public List<PokerActionEnum> getActions(
             @PathVariable Integer roomId,
             @PathVariable String nickname) {
-        Player player = gameSession.getTableFacade().getPlayerInfos(nickname).getPlayer();
-        if (player == null) {
-            return emptyList();
-        }
-        return gameSession.getAvailableActions(player);
+        return playerActionRestService.getActions(roomId, nickname);
     }
 
     @RequestMapping(method = POST, value = "/room/{roomId}/buychips/{nickname}/{chips}")
     @ResponseBody
-    public Player buyChips(
+    public PlayerDTO buyChips(
             @PathVariable Integer roomId,
             @PathVariable String nickname,
             @PathVariable Integer chips) throws InvalidStepActionException {
-        Player player = gameSession.getTableFacade().getPlayerInfos(nickname).getPlayer();
-        playerActionService.buyChips(gameSession, player, chips);
-        return player;
+        return playerActionRestService.buyChips(roomId, nickname, chips);
     }
 
 
     @RequestMapping(method = POST, value = "/room/{roomId}/sitin/{nickname}")
     @ResponseBody
-    public Player sitIn(
+    public PlayerDTO sitIn(
             @PathVariable Integer roomId,
             @PathVariable String nickname) throws PokerGameException {
-        Player newPlayer = new Player(nickname);
-        playerActionService.sitIn(gameSession, newPlayer);
-        return newPlayer;
+        return playerActionRestService.sitIn(roomId, nickname);
     }
 
     @RequestMapping(value = "/room/{roomId}/fold/{nickname}", method = POST)
-    public void fold(
+    @ResponseBody
+    public PlayerDTO fold(
             @PathVariable Integer roomId,
             @PathVariable String nickname) throws PokerGameException {
-        Player player = gameSession.getTableFacade().getPlayerInfos(nickname).getPlayer();
-        playerActionService.fold(gameSession, player);
+        return playerActionRestService.fold(roomId, nickname);
     }
 
     @RequestMapping(value = "/room/{roomId}/paysmallblind/{nickname}", method = POST)
     @ResponseBody
-    public Player paySmallblind(
+    public PlayerDTO paySmallblind(
             @PathVariable Integer roomId,
             @PathVariable String nickname) throws PokerGameException {
-        Player player = gameSession.getTableFacade().getPlayerInfos(nickname).getPlayer();
-        playerActionService.paySmallblind(gameSession, player);
-        return player;
+        return playerActionRestService.paySmallblind(roomId, nickname);
     }
 
     @RequestMapping(value = "/room/{roomId}/paybigblind/{nickname}", method = POST)
     @ResponseBody
-    public Player payBigblind(
+    public PlayerDTO payBigblind(
             @PathVariable Integer roomId,
             @PathVariable String nickname) throws PokerGameException {
-        Player player = gameSession.getTableFacade().getPlayerInfos(nickname).getPlayer();
-        playerActionService.payBigblind(gameSession, player);
-        return player;
+        return playerActionRestService.payBigblind(roomId, nickname);
     }
 
     @RequestMapping(value = "/room/{roomId}/check/{nickname}", method = POST)
     @ResponseBody
-    public Player check(
+    public PlayerDTO check(
             @PathVariable Integer roomId,
             @PathVariable String nickname) throws PokerGameException {
-        Player player = gameSession.getTableFacade().getPlayerInfos(nickname).getPlayer();
-        playerActionService.check(gameSession, player);
-        return player;
+        return playerActionRestService.check(roomId, nickname);
     }
 
     @RequestMapping(value = "/room/{roomId}/call/{nickname}", method = POST)
     @ResponseBody
-    public Player call(
+    public PlayerDTO call(
             @PathVariable Integer roomId,
             @PathVariable String nickname) throws PokerGameException {
-        Player player = gameSession.getTableFacade().getPlayerInfos(nickname).getPlayer();
-        playerActionService.call(gameSession, player);
-        return player;
+        return playerActionRestService.call(roomId, nickname);
     }
 
 
     @RequestMapping(value = "/room/{roomId}/bet/{nickname}/{chips}", method = POST)
     @ResponseBody
-    public Player bet(
+    public PlayerDTO bet(
             @PathVariable Integer roomId,
             @PathVariable String nickname,
             @PathVariable Integer chips) throws PokerGameException {
-        Player player = gameSession.getTableFacade().getPlayerInfos(nickname).getPlayer();
-        playerActionService.bet(gameSession, player, chips);
-        return player;
+        return playerActionRestService.bet(roomId, nickname, chips);
     }
 
     @RequestMapping(value = "/room/{roomId}/raise/{nickname}/{chips}", method = POST)
     @ResponseBody
-    public Player raise(
+    public PlayerDTO raise(
             @PathVariable Integer roomId,
             @PathVariable String nickname,
             @PathVariable Integer chips) throws PokerGameException {
-        Player player = gameSession.getTableFacade().getPlayerInfos(nickname).getPlayer();
-        playerActionService.raise(gameSession, player, chips);
-        return player;
+        return playerActionRestService.raise(roomId, nickname, chips);
     }
 
     @RequestMapping(value = "/room/{roomId}/allin/{nickname}", method = POST)
     @ResponseBody
-    public Player allIn(
+    public PlayerDTO allIn(
             @PathVariable Integer roomId,
             @PathVariable String nickname) throws PokerGameException {
-        Player player = gameSession.getTableFacade().getPlayerInfos(nickname).getPlayer();
-        playerActionService.allIn(gameSession, player);
-        return player;
+        return playerActionRestService.allIn(roomId, nickname);
     }
 
     @RequestMapping(value = "/room/{roomId}/show/{nickname}", method = POST)
@@ -193,9 +163,7 @@ public class PlayerController {
     public HandEvaluation show(
             @PathVariable Integer roomId,
             @PathVariable String nickname) throws PokerGameException {
-        Player player = gameSession.getTableFacade().getPlayerInfos(nickname).getPlayer();
-        playerActionService.show(gameSession, player);
-        return new HandEvaluator().evaluate(player.getHand());
+        return playerActionRestService.show(roomId, nickname);
     }
 
 }

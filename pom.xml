@@ -69,6 +69,11 @@
                 <artifactId>spring-security-web</artifactId>
                 <version>${springframework-version}</version>
             </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.springframework</groupId>-->
+                <!--<artifactId>spring-aop</artifactId>-->
+                <!--<version>${springframework-version}</version>-->
+            <!--</dependency>-->
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -113,7 +118,8 @@
         <module>isma-poker</module>
         <module>isma-poker-services</module>
         <module>isma-poker-rest-app</module>
-        <!--<module>isma-poker-web</module>-->
+        <module>isma-poker-server</module>
+        <module>isma-poker-web</module>
     </modules>
     <scm>
         <connection>scm:git:https://github.com/visma/isma-project-poker.git</connection>
