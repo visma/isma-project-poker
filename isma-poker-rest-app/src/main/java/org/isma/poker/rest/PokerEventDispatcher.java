@@ -50,6 +50,8 @@ public class PokerEventDispatcher extends GameEventListener {
             msg = new ClientMessage("buy", event);
         } else if (event instanceof BlindEvent) {
             msg = new ClientMessage("blind", event);
+        } else if (event instanceof PlayerTurnEvent) {
+            msg = new ClientMessage("playerTurn", event);
         } else {
             msg = new ClientMessage("???", event);
         }

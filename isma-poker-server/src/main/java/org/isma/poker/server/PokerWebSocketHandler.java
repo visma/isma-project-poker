@@ -15,6 +15,7 @@ public class PokerWebSocketHandler extends WebSocketHandler {
     }
 
     public WebSocket doWebSocketConnect(HttpServletRequest request, String protocol) {
+        System.out.println("HttpServletRequest.parameter(user)= : " + request.getParameter("user"));
         return new PokerWebSocket();
     }
 
@@ -24,6 +25,11 @@ public class PokerWebSocketHandler extends WebSocketHandler {
         public void onOpen(Connection connection) {
             this.connection = connection;
             webSockets.add(this);
+        }
+
+        public void onClose(int closeCode, String message) {
+            this.connection = null;
+            webSockets.remove(this);
         }
 
         public void onMessage(String message) {
@@ -40,8 +46,6 @@ public class PokerWebSocketHandler extends WebSocketHandler {
             }
         }
 
-        public void onClose(int closeCode, String message) {
-            webSockets.remove(this);
-        }
+
     }
 }

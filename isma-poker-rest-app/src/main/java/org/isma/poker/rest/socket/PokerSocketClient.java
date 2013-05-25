@@ -13,7 +13,7 @@ import static java.lang.String.format;
 
 @Component
 public class PokerSocketClient {
-    private static final String URL = "ws://localhost:8081/";
+    private static final String URL = "ws://localhost:8081";
     private boolean connected = false;
     private WebSocket.Connection connection;
 
@@ -28,7 +28,8 @@ public class PokerSocketClient {
         factory.start();
 
         WebSocketClient client = factory.newWebSocketClient();
-        connection = client.open(new URI(URL), new WebSocket.OnTextMessage() {
+        String url = URL;
+        connection = client.open(new URI(url), new WebSocket.OnTextMessage() {
             public void onOpen(Connection connection) {
             }
 

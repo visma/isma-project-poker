@@ -1,16 +1,16 @@
 package org.isma.poker.rest;
 
 public class ClientMessage {
-    private final String action;
+    private final String id;
     private final Object object;
 
-    public ClientMessage(String action, Object object) {
-        this.action = action;
+    public ClientMessage(String id, Object object) {
+        this.id = id;
         this.object = object;
     }
 
-    public String getAction() {
-        return action;
+    public String getId() {
+        return id;
     }
 
     public Object getObject() {

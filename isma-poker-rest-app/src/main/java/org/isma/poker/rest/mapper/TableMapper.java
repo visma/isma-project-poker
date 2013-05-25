@@ -5,6 +5,7 @@ import org.isma.poker.game.model.TableFacade;
 import org.isma.poker.rest.dto.TableDTO;
 
 public class TableMapper {
+    //TODO TU
     public static TableDTO toDTO(GameSession game) {
         TableFacade tableFacade = game.getTableFacade();
         TableDTO dto = new TableDTO();
@@ -17,6 +18,7 @@ public class TableMapper {
         dto.setBigBlindAmount(tableFacade.getBigBlindAmount());
 
         dto.setCurrentBet(tableFacade.getCurrentBet());
+        dto.setPot(tableFacade.getTotalPot());
 
         dto.setStep(game.getStep());
         return dto;

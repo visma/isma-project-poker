@@ -9,6 +9,7 @@ public class TableDTO {
     private PlayerDTO smallBlindPlayer;
     private PlayerDTO bigBlindPlayer;
     private int currentBet;
+    private int pot;
     private Step step;
 
     public TableDTO() {
@@ -68,5 +69,13 @@ public class TableDTO {
 
     public Step getStep() {
         return step;
+    }
+
+    public int getPot() {
+        return pot;
+    }
+
+    public void setPot(int pot) {
+        this.pot = pot;
     }
 }

@@ -1,12 +1,26 @@
 LoginView = Backbone.View.extend({
-    initialize:function () {
-        console.debug("initialize LoginView");
-        this.template = _.template(tpl.get('login-template'));
-        console.debug("initialize LoginView ended");
+    initialize: function (attrs) {
+        this.template = login_template;
+        this.render();
+        this.loginButton = $("#loginButton");
+        this.nickname = $("#login");
+        this.model = attrs.model;
     },
-    render:function () {
-        this.$el.html( this.template() );
-        return this.el;
+    render: function () {
+        this.$el.html(this.template);
+    },
+    events: {
+        "click input[type=button]": "signIn"
+    },
+    signIn: function(){
+        console.info("signIn");
+        this.model.set('nickname', this.nickname.val());
+        game.connect(this.nickname.val());
+        game.sitIn(this.nickname.val());
+        game.buyChips(this.nickname.val(), 100);
+        this.nickname.attr("disabled", true);
+        this.loginButton.attr("disabled", true);
+
+        models['gameInfos'].refresh();
     }
 });
-var playerActionsLoaded = true;

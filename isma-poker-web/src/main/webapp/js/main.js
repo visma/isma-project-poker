@@ -22,5 +22,3 @@ function loadAllTemplates() {
     });
     console.log("\tloadAllTemplates() end");
 };
-
-var mainLoaded = true;

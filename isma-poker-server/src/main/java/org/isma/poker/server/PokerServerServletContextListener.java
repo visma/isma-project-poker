@@ -22,7 +22,8 @@ public class PokerServerServletContextListener implements ServletContextListener
             server = new Server(PORT);
             pokerWebSocketHandler.setHandler(new DefaultHandler());
             server.setHandler(pokerWebSocketHandler);
-              server.start();
+            server.getConnectors()[0].setMaxIdleTime(1000 * 60 * 30);
+            server.start();
         } catch (Throwable e) {
             e.printStackTrace();
         }
