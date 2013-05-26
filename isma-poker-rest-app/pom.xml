@@ -22,11 +22,41 @@
     <properties>
         <jetty.version>8.1.5.v20120716</jetty.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.isma</groupId>
             <artifactId>isma-poker-services</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+
+        <!-- JSON -->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.3</version>
+            <type>jar</type>
+            <classifier>jdk15</classifier>
+        </dependency>
+
+        <!-- DOZER -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>5.3.2</version>
+        </dependency>
+
+        <!-- Jackson JSON Mapper-->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.8</version>
+        </dependency>
+
         <!-- SPRING -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -36,28 +66,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-aop</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.aspectj</groupId>-->
-        <!--<artifactId>aspectjrt</artifactId>-->
-        <!--<version>1.6.11</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.aspectj</groupId>-->
-        <!--<artifactId>aspectjweaver</artifactId>-->
-        <!--<version>1.6.11</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-expression</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework</groupId>-->
-        <!--<artifactId>spring-context</artifactId>-->
-        <!--</dependency>-->
+
         <!-- JSF-303 Dependency Injection-->
         <dependency>
             <groupId>javax.inject</groupId>
@@ -81,27 +90,6 @@
             <artifactId>jsp-api</artifactId>
             <version>2.1</version>
             <scope>provided</scope>
-        </dependency>
-        <!-- JSON -->
-        <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <version>2.3</version>
-            <type>jar</type>
-            <classifier>jdk15</classifier>
-        </dependency>
-
-        <!-- Jackson JSON Mapper-->
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.8</version>
-        </dependency>
-        <!-- DOZER -->
-        <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
-            <version>5.3.2</version>
         </dependency>
 
         <!-- JETTY CLIENT -->

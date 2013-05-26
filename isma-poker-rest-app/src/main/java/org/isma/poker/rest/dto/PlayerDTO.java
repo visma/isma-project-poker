@@ -4,17 +4,17 @@ public class PlayerDTO {
     private final String name;
     private final int chips;
     private final boolean fold;
-    private final String holdCard1;
-    private final String holdCard2;
+    private final String holeCard1;
+    private final String holeCard2;
     private int position;
     private int currentBet;
 
-    public PlayerDTO(String name, int chips, boolean fold, String holdCard1, String holdCard2) {
+    public PlayerDTO(String name, int chips, boolean fold, String holeCard1, String holeCard2) {
         this.name = name;
         this.chips = chips;
         this.fold = fold;
-        this.holdCard1 = holdCard1;
-        this.holdCard2 = holdCard2;
+        this.holeCard1 = holeCard1;
+        this.holeCard2 = holeCard2;
     }
 
     public String getName() {
@@ -29,12 +29,12 @@ public class PlayerDTO {
         return fold;
     }
 
-    public String getHoldCard1() {
-        return holdCard1;
+    public String getHoleCard1() {
+        return holeCard1;
     }
 
-    public String getHoldCard2() {
-        return holdCard2;
+    public String getHoleCard2() {
+        return holeCard2;
     }
 
     public void setPosition(int position) {

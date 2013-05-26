@@ -12,26 +12,68 @@ var game = {
         this._ws.onerror = this._onerror;
     },
 
-    infos : function(){
+    getGameStatus: function () {
         var data = "no";
         $.ajax({
             async: false,
             type: "GET",
-            url: "http://localhost:8080/poker//room/1/status",
+            url: "http://localhost:8080/poker/room/1/status",
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.debug("succes de infos " + JSON.stringify(response));
+                console.debug("succes de getGameStatus " + JSON.stringify(response));
                 data = response;
             },
             failure: function (response) {
-                console.error("echec de infos " + JSON.stringify(response));
+                console.error("echec de getGameStatus " + JSON.stringify(response));
                 data = response;
             }
         });
         return data;
     },
+    getPlayerStatus: function (nickname) {
+        var data = "no";
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/poker/room/1/player/" + nickname,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.debug("succes de getPlayerStatus " + JSON.stringify(response));
+                data = response;
+            },
+            failure: function (response) {
+                console.error("echec de getPlayerStatus " + JSON.stringify(response));
+                data = response;
+            }
+        });
+        return data;
+    },
+
+    getActions: function (nickname) {
+        var data = "no";
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/poker/room/1/actions/" + nickname,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.debug("succes de getActions " + JSON.stringify(response));
+                data = response;
+            },
+            failure: function (response) {
+                console.error("echec de getActions " + JSON.stringify(response));
+                data = response;
+            }
+        });
+        return data;
+    },
+
     sitIn: function (nickname) {
         $.ajax({
             async: false,
@@ -66,28 +108,7 @@ var game = {
         });
     },
 
-    getActions: function (nickname) {
-        var data = "no";
-        $.ajax({
-            async: false,
-            type: "GET",
-            url: "http://localhost:8080/poker/room/1/actions/" + nickname,
-            data: "{}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                console.debug("succes de getActions " + JSON.stringify(response));
-                data = response;
-            },
-            failure: function (response) {
-                console.error("echec de getActions " + JSON.stringify(response));
-                data = response;
-            }
-        });
-        return data;
-    },
-
-    paySmallBlind : function(nickname){
+    paySmallBlind: function (nickname) {
         var data = "no";
         $.ajax({
             async: false,
@@ -108,7 +129,7 @@ var game = {
         return data;
     },
 
-    payBigBlind : function(nickname){
+    payBigBlind: function (nickname) {
         var data = "no";
         $.ajax({
             async: false,
@@ -123,6 +144,150 @@ var game = {
             },
             failure: function (response) {
                 console.error("echec de payBigBlind " + JSON.stringify(response));
+                data = response;
+            }
+        });
+        return data;
+    },
+
+    check: function (nickname) {
+        var data = "no";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "http://localhost:8080/poker/room/1/check/" + nickname,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.debug("succes de check " + JSON.stringify(response));
+                data = response;
+            },
+            failure: function (response) {
+                console.error("echec de check " + JSON.stringify(response));
+                data = response;
+            }
+        });
+        return data;
+    },
+    call: function (nickname) {
+        var data = "no";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "http://localhost:8080/poker/room/1/call/" + nickname,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.debug("succes de call " + JSON.stringify(response));
+                data = response;
+            },
+            failure: function (response) {
+                console.error("echec de call " + JSON.stringify(response));
+                data = response;
+            }
+        });
+        return data;
+    },
+
+    bet: function (nickname, chips) {
+        var data = "no";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "http://localhost:8080/poker/room/1/bet/" + nickname + "/" + chips,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.debug("succes de bet " + JSON.stringify(response));
+                data = response;
+            },
+            failure: function (response) {
+                console.error("echec de bet " + JSON.stringify(response));
+                data = response;
+            }
+        });
+        return data;
+    },
+
+    raise: function (nickname, chips) {
+        var data = "no";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "http://localhost:8080/poker/room/1/raise/" + nickname + "/" + chips,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.debug("succes de raise " + JSON.stringify(response));
+                data = response;
+            },
+            failure: function (response) {
+                console.error("echec de raise " + JSON.stringify(response));
+                data = response;
+            }
+        });
+        return data;
+    },
+
+    allin: function (nickname) {
+        var data = "no";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "http://localhost:8080/poker/room/1/allin/" + nickname,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.debug("succes de allin " + JSON.stringify(response));
+                data = response;
+            },
+            failure: function (response) {
+                console.error("echec de allin " + JSON.stringify(response));
+                data = response;
+            }
+        });
+        return data;
+    },
+    fold: function (nickname) {
+        var data = "no";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "http://localhost:8080/poker/room/1/fold/" + nickname,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.debug("succes de fold " + JSON.stringify(response));
+                data = response;
+            },
+            failure: function (response) {
+                console.error("echec de fold " + JSON.stringify(response));
+                data = response;
+            }
+        });
+        return data;
+    },
+    show: function (nickname) {
+        var data = "no";
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "http://localhost:8080/poker/room/1/show/" + nickname,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.debug("succes de show " + JSON.stringify(response));
+                data = response;
+            },
+            failure: function (response) {
+                console.error("echec de show " + JSON.stringify(response));
                 data = response;
             }
         });

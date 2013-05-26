@@ -4,27 +4,35 @@
     <title>Poker client</title>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <!-- STYLE -->
-    <link rel="stylesheet" media="screen" href="css/style.css" type="text/css"/>
+    <!--<link rel="stylesheet" media="screen" href="css/style.css" type="text/css"/>-->
+    <link rel="stylesheet" media="screen" href="css/base.css" type="text/css"/>
+    <link rel="stylesheet" media="screen" href="css/modele09.css" type="text/css"/>
+    <link rel="stylesheet" media="screen" href="css/poker.css" type="text/css"/>
 
     <!-- LIBRARIES -->
     <script type="text/javascript" src="js/lib/jquery-1.7.2.js"></script>
     <script type="text/javascript" src="js/lib/underscore.js"></script>
     <script type="text/javascript" src="js/lib/backbone.js"></script>
 
+    <!-- UTILS -->
+    <script type="text/javascript" src="js/util.js"></script>
+
     <!-- BACKBONE -MODELS/VIEWS -->
     <script type="text/javascript" src="js/models/gameinfos.js"></script>
     <script type="text/javascript" src="js/views/gameinfos.js"></script>
-
     <script type="text/javascript" src="js/models/playeractions.js"></script>
     <script type="text/javascript" src="js/views/playeractions.js"></script>
-
     <script type="text/javascript" src="js/models/login.js"></script>
     <script type="text/javascript" src="js/views/login.js"></script>
+
+    <script type="text/javascript" src="js/models/player.js"></script>
+    <script type="text/javascript" src="js/views/player.js"></script>
 
     <!-- TEMPLATES -->
     <script type="text/javascript" src="js/templates/login-template.js"></script>
     <script type="text/javascript" src="js/templates/gameinfos-template.js"></script>
     <script type="text/javascript" src="js/templates/playeractions-template.js"></script>
+    <script type="text/javascript" src="js/templates/player-template.js"></script>
 
     <!-- COMMUNICATION -->
     <script type="text/javascript" src="js/io/actions.js"></script>
@@ -33,13 +41,54 @@
 </head>
 <body>
 <!-- STRUCTURE -->
-<div id="login-container"></div>
+<!--<div id="login-container"></div>-->
+<!--<div id="main-container">-->
+    <!--<div id="gameinfos-container"></div>-->
+    <!--<div id="playeractions-container"></div>-->
+    <!--<div id="player-container"></div>-->
+<!--</div>-->
 
-<div id="main-container">
-    <div id="gameinfos-container"></div>
-    <div id="playeractions-container"></div>
+<!-- GABARIT 10-->
+<div id="global">
+    <div id="entete">
+        <div id="title-container"><center><h1>Poker WebApp</h1></center></div>
+        <div id="login-container"></div>
+    </div>
+    <div id="centre">
+        <div id="navigation">
+            <div id="gameinfos-container"></div>
+            <div id="playerinfos-container"></div>
+        </div>
+        <div id="principal">
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+            TABLE todo<br/>
+        </div>
+        <div id="secondaire">ROOMS LIST todo</div>
+    </div>
+    <div id="pied">
+        <div id="playeractions-container"></div>
+    </div>
 </div>
-
 <!-- FILL STRUCTURE WITH BACKBONE -->
 <script type="text/javascript">
     var gameInfos = new GameInfosModel();
@@ -60,9 +109,16 @@
         model: login
     });
 
+    var player = new Player();
+    var playerView = new PlayerView({
+        el: $('#playerinfos-container'),
+        model: player
+    });
+
     models['login'] = login;
     models['gameInfos'] = gameInfos;
     models['playerActions'] = playerActions;
+    models['player'] = player;
 
 </script>
 </body>

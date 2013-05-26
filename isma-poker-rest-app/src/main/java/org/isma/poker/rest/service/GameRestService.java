@@ -36,4 +36,10 @@ public class GameRestService {
         List<PlayerInfos> playersInfos = roomManager.getGame(roomId).getTableFacade().getPlayersInfos();
         return PlayerMapper.toDTOs(playersInfos, game);
     }
+
+    public PlayerDTO getPlayer(Integer roomId, String nickname) {
+        GameSession game = roomManager.getGame(roomId);
+        PlayerInfos playersInfos = roomManager.getGame(roomId).getTableFacade().getPlayerInfos(nickname);
+        return PlayerMapper.toDTO(playersInfos, game);
+    }
 }

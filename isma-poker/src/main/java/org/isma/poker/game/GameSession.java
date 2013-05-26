@@ -94,14 +94,17 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
 
     private void nextStep() throws InvalidStepActionException {
         stepRunner.nextStep();
+        notifyEvent(new NewStepEvent());
     }
 
     public void gotoEndStep() throws InvalidStepActionException {
         stepRunner.gotoEnd();
+        notifyEvent(new NewStepEvent());
     }
 
     public void finishStep() throws InvalidStepActionException {
         stepRunner.finish();
+        notifyEvent(new NewStepEvent());
     }
 
     @Override

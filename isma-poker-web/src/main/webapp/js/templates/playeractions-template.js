@@ -1,6 +1,8 @@
 var playeractions_template =
     '\
 <h1>Actions</h1>\
+<input type="number" id="chips-amount" placeholder="Enter chips value"/>\
+<br/>\
 <input type="button" id="sitout-button" value="SitOut"/>\
 <input type="button" id="fold-button" value="Fold"/>\
 <input type="button" id="smallblind-button" value="Pay Small Blind"/>\

@@ -8,4 +8,30 @@
 
     <context:component-scan base-package="org.isma.poker.rest"/>
     <mvc:annotation-driven/>
+
+    <!-- Pour retourner du json avec les @ExceptionHandler -->
+    <!--<bean id="methodHandlerExceptionResolver"-->
+          <!--class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">-->
+        <!--<property name="messageConverters">-->
+            <!--<list>-->
+                <!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!-- Pour retourner du json si @ExceptionHandler -->
+    <!--<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">-->
+        <!--<property name="mediaTypes">-->
+            <!--<map>-->
+                <!--<entry key="json" value="application/json"/>-->
+            <!--</map>-->
+        <!--</property>-->
+        <!--<property name="defaultContentType" value="application/json"/>-->
+        <!--<property name="defaultViews">-->
+            <!--<list>-->
+                <!--<bean name="MappingJacksonJsonView"-->
+                      <!--class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
 </beans>

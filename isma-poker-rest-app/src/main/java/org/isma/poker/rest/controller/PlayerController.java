@@ -10,6 +10,7 @@ import org.isma.poker.rest.dto.TableDTO;
 import org.isma.poker.rest.service.GameRestService;
 import org.isma.poker.rest.service.PlayerActionRestService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +23,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping(value = "/poker")
-public class PlayerController {
+public class PlayerController extends AbstractController {
     private static final Logger logger = Logger.getLogger(PlayerController.class);
 
     @Inject
@@ -57,6 +58,12 @@ public class PlayerController {
     @ResponseBody
     public List<PlayerDTO> getPlayers(@PathVariable Integer roomId) {
         return gameRestService.getPlayers(roomId);
+    }
+
+    @RequestMapping(method = GET, value = "/room/{roomId}/player/{nickname}")
+    @ResponseBody
+    public PlayerDTO getPlayer(@PathVariable Integer roomId, @PathVariable String nickname) {
+        return gameRestService.getPlayer(roomId, nickname);
     }
 
     /**
@@ -108,6 +115,7 @@ public class PlayerController {
     }
 
     @RequestMapping(value = "/room/{roomId}/paybigblind/{nickname}", method = POST)
+    @ExceptionHandler
     @ResponseBody
     public PlayerDTO payBigblind(
             @PathVariable Integer roomId,

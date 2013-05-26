@@ -2,16 +2,17 @@ GameInfosModel = Backbone.Model.extend({
     initialize: function () {
     },
     defaults: {
-        smallBlind: "0",
-        bigBlind: "0",
-        step: "",
-        currentBet: "0",
-        pot: "0",
-        currentPlayer: ""
+        smallBlind: null,
+        bigBlind: null,
+        step: null,
+        currentBet: null,
+        pot: null,
+        currentPlayer: null
     },
 
     refresh: function () {
-        var infos = game.infos();
+        var infos = game.getGameStatus();
+
         this.set('smallBlind', infos.smallBlindAmount);
         this.set('bigBlind', infos.bigBlindAmount);
         this.set('step', infos.step);

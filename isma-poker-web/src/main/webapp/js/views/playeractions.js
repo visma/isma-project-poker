@@ -15,33 +15,63 @@ PlayerActionsView = Backbone.View.extend({
         this.allInButton = $("#allin-button");
         this.showButton = $("#show-button");
 
+        this.chipsNumberField = $("#chips-amount");
+
         this.render();
         this.model.on('change', this.render, this);
     },
     events: {
         "click #sitout-button": "sitOut",
-        "click #fold-button": "todo",
+        "click #fold-button": "fold",
         "click #smallblind-button": "smallblind",
         "click #bigblind-button": "bigblind",
-        "click #check-button": "todo",
-        "click #call-button": "todo",
-        "click #bet-button": "todo",
-        "click #raise-button": "todo",
-        "click #allin-button": "todo",
-        "click #show-button": "todo"
+        "click #check-button": "check",
+        "click #call-button": "call",
+        "click #bet-button": "bet",
+        "click #raise-button": "raise",
+        "click #allin-button": "allin",
+        "click #show-button": "show"
     },
 
-    sitOut : function(){
+    sitOut: function () {
         alert("todo sitout");
     },
-    smallblind : function(){
+    smallblind: function () {
         game.paySmallBlind(models['login'].get('nickname'));
     },
-    bigblind : function(){
+    bigblind: function () {
         game.payBigBlind(models['login'].get('nickname'));
     },
-    todo : function(){
-        alert("todo X");
+    check: function () {
+        game.check(models['login'].get('nickname'));
+    },
+    call: function () {
+        game.call(models['login'].get('nickname'));
+    },
+    bet: function () {
+        var chips = this.chipsNumberField.val();
+        if (chips <= 0) {
+            alert("Enter a bet amount !");
+        } else {
+            game.bet(models['login'].get('nickname'), chips);
+        }
+    },
+    raise: function () {
+        var chips = this.chipsNumberField.val();
+        if (chips <= 0) {
+            alert("Enter a raise amount !");
+        } else {
+            game.raise(models['login'].get('nickname'), chips);
+        }
+    },
+    allin: function () {
+        game.allin(models['login'].get('nickname'));
+    },
+    fold: function () {
+        game.fold(models['login'].get('nickname'));
+    },
+    show: function () {
+        game.show(models['login'].get('nickname'));
     },
 
     render: function () {
@@ -56,6 +86,13 @@ PlayerActionsView = Backbone.View.extend({
         this.renderButtonAction('RAISE', this.raiseButton);
         this.renderButtonAction('ALLIN', this.allInButton);
         this.renderButtonAction('SHOW', this.showButton);
+
+        if ($.inArray('BET', this.model.get('actions')) != -1 ||
+            $.inArray('RAISE', this.model.get('actions')) != -1) {
+            this.chipsNumberField.show();
+        } else {
+            this.chipsNumberField.hide();
+        }
     },
     renderButtonAction: function (action, button) {
         if ($.inArray(action, this.model.get('actions')) != -1) {

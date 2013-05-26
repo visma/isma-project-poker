@@ -42,6 +42,7 @@ public class PokerEventDispatcher extends GameEventListener {
         return json.toString();
     }
 
+    //TODO migrer les dto dans un autre package visible par celui ci ET rest-app pour envoyer des trucs plus jolis coté client
     private String buildMessage(GameEvent event) {
         ClientMessage msg;
         if (event instanceof PlayerSitInEvent) {
@@ -52,6 +53,10 @@ public class PokerEventDispatcher extends GameEventListener {
             msg = new ClientMessage("blind", event);
         } else if (event instanceof PlayerTurnEvent) {
             msg = new ClientMessage("playerTurn", event);
+        } else if (event instanceof NewStepEvent) {
+            msg = new ClientMessage("newStep", event);
+        } else if (event instanceof RoundEndEvent) {
+            msg = new ClientMessage("results", event);
         } else {
             msg = new ClientMessage("???", event);
         }

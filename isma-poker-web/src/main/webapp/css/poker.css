@@ -1,0 +1,70 @@
+/*****************************************************
+* Authentification
+*****************************************************/
+#login-container {
+    background: #7d172a;
+    text-align: right;
+}
+
+#login-container label {
+    color: #FFD700;
+}
+
+/*****************************************************
+* Game informations
+*****************************************************/
+#gameinfos-container {
+    /*la couleur deconne sans ce float:left (?) */
+    float: left;
+    width: 100%;
+    background: #7d172a;
+}
+
+#gameinfos-container #gameinfos-left {
+    float: left;
+}
+
+#gameinfos-container #gameinfos-right {
+    float: right;
+}
+
+#gameinfos-container p {
+    margin: 0;
+}
+
+#gameinfos-container label {
+    color: #FFD700;
+}
+/*****************************************************
+* Player informations
+*****************************************************/
+#playerinfos-container {
+    float: left; /*la couleur deconne sans ça (?) */
+    width: 100%;
+    background: #7d172a;
+}
+
+#playerinfos-container #playerinfos-left {
+    float: left;
+}
+
+#playerinfos-container #playerinfos-right {
+    float: right;
+}
+
+#playerinfos-container p {
+    margin: 0;
+}
+
+#playerinfos-container label {
+    color: #FFD700;
+}
+/*****************************************************
+* Player actions
+*****************************************************/
+#playeractions-container {
+    /*float: right;*/
+    width: 100%;
+    border-width: 1px;
+    background: #7d172a;
+}

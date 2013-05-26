@@ -1,6 +1,6 @@
 var gameinfos_template =
     '\
-<h1>Game informations</h1>\
+<h1>Game</h1>\
 <div id="gameinfos-left">\
     <p><label>Step</label></p> \
     <p><label>Blinds</label></p> \

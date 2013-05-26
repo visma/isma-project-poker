@@ -14,10 +14,15 @@ GameInfosView = Backbone.View.extend({
         this.model.on('change', this.render, this);
     },
     render: function () {
-        this.step.html(this.model.get('step'));
-        this.blinds.html(this.model.get('smallBlind') + "/" + this.model.get('bigBlind') + "$");
-        this.pot.html(this.model.get('pot'));
-        this.currentBet.html(this.model.get('currentBet'));
-        this.currentPlayer.html(this.model.get('currentPlayer'));
+        var defaultvalue = '---';
+        this.step.html(defaultIfNotDefined(this.model.get('step'), defaultvalue));
+        if (isset(this.model.get('smallBlind'))) {
+            this.blinds.html(this.model.get('smallBlind') + "/" + this.model.get('bigBlind') + "$");
+        }else{
+            this.blinds.html(defaultvalue);
+        }
+        this.pot.html(defaultIfNotDefined(this.model.get('pot'), defaultvalue));
+        this.currentBet.html(defaultIfNotDefined(this.model.get('currentBet'), defaultvalue));
+        this.currentPlayer.html(defaultIfNotDefined(this.model.get('currentPlayer'), defaultvalue));
     }
 });
