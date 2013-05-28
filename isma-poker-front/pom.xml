@@ -6,10 +6,10 @@
     | Project Information
     -->
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>isma-poker-web</artifactId>
+    <artifactId>isma-poker-front</artifactId>
     <packaging>war</packaging>
     <version>0.1</version>
-    <name>module poker web</name>
+    <name>module poker front</name>
     <!--
      | POM Relationships
      -->
