@@ -2,7 +2,7 @@ Card = Backbone.Model.extend({
     initialize: function () {
     },
     defaults: {
-        value: "---",
+        value: "---"
     },
 
     reset: function () {
