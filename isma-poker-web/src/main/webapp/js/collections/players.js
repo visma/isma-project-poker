@@ -12,7 +12,7 @@ PlayerCollection = Backbone.Collection.extend({
             this.at(i).set('chips', player.chips);
             this.at(i).set('bet', player.currentBet);
             this.at(i).set('hand', player.holeCard1 + ", " + player.holeCard2);
-            this.at(i).set('status', player.fold ? "fold" : "playing");
+            this.at(i).set('status', player.status);
         }
         for (var i = players.length; i < this.length; i++) {
             console.debug("\t- clean player at index : " + i);

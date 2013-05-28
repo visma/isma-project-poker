@@ -6,6 +6,7 @@ import org.isma.poker.commons.dto.PlayerDTO;
 import org.isma.poker.game.GameSession;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.PlayerInfos;
+import org.isma.poker.game.model.PlayerStatus;
 import org.isma.poker.helper.CardHelper;
 import org.isma.poker.model.Hand;
 
@@ -25,6 +26,9 @@ public class PlayerMapper {
         PlayerDTO dto = new PlayerDTO(player.getNickname(), player.getChips(), player.isFold(), card1, card2);
         dto.setPosition(-1);
         dto.setCurrentBet(game.getTableFacade().getCurrentStepBet(player));
+
+        PlayerStatus playerStatus = game.getTableFacade().getStatus(player);
+        dto.setStatus(playerStatus);
         return dto;
     }
 

@@ -1,7 +1,7 @@
 package org.isma.poker.rest.controller;
 
 import org.apache.log4j.Logger;
-import org.isma.poker.commons.dto.ErrrorDTO;
+import org.isma.poker.commons.dto.ErrorDTO;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,7 +15,7 @@ public abstract class AbstractController {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Object handleException(Exception ex, HttpServletRequest request, HttpServletResponse response) {
-        logger.debug("handle exception : " + ex);
-        return new ErrrorDTO(ex.getMessage(), ex.getClass().getSimpleName());
+        logger.error("handle exception : " + ex);
+        return new ErrorDTO(ex.getMessage(), ex.getClass().getSimpleName());
     }
 }

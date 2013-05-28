@@ -22,7 +22,7 @@ PlayerInfo = Backbone.Model.extend({
         var playerDTO = game.getPlayer(nickname);
 
         this.set('name', nickname);
-        this.set('status', playerDTO.fold ? 'folded' : 'playing');
+        this.set('status', playerDTO.status);
         this.set('chips', playerDTO.chips);
         this.set('bet', playerDTO.currentBet);
         if (playerDTO.holeCard1 != null) {

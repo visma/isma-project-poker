@@ -10,14 +10,14 @@
     <mvc:annotation-driven/>
 
     <!-- Pour retourner du json avec les @ExceptionHandler -->
-    <!--<bean id="methodHandlerExceptionResolver"-->
-          <!--class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">-->
-        <!--<property name="messageConverters">-->
-            <!--<list>-->
-                <!--<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
+    <bean id="methodHandlerExceptionResolver"
+          class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+            </list>
+        </property>
+    </bean>
 
     <!-- Pour retourner du json si @ExceptionHandler -->
     <!--<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">-->

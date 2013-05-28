@@ -1,9 +1,12 @@
 package org.isma.poker.commons.dto;
 
+import org.isma.poker.game.model.PlayerStatus;
+
 public class PlayerDTO {
     private final String name;
     private final int chips;
     private final boolean fold;
+    private PlayerStatus status;
     private final String holeCard1;
     private final String holeCard2;
     private int position;
@@ -51,5 +54,13 @@ public class PlayerDTO {
 
     public int getCurrentBet() {
         return currentBet;
+    }
+
+    public PlayerStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PlayerStatus status) {
+        this.status = status;
     }
 }

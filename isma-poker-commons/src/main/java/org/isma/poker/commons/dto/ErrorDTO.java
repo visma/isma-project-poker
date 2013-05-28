@@ -1,10 +1,10 @@
 package org.isma.poker.commons.dto;
 
-public class ErrrorDTO {
+public class ErrorDTO {
     private String message;
     private String type;
 
-    public ErrrorDTO(String message, String type) {
+    public ErrorDTO(String message, String type) {
         this.message = message;
         this.type = type;
     }
