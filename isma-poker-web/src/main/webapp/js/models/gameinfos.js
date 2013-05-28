@@ -10,24 +10,22 @@ GameInfosModel = Backbone.Model.extend({
         currentPlayer: null
     },
 
-    refresh: function () {
-        var infos = game.getGameStatus();
-
-        this.set('smallBlind', infos.smallBlindAmount);
-        this.set('bigBlind', infos.bigBlindAmount);
-        this.set('step', infos.step);
-        if (infos.currentPlayer != null) {
-            this.set('currentPlayer', infos.currentPlayer.name);
+    updateDTO: function (tableDTO) {
+        this.set('smallBlind', tableDTO.smallBlindAmount);
+        this.set('bigBlind', tableDTO.bigBlindAmount);
+        this.set('step', tableDTO.step);
+        if (tableDTO.currentPlayer != null) {
+            this.set('currentPlayer', tableDTO.currentPlayer.name);
         } else {
             this.set('currentPlayer', 'no');
         }
-        if (infos.pot != null) {
-            this.set('pot', infos.pot);
+        if (tableDTO.pot != null) {
+            this.set('pot', tableDTO.pot);
         } else {
             this.set('pot', '0');
         }
-        if (infos.currentBet != null) {
-            this.set('currentBet', infos.currentBet);
+        if (tableDTO.currentBet != null) {
+            this.set('currentBet', tableDTO.currentBet);
         } else {
             this.set('currentBet', '0');
         }

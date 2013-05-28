@@ -5,10 +5,10 @@ PlayerActions = Backbone.Model.extend({
         actions: []
     },
 
-    refresh: function () {
+    updateActions: function () {
         var nick = models['login'].get('nickname');
         this.set('actions', game.getActions(nick));
-        console.info(playerActions);
+        console.debug("PlayerActions.updateActions() : " + this.get('actions'));
     }
 
 });

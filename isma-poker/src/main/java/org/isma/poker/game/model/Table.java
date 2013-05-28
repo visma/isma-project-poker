@@ -86,6 +86,8 @@ public class Table {
     }
 
     private void clearTable() {
+        currentBet = 0;
+        currentStepBet.clear();
         pot.clear();
         communityCards.clear();
         inGamePlayers.clear();

@@ -1,5 +1,6 @@
 package org.isma.poker.rest.service;
 
+import org.isma.poker.commons.dto.PlayerDTO;
 import org.isma.poker.game.GameSession;
 import org.isma.poker.game.actions.PokerActionEnum;
 import org.isma.poker.game.exceptions.PokerGameException;
@@ -7,7 +8,6 @@ import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.PlayerInfos;
 import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.poker.model.HandEvaluation;
-import org.isma.poker.rest.dto.PlayerDTO;
 import org.isma.poker.rest.manager.RoomManager;
 import org.isma.poker.services.PlayerActionService;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static org.isma.poker.rest.mapper.PlayerMapper.toDTO;
+import static org.isma.poker.commons.mapper.PlayerMapper.toDTO;
 
 @Service
 public class PlayerActionRestService {

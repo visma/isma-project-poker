@@ -1,16 +1,17 @@
 package org.isma.poker.rest.service;
 
+import org.isma.poker.commons.dto.PlayerDTO;
+import org.isma.poker.commons.dto.TableDTO;
+import org.isma.poker.commons.mapper.PlayerMapper;
 import org.isma.poker.game.GameSession;
 import org.isma.poker.game.model.PlayerInfos;
-import org.isma.poker.rest.dto.PlayerDTO;
-import org.isma.poker.rest.dto.TableDTO;
 import org.isma.poker.rest.manager.RoomManager;
-import org.isma.poker.rest.mapper.PlayerMapper;
-import org.isma.poker.rest.mapper.TableMapper;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.List;
+
+import static org.isma.poker.commons.mapper.TableMapper.toDTO;
 
 @Service
 public class GameRestService {
@@ -26,7 +27,7 @@ public class GameRestService {
 
     public TableDTO getTable(Integer roomId) {
         GameSession game = roomManager.getGame(roomId);
-        TableDTO dto = TableMapper.toDTO(game);
+        TableDTO dto = toDTO(game);
         dto.setStep(game.getStep());
         return dto;
     }

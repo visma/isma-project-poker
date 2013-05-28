@@ -1,8 +1,10 @@
-package org.isma.poker.rest.mapper;
+package org.isma.poker.commons.mapper;
 
+import org.isma.poker.commons.dto.TableDTO;
 import org.isma.poker.game.GameSession;
 import org.isma.poker.game.model.TableFacade;
-import org.isma.poker.rest.dto.TableDTO;
+import org.isma.poker.helper.CardHelper;
+import org.isma.poker.model.Card;
 
 public class TableMapper {
     //TODO TU
@@ -21,6 +23,10 @@ public class TableMapper {
         dto.setPot(tableFacade.getTotalPot());
 
         dto.setStep(game.getStep());
+
+        for (Card card : tableFacade.getCommunityCards()) {
+            dto.getCards().add(CardHelper.toString(card));
+        }
         return dto;
     }
 }

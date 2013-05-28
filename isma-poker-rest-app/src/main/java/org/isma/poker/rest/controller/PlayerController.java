@@ -1,12 +1,12 @@
 package org.isma.poker.rest.controller;
 
 import org.apache.log4j.Logger;
+import org.isma.poker.commons.dto.PlayerDTO;
+import org.isma.poker.commons.dto.TableDTO;
 import org.isma.poker.game.actions.PokerActionEnum;
 import org.isma.poker.game.exceptions.PokerGameException;
 import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.poker.model.HandEvaluation;
-import org.isma.poker.rest.dto.PlayerDTO;
-import org.isma.poker.rest.dto.TableDTO;
 import org.isma.poker.rest.service.GameRestService;
 import org.isma.poker.rest.service.PlayerActionRestService;
 import org.springframework.stereotype.Controller;
@@ -48,9 +48,9 @@ public class PlayerController extends AbstractController {
         return "OK";
     }
 
-    @RequestMapping(method = GET, value = "/room/{roomId}/status")
+    @RequestMapping(method = GET, value = "/room/{roomId}")
     @ResponseBody
-    public TableDTO getTableStatus(@PathVariable Integer roomId) {
+    public TableDTO getTable(@PathVariable Integer roomId) {
       return gameRestService.getTable(roomId);
     }
 

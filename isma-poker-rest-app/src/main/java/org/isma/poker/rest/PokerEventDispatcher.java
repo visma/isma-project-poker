@@ -1,10 +1,10 @@
 package org.isma.poker.rest;
 
 import net.sf.json.JSON;
+import org.isma.poker.commons.dto.TableDTO;
+import org.isma.poker.commons.mapper.TableMapper;
 import org.isma.poker.game.GameSession;
 import org.isma.poker.game.event.*;
-import org.isma.poker.rest.dto.TableDTO;
-import org.isma.poker.rest.mapper.TableMapper;
 import org.isma.poker.rest.socket.PokerSocketClient;
 
 import java.io.IOException;
@@ -42,7 +42,6 @@ public class PokerEventDispatcher extends GameEventListener {
         return json.toString();
     }
 
-    //TODO migrer les dto dans un autre package visible par celui ci ET rest-app pour envoyer des trucs plus jolis coté client
     private String buildMessage(GameEvent event) {
         ClientMessage msg;
         if (event instanceof PlayerSitInEvent) {
@@ -57,6 +56,8 @@ public class PokerEventDispatcher extends GameEventListener {
             msg = new ClientMessage("newStep", event);
         } else if (event instanceof RoundEndEvent) {
             msg = new ClientMessage("results", event);
+        } else if (event instanceof HoldeCardEvent) {
+            msg = new ClientMessage("holeCards", event);
         } else {
             msg = new ClientMessage("???", event);
         }

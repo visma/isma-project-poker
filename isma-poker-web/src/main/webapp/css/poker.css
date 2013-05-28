@@ -60,6 +60,29 @@
     color: #FFD700;
 }
 /*****************************************************
+* Player on the table
+*****************************************************/
+#pokertable {
+    text-align: center;
+}
+
+#pokertable td {
+    width: 250px;
+    height: 80px;
+    background: #7d172a;
+}
+#pokertable div {
+    text-align: left;
+}
+
+#pokertable div p {
+    margin: 5px;
+}
+
+#pokertable div p label {
+    color: #FFD700;
+}
+/*****************************************************
 * Player actions
 *****************************************************/
 #playeractions-container {
@@ -67,4 +90,8 @@
     width: 100%;
     border-width: 1px;
     background: #7d172a;
+
+    /*isma ajout*/
+    position: fixed;
+    bottom: 10px;
 }

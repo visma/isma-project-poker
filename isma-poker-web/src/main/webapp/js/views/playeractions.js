@@ -54,6 +54,7 @@ PlayerActionsView = Backbone.View.extend({
             alert("Enter a bet amount !");
         } else {
             game.bet(models['login'].get('nickname'), chips);
+            this.chipsNumberField.val('');
         }
     },
     raise: function () {
@@ -62,6 +63,7 @@ PlayerActionsView = Backbone.View.extend({
             alert("Enter a raise amount !");
         } else {
             game.raise(models['login'].get('nickname'), chips);
+            this.chipsNumberField.val('');
         }
     },
     allin: function () {
@@ -75,7 +77,6 @@ PlayerActionsView = Backbone.View.extend({
     },
 
     render: function () {
-        console.info("todo actions rendering : " + this.model.get('actions'));
         this.renderButtonAction('SIT_OUT', this.sitoutButton);
         this.renderButtonAction('FOLD', this.foldButton);
         this.renderButtonAction('PAY_SMALL_BLIND', this.smallBlindButton);

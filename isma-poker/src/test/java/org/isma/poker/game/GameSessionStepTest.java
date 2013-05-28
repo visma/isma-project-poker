@@ -259,14 +259,19 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
     @Test
     public void two_players_second_round_start() throws Exception {
         //Given - go to 2nd round
-        gotoStep(END);
+        gotoStep(BETS_4);
+        bet(player2, game, 10);
+        call(player1, game);
+        show(player2, game);
+        show(player1, game);
 
         assertEquals(BLINDS, game.getStep());
         assertEquals(0, player1.getHand().size());
         assertEquals(0, player2.getHand().size());
+        assertEquals(0, tableFacade.getCurrentBet());
 
-        assertEquals(110, player2.getChips());
-        assertEquals(90, player1.getChips());
+        assertEquals(120, player2.getChips());
+        assertEquals(80, player1.getChips());
 
         assertEquals(player2, tableFacade.getDealer());
         assertEquals(player1, tableFacade.getSmallBlindPlayer());
@@ -278,11 +283,14 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
         assertEquals(5, game.getTableFacade().getCurrentBet());
         payBigBlind(player2, game);
         assertEquals(10, game.getTableFacade().getCurrentBet());
+        assertEquals(BETS_1, game.getStep());
+        assertEquals(5, tableFacade.getRemainingChipsToPay(player1));
+        call(player1, game);
 
         //Then
-        assertEquals(100, player2.getChips());
-        assertEquals(85, player1.getChips());
-        assertEquals(15, tableFacade.getTotalPot());
+        assertEquals(110, player2.getChips());
+        assertEquals(70, player1.getChips());
+        assertEquals(20, tableFacade.getTotalPot());
     }
 
 }

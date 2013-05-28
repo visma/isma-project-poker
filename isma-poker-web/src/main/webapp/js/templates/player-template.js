@@ -1,18 +1,10 @@
 var player_template =
     '\
-<h1>Player</h1>\
-<div id="playerinfos-left">\
-    <p><label>Name</label></p> \
-    <p><label>Status</label></p> \
-    <p><label>Chips</label></p> \
-    <p><label>Current Bet</label></p> \
-    <p><label>Hand</label></p> \
-</div>\
-<div id="playerinfos-right">\
-    <p><label id="player-nickname"><label></p> \
-    <p><label id="player-status"><label></p> \
-    <p><label id="player-chips"><label></p> \
-    <p><label id="player-bet"><label></p> \
-    <p><label id="player-hand"><label></p> \
+<div class="player-class">\
+    <p><label id="player_%index%-nickname"></label></p> \
+    <p><label>Chips : </label><label id="player_%index%-chips"></label></p> \
+    <p><label>Bet : </label><label id="player_%index%-bet"></label></p> \
+    <p><label>Status : </label><label id="player_%index%-status"></label></p> \
+    <p><label>Hand : </label><label id="player_%index%-hand"></label></p> \
 </div>\
 ';

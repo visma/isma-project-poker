@@ -1,7 +1,7 @@
 package org.isma.poker.rest.controller;
 
 import org.apache.log4j.Logger;
-import org.isma.poker.rest.dto.ErrrorDTO;
+import org.isma.poker.commons.dto.ErrrorDTO;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 

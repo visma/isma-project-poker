@@ -1,6 +1,9 @@
-package org.isma.poker.rest.dto;
+package org.isma.poker.commons.dto;
 
 import org.isma.poker.game.step.Step;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TableDTO {
     private int smallBlindAmount;
@@ -11,6 +14,7 @@ public class TableDTO {
     private int currentBet;
     private int pot;
     private Step step;
+    private List<String> cards = new ArrayList<String>();
 
     public TableDTO() {
     }
@@ -77,5 +81,9 @@ public class TableDTO {
 
     public void setPot(int pot) {
         this.pot = pot;
+    }
+
+    public List<String> getCards() {
+        return cards;
     }
 }

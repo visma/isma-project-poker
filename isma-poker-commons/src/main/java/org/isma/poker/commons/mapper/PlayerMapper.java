@@ -1,13 +1,13 @@
-package org.isma.poker.rest.mapper;
+package org.isma.poker.commons.mapper;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
+import org.isma.poker.commons.dto.PlayerDTO;
 import org.isma.poker.game.GameSession;
 import org.isma.poker.game.model.Player;
 import org.isma.poker.game.model.PlayerInfos;
 import org.isma.poker.helper.CardHelper;
 import org.isma.poker.model.Hand;
-import org.isma.poker.rest.dto.PlayerDTO;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +16,7 @@ import java.util.List;
 public class PlayerMapper {
 
     public static PlayerDTO toDTO(Player player, GameSession game) {
-        if (player == null){
+        if (player == null) {
             return null;
         }
         Hand hand = player.getHand();

@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <!-- POM's layout - http://www.javaworld.com/javaworld/jw-05-2006/jw-0529-maven.html -->
+
+    <!--
+    | Project Information
+    -->
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>isma-poker-commons</artifactId>
+    <packaging>jar</packaging>
+    <version>0.1</version>
+    <name>module poker commons</name>
+    <!--
+     | POM Relationships
+     -->
+    <parent>
+        <groupId>org.isma</groupId>
+        <artifactId>isma-project-poker</artifactId>
+        <version>0.1</version>
+    </parent>
+
+    <properties>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.isma</groupId>
+            <artifactId>isma-poker</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+
+        <!-- JSON -->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.3</version>
+            <type>jar</type>
+            <classifier>jdk15</classifier>
+        </dependency>
+
+        <!-- DOZER -->
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>5.3.2</version>
+        </dependency>
+
+        <!-- Jackson JSON Mapper-->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.8</version>
+        </dependency>
+    </dependencies>
+</project>

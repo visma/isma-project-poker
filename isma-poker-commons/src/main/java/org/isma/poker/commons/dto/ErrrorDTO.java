@@ -1,4 +1,4 @@
-package org.isma.poker.rest.dto;
+package org.isma.poker.commons.dto;
 
 public class ErrrorDTO {
     private String message;

@@ -40,6 +40,11 @@
             </dependency>
             <dependency>
                 <groupId>org.isma</groupId>
+                <artifactId>isma-poker-commons</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.isma</groupId>
                 <artifactId>isma-poker-web</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -112,6 +117,7 @@
     <modules>
         <module>isma-poker</module>
         <module>isma-poker-services</module>
+        <module>isma-poker-commons</module>
         <module>isma-poker-rest-app</module>
         <module>isma-poker-server</module>
         <module>isma-poker-web</module>

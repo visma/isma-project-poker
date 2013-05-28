@@ -17,22 +17,39 @@
     <!-- UTILS -->
     <script type="text/javascript" src="js/util.js"></script>
 
-    <!-- BACKBONE -MODELS/VIEWS -->
+    <!-- BACKBONE -MODELS/VIEWS/COLLECTIONS -->
     <script type="text/javascript" src="js/models/gameinfos.js"></script>
     <script type="text/javascript" src="js/views/gameinfos.js"></script>
+
     <script type="text/javascript" src="js/models/playeractions.js"></script>
     <script type="text/javascript" src="js/views/playeractions.js"></script>
+
     <script type="text/javascript" src="js/models/login.js"></script>
     <script type="text/javascript" src="js/views/login.js"></script>
 
-    <script type="text/javascript" src="js/models/player.js"></script>
+    <script type="text/javascript" src="js/views/table.js"></script>
+
+    <script type="text/javascript" src="js/models/playerinfo.js"></script>
+    <script type="text/javascript" src="js/collections/players.js"></script>
+    <script type="text/javascript" src="js/views/playerinfo.js"></script>
+    <script type="text/javascript" src="js/views/players.js"></script>
     <script type="text/javascript" src="js/views/player.js"></script>
+
+    <script type="text/javascript" src="js/models/card.js"></script>
+    <script type="text/javascript" src="js/collections/cards.js"></script>
+    <script type="text/javascript" src="js/views/card.js"></script>
+    <script type="text/javascript" src="js/views/cards.js"></script>
 
     <!-- TEMPLATES -->
     <script type="text/javascript" src="js/templates/login-template.js"></script>
     <script type="text/javascript" src="js/templates/gameinfos-template.js"></script>
     <script type="text/javascript" src="js/templates/playeractions-template.js"></script>
+    <script type="text/javascript" src="js/templates/playerinfo-template.js"></script>
     <script type="text/javascript" src="js/templates/player-template.js"></script>
+    <script type="text/javascript" src="js/templates/player-empty-template.js"></script>
+    <script type="text/javascript" src="js/templates/card-template.js"></script>
+    <script type="text/javascript" src="js/templates/card-empty-template.js"></script>
+    <script type="text/javascript" src="js/templates/table-template.js"></script>
 
     <!-- COMMUNICATION -->
     <script type="text/javascript" src="js/io/actions.js"></script>
@@ -41,17 +58,12 @@
 </head>
 <body>
 <!-- STRUCTURE -->
-<!--<div id="login-container"></div>-->
-<!--<div id="main-container">-->
-    <!--<div id="gameinfos-container"></div>-->
-    <!--<div id="playeractions-container"></div>-->
-    <!--<div id="player-container"></div>-->
-<!--</div>-->
-
-<!-- GABARIT 10-->
+<!-- GABARIT 09-->
 <div id="global">
     <div id="entete">
-        <div id="title-container"><center><h1>Poker WebApp</h1></center></div>
+        <div id="title-container">
+            <center><h1>Poker WebApp</h1></center>
+        </div>
         <div id="login-container"></div>
     </div>
     <div id="centre">
@@ -60,65 +72,58 @@
             <div id="playerinfos-container"></div>
         </div>
         <div id="principal">
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
-            TABLE todo<br/>
+            <div id="table-container"></div>
+            <div id="secondaire">Lobbies todo</div>
         </div>
-        <div id="secondaire">ROOMS LIST todo</div>
-    </div>
-    <div id="pied">
-        <div id="playeractions-container"></div>
+        <div id="pied">
+            <div id="playeractions-container"></div>
+        </div>
     </div>
 </div>
+
 <!-- FILL STRUCTURE WITH BACKBONE -->
 <script type="text/javascript">
     var gameInfos = new GameInfosModel();
-    var gameInfosView = new GameInfosView({
-        el: $('#gameinfos-container'),
-        model: gameInfos
-    });
+    var gameInfosView = new GameInfosView({el: $('#gameinfos-container'), model: gameInfos});
 
     var playerActions = new PlayerActions();
-    var playerActionsView = new PlayerActionsView({
-        el: $('#playeractions-container'),
-        model: playerActions
-    });
+    var playerActionsView = new PlayerActionsView({el: $('#playeractions-container'), model: playerActions});
 
     var login = new LoginModel();
-    var loginView = new LoginView({
-        el: $('#login-container'),
-        model: login
-    });
+    var loginView = new LoginView({el: $('#login-container'), model: login});
 
-    var player = new Player();
-    var playerView = new PlayerView({
-        el: $('#playerinfos-container'),
-        model: player
-    });
+    var thePlayer = new PlayerInfo();
+    var playerInfoView = new PlayerInfoView({el: $('#playerinfos-container'), model: thePlayer});
 
     models['login'] = login;
     models['gameInfos'] = gameInfos;
     models['playerActions'] = playerActions;
-    models['player'] = player;
+    models['player'] = thePlayer;
+
+    var tableView = new TableView({el: $('#table-container')});
+
+    var p1 = new PlayerInfo();
+    var p2 = new PlayerInfo();
+    var p3 = new PlayerInfo();
+    var p4 = new PlayerInfo();
+    var p5 = new PlayerInfo();
+    var p6 = new PlayerInfo();
+    var p7 = new PlayerInfo();
+    var p8 = new PlayerInfo();
+    var p9 = new PlayerInfo();
+    var p10 = new PlayerInfo();
+    var playerCollection = new PlayerCollection([p1, p2, p3, p4, p5, p6, p7, p8, p9, p10]);
+    var playerCollectionView = new PlayerCollectionView({collection: playerCollection});
+    models['playerCollection'] = playerCollection;
+
+    var card1 = new Card();
+    var card2 = new Card();
+    var card3 = new Card();
+    var card4 = new Card();
+    var card5 = new Card();
+    var cardCollection = new CardCollection([card1, card2, card3, card4, card5]);
+    var cardCollectionView = new CardCollectionView({collection: cardCollection});
+    models['cardCollection'] = cardCollection;
 
 </script>
 </body>

@@ -3,36 +3,50 @@ if (!window.WebSocket) {
 }
 
 var game = {
-    connect: function (user) {
-        var location = "ws://localhost:8081/poker?user=" + user;
-        this._ws = new WebSocket(location);
-        this._ws.onopen = this._onopen;
-        this._ws.onmessage = this._onmessage;
-        this._ws.onclose = this._onclose;
-        this._ws.onerror = this._onerror;
-    },
-
-    getGameStatus: function () {
+    /***************************************************************
+     *  AJAX WEBSERVICES - GAME INFORMATIONS
+     ***************************************************************/
+    getPlayers: function () {
         var data = "no";
         $.ajax({
             async: false,
             type: "GET",
-            url: "http://localhost:8080/poker/room/1/status",
+            url: "http://localhost:8080/poker//room/1/players",
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.debug("succes de getGameStatus " + JSON.stringify(response));
+                console.debug("succes de getPlayers " + JSON.stringify(response));
                 data = response;
             },
             failure: function (response) {
-                console.error("echec de getGameStatus " + JSON.stringify(response));
+                console.error("echec de getPlayers " + JSON.stringify(response));
                 data = response;
             }
         });
         return data;
     },
-    getPlayerStatus: function (nickname) {
+    getTable: function () {
+        var data = "no";
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: "http://localhost:8080/poker/room/1",
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.debug("succes de getTable " + JSON.stringify(response));
+                data = response;
+            },
+            failure: function (response) {
+                console.error("echec de getTable " + JSON.stringify(response));
+                data = response;
+            }
+        });
+        return data;
+    },
+    getPlayer: function (nickname) {
         var data = "no";
         $.ajax({
             async: false,
@@ -42,11 +56,11 @@ var game = {
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
-                console.debug("succes de getPlayerStatus " + JSON.stringify(response));
+                console.debug("succes de getPlayer " + JSON.stringify(response));
                 data = response;
             },
             failure: function (response) {
-                console.error("echec de getPlayerStatus " + JSON.stringify(response));
+                console.error("echec de getPlayer " + JSON.stringify(response));
                 data = response;
             }
         });
@@ -74,6 +88,9 @@ var game = {
         return data;
     },
 
+    /***************************************************************
+     *  AJAX WEBSERVICES - PLAYER ACTIONS
+     ***************************************************************/
     sitIn: function (nickname) {
         $.ajax({
             async: false,
@@ -293,6 +310,17 @@ var game = {
         });
         return data;
     },
+    /***************************************************************
+     *  WEBSOCKETS PART
+     ***************************************************************/
+    connect: function (user) {
+        var location = "ws://localhost:8081/poker?user=" + user;
+        this._ws = new WebSocket(location);
+        this._ws.onopen = this._onopen;
+        this._ws.onmessage = this._onmessage;
+        this._ws.onclose = this._onclose;
+        this._ws.onerror = this._onerror;
+    },
 
     _onopen: function () {
         //Nothing to do...
@@ -306,12 +334,12 @@ var game = {
 
     _onclose: function (m) {
         this._ws = null;
-        console.info("_onclose");
+        console.warn("WebSocket close : " + m);
     },
 
     _onerror: function (e) {
         alert(e);
-        console.info('WebSocket Error ' + e);
+        console.error("WebSocket error : " + e);
     },
 
     _send: function (user, message) {

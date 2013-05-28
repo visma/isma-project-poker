@@ -13,14 +13,12 @@ LoginView = Backbone.View.extend({
         "click input[type=button]": "signIn"
     },
     signIn: function(){
-        console.info("signIn");
         this.model.set('nickname', this.nickname.val());
         game.connect(this.nickname.val());
         game.sitIn(this.nickname.val());
         game.buyChips(this.nickname.val(), 100);
         this.nickname.attr("disabled", true);
         this.loginButton.attr("disabled", true);
-
-        models['gameInfos'].refresh();
+        models['gameInfos'].updateDTO(game.getTable());
     }
 });
