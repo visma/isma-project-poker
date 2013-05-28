@@ -20,5 +20,3 @@ PlayerCollection = Backbone.Collection.extend({
         }
     }
 });
-{
-}
