@@ -10,7 +10,6 @@ import org.isma.poker.model.HandEvaluation;
 import org.isma.poker.rest.service.GameRestService;
 import org.isma.poker.rest.service.PlayerActionRestService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,9 +31,6 @@ public class PlayerController extends AbstractController {
     @Inject
     private GameRestService gameRestService;
 
-
-//    public PlayerController() {
-//    }
 
     /**
      * *********************************************************************************
@@ -115,7 +111,6 @@ public class PlayerController extends AbstractController {
     }
 
     @RequestMapping(value = "/room/{roomId}/paybigblind/{nickname}", method = POST)
-    @ExceptionHandler
     @ResponseBody
     public PlayerDTO payBigblind(
             @PathVariable Integer roomId,

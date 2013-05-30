@@ -6,6 +6,13 @@ var game = {
     /***************************************************************
      *  AJAX WEBSERVICES - GAME INFORMATIONS
      ***************************************************************/
+
+    _ajax_error: function (url, response) {
+        console.error("error " + response.responseText);
+        var error = jQuery.parseJSON(response.responseText);
+        alert("Error [" + error.object.type + "]\nurl=" + url + "\nmessage=" + error.object.message);
+    },
+
     getPlayers: function () {
         var data = "no";
         $.ajax({
@@ -19,9 +26,8 @@ var game = {
                 console.debug("succes de getPlayers " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de getPlayers " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
         });
         return data;
@@ -39,10 +45,10 @@ var game = {
                 console.debug("succes de getTable " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de getTable " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },
@@ -59,10 +65,10 @@ var game = {
                 console.debug("succes de getPlayer " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de getPlayer " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },
@@ -80,10 +86,10 @@ var game = {
                 console.debug("succes de getActions " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de getActions " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },
@@ -102,13 +108,15 @@ var game = {
             success: function (response) {
                 console.debug("succes de sitIn " + JSON.stringify(response));
             },
-            failure: function (response) {
-                console.error("echec de sitIn " + JSON.stringify(response));
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
     },
 
     buyChips: function (nickname, chips) {
+        console.info("buyChips start");
         $.ajax({
             async: false,
             type: "POST",
@@ -119,10 +127,11 @@ var game = {
             success: function (response) {
                 console.debug("succes de buyChips " + JSON.stringify(response));
             },
-            failure: function (response) {
-                console.error("echec de buyChips " + JSON.stringify(response));
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
         });
+        console.info("buyChips end");
     },
 
     paySmallBlind: function (nickname) {
@@ -138,10 +147,10 @@ var game = {
                 console.debug("succes de paySmallBlind " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de paySmallBlind " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },
@@ -159,10 +168,10 @@ var game = {
                 console.debug("succes de payBigBlind " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de payBigBlind " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },
@@ -180,10 +189,10 @@ var game = {
                 console.debug("succes de check " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de check " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },
@@ -200,10 +209,10 @@ var game = {
                 console.debug("succes de call " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de call " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },
@@ -221,10 +230,10 @@ var game = {
                 console.debug("succes de bet " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de bet " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },
@@ -242,10 +251,10 @@ var game = {
                 console.debug("succes de raise " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de raise " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },
@@ -263,10 +272,10 @@ var game = {
                 console.debug("succes de allin " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de allin " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },
@@ -283,10 +292,10 @@ var game = {
                 console.debug("succes de fold " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de fold " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },
@@ -303,10 +312,10 @@ var game = {
                 console.debug("succes de show " + JSON.stringify(response));
                 data = response;
             },
-            failure: function (response) {
-                console.error("echec de show " + JSON.stringify(response));
-                data = response;
+            error: function (response) {
+                game._ajax_error(this.url, response);
             }
+
         });
         return data;
     },

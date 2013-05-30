@@ -30,11 +30,23 @@ Then etape en cours : BETS_2 (pot : 60)
 Then le croupier distribue le flop : 10-S, Q-D, A-H
 
 When mario effectue l'action : BET(10)
+Then la mise en cours de mario est de 10 jetons
+Then le montant des encheres en cours sur ce tour de mise est de 10 jetons
+
 When luigi effectue l'action : CALL()
+Then la mise en cours de mario est de 10 jetons
+Then le montant des encheres en cours sur ce tour de mise est de 10 jetons
+
 When peach effectue l'action : ALLIN()
+Then la mise en cours de peach est de 80 jetons
+Then le montant des encheres en cours sur ce tour de mise est de 80 jetons
+
 When mario effectue l'action : CALL()
 When luigi effectue l'action : CALL()
 
+Then mario a 100 jetons
+Then luigi a 100 jetons
+Then peach a 0 jetons
 Then etape en cours : BETS_3 (pot : 300)
 Then le croupier distribue le turn : 10-S, Q-D, A-H, 7-S
 

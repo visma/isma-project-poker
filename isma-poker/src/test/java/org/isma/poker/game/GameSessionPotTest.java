@@ -79,6 +79,14 @@ public class GameSessionPotTest extends Abstract3PlayersGameSessionTest {
 
 //        game.nextStep();
         assertEquals(SHOWDOWN, game.getStep());
+
+        show(player1, game);
+        show(player2, game);
+        show(player3, game);
+        assertEquals(0, game.getTableFacade().getCurrentStepBet(player1));
+        assertEquals(0, game.getTableFacade().getCurrentStepBet(player2));
+        assertEquals(0, game.getTableFacade().getCurrentStepBet(player3));
+
     }
 
     private void assertCurrentBets(int expectedPlayer1CurrentBet,

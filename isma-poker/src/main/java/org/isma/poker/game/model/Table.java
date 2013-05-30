@@ -239,6 +239,7 @@ public class Table {
 
     public void handleFold(Player player) {
         player.setFold(true);
+        player.getHand().clear();
     }
 
     public void handleSitOut(Player player) {
@@ -321,6 +322,10 @@ public class Table {
         List<Player> alivePlayers = new ArrayList<Player>(inGamePlayers);
         filter(alivePlayers, new AlivePlayerPredicate());
         return alivePlayers;
+    }
+
+    public void endRound() {
+        clearTable();
     }
 
     private class HasMoneyPredicate implements Predicate {

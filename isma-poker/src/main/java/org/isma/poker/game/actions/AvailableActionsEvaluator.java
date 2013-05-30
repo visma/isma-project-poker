@@ -37,7 +37,7 @@ public class AvailableActionsEvaluator {
             return asList(SIT_OUT, FOLD, CHECK, BET, ALLIN);
         }
         int remainingChipsToPay = tableFacade.getRemainingChipsToPay(player);
-        if (remainingChipsToPay >= player.getChips()) {
+        if (remainingChipsToPay >= player.getChips() && player.hasChips()) {
             return asList(SIT_OUT, FOLD, ALLIN);
         }
         if (remainingChipsToPay == 0) {

@@ -23,7 +23,7 @@ CardView = Backbone.View.extend({
     },
 
     render: function () {
-        console.info("card view rendered " + this.index);
+        console.debug("card view rendered " + this.index);
         this._loadTemplate();
         if (this.model.loaded()) {
             this.value.html(this.model.get('value'));

@@ -206,11 +206,13 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
     }
 
     public void executeEndStep() throws InvalidStepActionException {
+        LOG.debug("executeEndStep");
         Results results = new Results(table.getPot(), table.getAlivePlayers());
         notifyEvent(new RoundEndEvent(results));
         for (Winner winner : results.getWinners()) {
             winner.getPlayer().setChips(winner.getPlayer().getChips() + winner.getPrize());
         }
+        table.endRound();
         beginRoundIfPossible();
     }
 

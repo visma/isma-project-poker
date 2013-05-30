@@ -85,7 +85,6 @@ public class GameSteps extends AbstractPokerSteps {
     }
 
 
-
     @When("$nickname call")
     public void whenCall(String nickname) throws PokerGameException {
         Player player = getPlayer(nickname);
@@ -109,12 +108,22 @@ public class GameSteps extends AbstractPokerSteps {
     }
 
     @When("$nickname paie la grosse blinde")
-    public void givenBigBlindPaid(String nickname) throws Exception {
+    public void whenBigBlindPaid(String nickname) throws Exception {
         PlayerAction.payBigBlind(getPlayer(nickname), current().game);
     }
 
+    @Then("la mise en cours de $nickname est de $chips jetons")
+    public void thenCurrentBet(String nickname, Integer chips) {
+        Player player = getPlayer(nickname);
+        assertEquals(chips.intValue(), current().game.getTableFacade().getCurrentStepBet(player));
+    }
+    @Then("le montant des encheres en cours sur ce tour de mise est de $chips jetons")
+    public void thenCurrentTableBet(Integer chips){
+        assertEquals(chips.intValue(), current().game.getTableFacade().getCurrentBet());
+    }
+
     @Then("$nickname reçoit les cartes cachees : $card1, $card2")
-    public void givenHoleCards(String nickname, Card card1, Card card2) throws Exception {
+    public void thenHoleCards(String nickname, Card card1, Card card2) throws Exception {
         Player player = getPlayer(nickname);
         assertEquals(2, player.getHand().size());
         assertEquals(card1, player.getHand().get(0));
@@ -122,7 +131,7 @@ public class GameSteps extends AbstractPokerSteps {
     }
 
     @Then("le montant de l'enchere en cours est de $chips jetons")
-    public void thenCurrentBet(int chips){
+    public void thenCurrentBet(int chips) {
         assertEquals(chips, current().game.getTableFacade().getCurrentBet());
     }
 
@@ -213,11 +222,11 @@ public class GameSteps extends AbstractPokerSteps {
     }
 
     @Then("$nickname est vainqueur sans rien montrer gagne $prize jetons")
-    public void thenWinnerBeforeShowdown(String nickname, int prize){
+    public void thenWinnerBeforeShowdown(String nickname, int prize) {
         RoundEndEvent event = (RoundEndEvent) current().resultEventListner.peek();
         Results results = event.getResults();
         for (Winner winner : results.getWinners()) {
-            if (winner.getPlayer().getNickname().equals(nickname)){
+            if (winner.getPlayer().getNickname().equals(nickname)) {
                 //assertEquals(handEvaluation, winner.getHandEvaluation());
                 assertEquals(prize, winner.getPrize());
                 return;
@@ -227,11 +236,11 @@ public class GameSteps extends AbstractPokerSteps {
     }
 
     @Then("$nickname est vainqueur avec $handEvaluation et gagne $prize jetons")
-    public void thenWinner(String nickname, HandEvaluation handEvaluation, int prize){
+    public void thenWinner(String nickname, HandEvaluation handEvaluation, int prize) {
         RoundEndEvent event = (RoundEndEvent) current().resultEventListner.peek();
         Results results = event.getResults();
         for (Winner winner : results.getWinners()) {
-            if (winner.getPlayer().getNickname().equals(nickname)){
+            if (winner.getPlayer().getNickname().equals(nickname)) {
                 assertEquals(handEvaluation, winner.getHandEvaluation());
                 assertEquals(prize, winner.getPrize());
                 return;
@@ -241,11 +250,11 @@ public class GameSteps extends AbstractPokerSteps {
     }
 
     @Then("$nickname a perdu avec $handEvaluation")
-    public void thenLoser(String nickname, HandEvaluation handEvaluation){
+    public void thenLoser(String nickname, HandEvaluation handEvaluation) {
         RoundEndEvent event = (RoundEndEvent) current().resultEventListner.peek();
         Results results = event.getResults();
         for (Loser loser : results.getLosers()) {
-            if (loser.getPlayer().getNickname().equals(nickname)){
+            if (loser.getPlayer().getNickname().equals(nickname)) {
                 assertEquals(handEvaluation, loser.getHandEvaluation());
                 return;
             }
@@ -283,7 +292,7 @@ public class GameSteps extends AbstractPokerSteps {
         }
     }
 
-    private Player getPlayer(String nickname){
+    private Player getPlayer(String nickname) {
         return current().game.getTableFacade().getPlayerInfos(nickname).getPlayer();
     }
 }

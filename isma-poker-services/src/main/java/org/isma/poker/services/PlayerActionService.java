@@ -56,8 +56,9 @@ public class PlayerActionService {
     }
 
     public HandEvaluation show(GameSession game, Player player) throws PokerGameException {
+        HandEvaluation evaluation = new HandEvaluator().evaluate(player.getHand());
         PlayerAction.show(player, game);
-        return new HandEvaluator().evaluate(player.getHand());
+        return evaluation;
     }
 
 

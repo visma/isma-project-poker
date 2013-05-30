@@ -25,10 +25,10 @@ function _onResults(obj) {
     var index;
     for (index = 0; index < losers.length; ++index) {
         var loser = losers[index];
-        console.error("loser : " + loser.player.nickname + " avec " + loser.handEvaluation);
+        alert("loser : " + loser.player.nickname + " avec " + loser.handEvaluation);
     }
     for (index = 0; index < winners.length; ++index) {
         var winner = winners[index];
-        console.error("winner : " + winner.player.nickname + " avec " + winner.handEvaluation);
+        alert("winner : " + winner.player.nickname + " avec " + winner.handEvaluation);
     }
 }

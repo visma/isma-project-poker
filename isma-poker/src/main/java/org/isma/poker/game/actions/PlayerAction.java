@@ -62,7 +62,7 @@ public class PlayerAction {
     //TODO a deplacer dans le GameSession
     public static int payChips(Player player, int priceToPay) {
         if (!player.hasChips()) {
-            throw new RuntimeException("avoid this...");
+            throw new RuntimeException("impossible to pay if no chips");
         }
         int chips = player.getChips();
         if (chips < priceToPay) {

@@ -61,6 +61,13 @@
             <version>1.9.8</version>
         </dependency>
 
+        <!-- To use spring @Configuration Annotation -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+
         <!-- SPRING -->
         <dependency>
             <groupId>org.springframework</groupId>

@@ -6,12 +6,11 @@ CardCollection = Backbone.Collection.extend({
         var cards = tableDTO.cards;
         for (var i = 0; i < cards.length; i++) {
             var card = cards[i];
-            console.info("fill " + i);
-            console.info("card " + card);
+            console.debug("card [" + i + "]" + card);
             this.at(i).set('value', card);
         }
         for (var i = cards.length; i < this.length; i++) {
-            console.info("efface " + i);
+            console.debug("clear card " + i);
             this.at(i).reset();
         }
     }

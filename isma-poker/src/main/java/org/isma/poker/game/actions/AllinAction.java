@@ -17,28 +17,26 @@ public class AllinAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
-        int currentBet = table.getCurrentBet();
+        int currentTableBet = table.getCurrentBet();
         int currentPaid = table.getCurrentStepBet(player);
-        int additionalChips = player.getChips() - currentBet;
+        int betIncreaseCost = player.getChips() - currentTableBet + currentPaid;
         int toPay = player.getChips();
 
-        LOG.debug(format("currentBet : %s", currentBet));
+        LOG.debug(format("currentBet : %s", currentTableBet));
         LOG.debug(format("currentPaid : %s", currentPaid));
-        LOG.debug(format("additionalChips : %s", additionalChips));
+        LOG.debug(format("betIncreaseCost : %s", betIncreaseCost));
         LOG.debug(format("toPay : %s", toPay));
 
-        if (additionalChips > 0 && table.getRaisesRemaining() == 0) {
+        if (betIncreaseCost > 0 && table.getRaisesRemaining() == 0) {
             throw new InvalidPlayerBetException(RAISE_FORBIDDEN);
         }
-        int raiseCost = (currentBet - currentPaid) + additionalChips;
-        LOG.debug(format("raiseCost : %s", raiseCost));
-        if (raiseCost > 0) {
+        if (betIncreaseCost > 0) {
             table.decreaseRaiseRemainings();
         }
         PlayerAction.payChips(player, toPay);
         table.addToPot(player, toPay);
-        if (additionalChips > 0) {
-            table.addBet(additionalChips);
+        if (betIncreaseCost > 0) {
+            table.addBet(betIncreaseCost);
         }
     }
 }
