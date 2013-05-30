@@ -27,7 +27,6 @@ public class SuitHelper {
         throw new IllegalArgumentException("illegal suit : '" + c + "'");
     }
 
-    //TODO TU
     public static String toString(SuitEnum suit) {
         return (String) conversionMap.getKey(suit);
     }

@@ -58,11 +58,7 @@ public class Pot extends AbstractPot implements Cloneable{
         potMap.put(player, amt + paid);
     }
 
-    public int getTotalBet(Player player) {
-        return potMap.get(player);
-    }
-
-    //TODO TU
+    //TODO TU (trouver une méthode efficace de tester clone() avec plantage si clone() n'est pas updaté avec de nouveaux attributs)
     @Override
     public Pot clone() {
         Pot clone = new Pot();

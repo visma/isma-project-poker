@@ -137,7 +137,7 @@ public class TableFacade {
         return null;
     }
 
-    //TODO a bien tester !!!
+    //TODO a bien tester (les status dependent aussi de Table.inGamePlayers )
     public PlayerStatus getStatus(Player player) {
         if (player.isFold()){
             return PlayerStatus.FOLDED;

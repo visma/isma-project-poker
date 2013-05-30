@@ -14,7 +14,6 @@ public class CardHelper {
         return new Card(value, suit);
     }
 
-    //TODO TU
     public static String toString(Card card) {
         return ValueHelper.toString(card.getValue()) + SEPARATOR + SuitHelper.toString(card.getSuit());
     }

@@ -1,4 +1,4 @@
-//TODO a quoi ça sert ?
+//TODO heu... a quoi ça sert ?
 Backbone.View.prototype.close = function () {
     console.log('Closing view ' + this);
     if (this.beforeClose) {

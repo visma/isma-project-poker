@@ -14,7 +14,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 //TODO faire PLEIN de cas de tests la
-//TODO a tester mieux !!!
 public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTest {
     private AvailableActionsEvaluator evaluator = new AvailableActionsEvaluator();
 

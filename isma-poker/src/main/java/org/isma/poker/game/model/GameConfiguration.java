@@ -5,7 +5,10 @@ public class GameConfiguration {
 
     private final int smallBlindAmount;
     private final int bigBlindAmount;
+
+    //TODO a tester !
     private final int maxPlayers = DEFAULT_MAX_PLAYERS;
+
     private final boolean tournament;
     private final boolean noLimit;
 

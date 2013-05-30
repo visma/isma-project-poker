@@ -51,7 +51,7 @@ public class Player implements Cloneable {
                 '}';
     }
 
-    //TODO TU
+    //TODO TU (trouver une méthode efficace de tester clone() avec plantage si clone() n'est pas updaté avec de nouveaux attributs)
     public Player clone() {
         Player clone = new Player(nickname);
         clone.chips = this.chips;

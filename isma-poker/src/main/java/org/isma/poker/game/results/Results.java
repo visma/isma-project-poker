@@ -108,7 +108,7 @@ public class Results implements Cloneable {
         return getPlayersStates(losers);
     }
 
-    //TODO TU
+    //TODO TU (trouver une méthode efficace de tester clone() avec plantage si clone() n'est pas updaté avec de nouveaux attributs)
     @Override
     public Results clone() {
         return new Results(this);

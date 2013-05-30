@@ -36,7 +36,6 @@ public class ValueHelper {
         throw new IllegalArgumentException("illegal value : '" + c + "'");
     }
 
-    //TODO TU
     public static String toString(ValueEnum value) {
         return (String) conversionMap.getKey(value);
     }

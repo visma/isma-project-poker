@@ -299,7 +299,7 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
         return actionsEvaluator.evaluate(this, player);
     }
 
-    //TODO a foutre dans action comme les action joueurs
+    //TODO a mettre dans action comme les action joueurs
     public abstract class AbstractDealerAction {
         void execute() throws InvalidStepActionException {
             Step cloneStep = GameSession.this.stepRunner.getStep();
