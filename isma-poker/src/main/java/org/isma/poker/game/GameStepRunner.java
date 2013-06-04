@@ -5,7 +5,7 @@ import org.isma.poker.game.step.InvalidStepActionException;
 import org.isma.poker.game.step.PokerStepRunner;
 import org.isma.poker.game.step.StepEnum;
 
-class GameStepRunner {
+public class GameStepRunner {
     private static final Logger LOG = Logger.getLogger(GameStepRunner.class);
     private final PokerStepRunner runner;
 

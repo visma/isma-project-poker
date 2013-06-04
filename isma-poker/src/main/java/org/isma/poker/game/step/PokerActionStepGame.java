@@ -18,4 +18,6 @@ public interface PokerActionStepGame {
      * game is freeze if there is less than 2 players with chips
      */
     void freeze();
+
+    boolean isFreeze();
 }

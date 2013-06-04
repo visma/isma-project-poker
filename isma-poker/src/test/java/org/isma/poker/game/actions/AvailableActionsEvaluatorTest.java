@@ -1,7 +1,9 @@
 package org.isma.poker.game.actions;
 
 import org.isma.poker.game.Abstract3PlayersGameSessionTest;
+import org.isma.poker.game.GameSession;
 import org.isma.poker.game.model.InvalidPlayerTurnException;
+import org.isma.poker.game.step.StepEnum;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,8 +12,9 @@ import java.util.List;
 import static org.isma.poker.game.actions.PlayerAction.*;
 import static org.isma.poker.game.actions.PokerActionEnum.*;
 import static org.isma.poker.game.step.StepEnum.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 //TODO faire PLEIN de cas de tests la
 public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTest {
@@ -26,6 +29,20 @@ public class AvailableActionsEvaluatorTest extends Abstract3PlayersGameSessionTe
     @Test
     public void no_raise_available_if_max_reached(){
         fail("todo");
+    }
+
+    @Test
+    public void game_is_ended(){
+        //Given
+        game = mock(GameSession.class);
+        when(game.getStep()).thenReturn(StepEnum.END);
+
+        //When
+        List<PokerActionEnum> p1Action = evaluator.evaluate(game, player1);
+
+        //Then
+        assertEquals(1, p1Action.size());
+        assertTrue(p1Action.contains(SIT_OUT));
     }
 
     @Test

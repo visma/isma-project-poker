@@ -5,6 +5,8 @@ import org.isma.poker.model.CommunityCards;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//TODO prendre une decision avec les trucs deprecated
 public class TableFacade {
     private final Table table;
     private final GameConfiguration configuration;
@@ -137,23 +139,4 @@ public class TableFacade {
         return null;
     }
 
-    //TODO a bien tester (les status dependent aussi de Table.inGamePlayers )
-    public PlayerStatus getStatus(Player player) {
-        if (player.isFold()){
-            return PlayerStatus.FOLDED;
-        }
-        if (player == table.getCurrentPlayer()){
-            return PlayerStatus.PLAYING;
-        }
-        if (table.getAlivePlayers().contains(player)){
-            return PlayerStatus.INGAME;
-        }
-        if (table.getAllPlayers().contains(player) && player.hasChips()){
-            return PlayerStatus.WAITING;
-        }
-        if (table.getAllPlayers().contains(player) && !player.hasChips()){
-            return PlayerStatus.OUT_OF_CASH;
-        }
-        throw new RuntimeException("TableFacade.getStatus : unable to determine status");
-    }
 }

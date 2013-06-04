@@ -90,6 +90,7 @@ public class StraightHelperTest {
 
     @Test
     public void possibleStraights_normalCase() {
+        //Given
         hand.add(ACE_OF_CLUBS);
         hand.add(KING_OF_CLUBS);
         hand.add(QUEEN_OF_CLUBS);
@@ -98,7 +99,10 @@ public class StraightHelperTest {
         hand.add(NINE_OF_CLUBS);
         hand.add(EIGHT_OF_CLUBS);
 
+        //When
         List<Hand> straightHands = StraightHelper.getAllStraights(hand);
+
+        //Then
         assertEquals(3, straightHands.size());
         assertEquals("[Ace of Clubs, King of Clubs, Queen of Clubs, Knave of Clubs, 10 of Clubs]", straightHands.get(0).toString());
         assertEquals("[King of Clubs, Queen of Clubs, Knave of Clubs, 10 of Clubs, 9 of Clubs]", straightHands.get(1).toString());
@@ -107,6 +111,7 @@ public class StraightHelperTest {
 
     @Test
     public void possibleStraights_pairInsideStraight() {
+        //Given
         hand.add(ACE_OF_CLUBS);
         hand.add(KING_OF_CLUBS);
         hand.add(QUEEN_OF_CLUBS);
@@ -115,11 +120,13 @@ public class StraightHelperTest {
         hand.add(TEN_OF_DIAMONDS);
         hand.add(NINE_OF_CLUBS);
 
+        //When
         List<Hand> straightHands = StraightHelper.getAllStraights(hand);
+
+        //Then
         assertEquals(4, straightHands.size());
         assertEquals("[Ace of Clubs, King of Clubs, Queen of Clubs, Knave of Clubs, 10 of Diamonds]", straightHands.get(0).toString());
         assertEquals("[Ace of Clubs, King of Clubs, Queen of Clubs, Knave of Clubs, 10 of Clubs]", straightHands.get(1).toString());
-
         assertEquals("[King of Clubs, Queen of Clubs, Knave of Clubs, 10 of Diamonds, 9 of Clubs]", straightHands.get(2).toString());
         assertEquals("[King of Clubs, Queen of Clubs, Knave of Clubs, 10 of Clubs, 9 of Clubs]", straightHands.get(3).toString());
 

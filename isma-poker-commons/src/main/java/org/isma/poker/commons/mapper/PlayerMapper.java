@@ -27,7 +27,7 @@ public class PlayerMapper {
         dto.setPosition(-1);
         dto.setCurrentBet(game.getTableFacade().getCurrentStepBet(player));
 
-        PlayerStatus playerStatus = game.getTableFacade().getStatus(player);
+        PlayerStatus playerStatus = game.getStatus(player);
         dto.setStatus(playerStatus);
         return dto;
     }

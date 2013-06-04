@@ -44,6 +44,17 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
         this.stepRunner = new GameStepRunner(this);
     }
 
+    public GameSession(GameConfiguration configuration,
+                       IDeckFactory deckFactory,
+                       ITableFactory tableFactory,
+                       IGameStepRunnerFactory stepRunnerFactory) {
+        this.configuration = configuration;
+        this.deckFactory = deckFactory;
+        this.table = tableFactory.buildTable();
+        this.tableFacade = new TableFacade(table, configuration);
+        this.stepRunner = stepRunnerFactory.buildStepRunner(this);
+    }
+
     /**
      * Game doesn't begin until a minimum players is reached
      *
@@ -290,13 +301,36 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
         }
     }
 
+    //TODO Test unitaire
     public boolean isFreeze() {
-        return getStep() == END && tableFacade.getCurrentPlayer() == null;
+        return getStep() == END/* && tableFacade.getCurrentPlayer() == null*/;
     }
 
     public List<PokerActionEnum> getAvailableActions(Player player) {
         AvailableActionsEvaluator actionsEvaluator = new AvailableActionsEvaluator();
         return actionsEvaluator.evaluate(this, player);
+    }
+
+    public PlayerStatus getStatus(Player player) {
+        if (isFreeze()){
+            return PlayerStatus.WAITING;
+        }
+        if (player.isFold()){
+            return PlayerStatus.FOLDED;
+        }
+        if (player == table.getCurrentPlayer() && table.getAlivePlayers().contains(player)){
+            return PlayerStatus.PLAYING;
+        }
+        if (table.getAlivePlayers().contains(player)){
+            return PlayerStatus.INGAME;
+        }
+        if (table.getAllPlayers().contains(player) && player.hasChips()){
+            return PlayerStatus.WAITING;
+        }
+        if (table.getAllPlayers().contains(player) && !player.hasChips()){
+            return PlayerStatus.OUT_OF_CASH;
+        }
+        throw new RuntimeException("TableFacade.getStatus : unable to determine status");
     }
 
     //TODO a mettre dans action comme les action joueurs
