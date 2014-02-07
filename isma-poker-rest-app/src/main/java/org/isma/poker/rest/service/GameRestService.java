@@ -38,7 +38,7 @@ public class GameRestService {
         GameSession game = roomManager.getGame(roomId);
         TableDTO dto = toDTO(game);
         dto.setStep(game.getStep());
-        TableMapper.hiddeHoleCards(dto, nickname);
+        TableMapper.hiddeHoleCards(game, dto, nickname);
         return dto;
     }
 
@@ -46,7 +46,7 @@ public class GameRestService {
         GameSession game = roomManager.getGame(roomId);
         List<PlayerInfos> playersInfos = roomManager.getGame(roomId).getTableFacade().getPlayersInfos();
         List<PlayerDTO> playerDTOs = PlayerMapper.toDTOs(playersInfos, game);
-        PlayerMapper.hiddeHoleCards(playerDTOs, nickname);
+        PlayerMapper.hiddeHoleCards(game, playerDTOs, nickname);
         return playerDTOs;
     }
 
@@ -54,7 +54,7 @@ public class GameRestService {
         GameSession game = roomManager.getGame(roomId);
         PlayerInfos playersInfos = roomManager.getGame(roomId).getTableFacade().getPlayerInfos(nickname);
         PlayerDTO playerDTO = PlayerMapper.toDTO(playersInfos, game);
-        PlayerMapper.hiddeHoleCards(playerDTO, nickname);
+        PlayerMapper.hiddeHoleCards(game, playerDTO, nickname);
         return playerDTO;
     }
 

@@ -263,7 +263,9 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
         bet(player2, game, 10);
         call(player1, game);
         show(player2, game);
+        assertTrue(player2.isShow());
         show(player1, game);
+        assertFalse(player2.isShow());
 
         assertEquals(BLINDS, game.getStep());
         assertEquals(0, player1.getHand().size());
@@ -285,6 +287,8 @@ public class GameSessionStepTest extends Abstract2PlayersGameSessionTest {
         assertEquals(10, game.getTableFacade().getCurrentBet());
         assertEquals(BETS_1, game.getStep());
         assertEquals(5, tableFacade.getRemainingChipsToPay(player1));
+        assertFalse(player2.isShow());
+        assertFalse(player1.isShow());
         call(player1, game);
 
         //Then

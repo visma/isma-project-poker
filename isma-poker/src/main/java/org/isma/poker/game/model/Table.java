@@ -94,6 +94,7 @@ public class Table {
         inGamePlayers.addAll(select(players, new HasMoneyPredicate()));
         for (Player inGamePlayer : inGamePlayers) {
             inGamePlayer.setFold(false);
+            inGamePlayer.setShow(false);
         }
         remainingActionPlayers.clear();
         for (Player player : players) {

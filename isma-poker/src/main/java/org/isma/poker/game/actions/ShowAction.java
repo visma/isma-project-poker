@@ -16,6 +16,7 @@ public class ShowAction extends AbstractPlayerAction {
 
     @Override
     protected void doAction(Player player) throws InvalidPlayerBetException, InvalidStepActionException {
+        player.setShow(true);
         game.notifyEvent(new ShowEvent(player));
     }
 }

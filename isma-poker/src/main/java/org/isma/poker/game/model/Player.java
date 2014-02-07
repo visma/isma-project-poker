@@ -7,6 +7,7 @@ public class Player implements Cloneable {
     private final Hand hand = new Hand();
     private int chips;
     private boolean fold = false;
+    private boolean show = false;
 
     public Player(String nickname) {
         this.nickname = nickname;
@@ -40,6 +41,14 @@ public class Player implements Cloneable {
 
     public void setChips(int chips) {
         this.chips = chips;
+    }
+
+    public boolean isShow() {
+        return show;
+    }
+
+    public void setShow(boolean show) {
+        this.show = show;
     }
 
     @Override
@@ -76,4 +85,6 @@ public class Player implements Cloneable {
     public int hashCode() {
         return nickname.hashCode();
     }
+
+
 }

@@ -76,9 +76,18 @@ public abstract class Abstract2PlayersGameSessionTest extends AbstractPokerTest 
             assertEquals(SHOWDOWN, game.getStep());
         }
         if (step.getOrder() > SHOWDOWN.getOrder()) {
+            throw new RuntimeException("not tested so far");
+            /*
+            assertFalse(player2.isShow());
             PlayerAction.show(player2, game);
+            assertTrue(player2.isShow());
+
+            assertFalse(player1.isShow());
             PlayerAction.show(player1, game);
+            assertTrue(player1.isShow());
+
             assertEquals(BLINDS, game.getStep());
+            */
         }
     }
 

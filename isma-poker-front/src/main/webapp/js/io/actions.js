@@ -16,7 +16,7 @@ var game = {
         $.ajax({
             async: false,
             type: "GET",
-            url: "http://localhost:8080/poker//room/1/players/" + authCode,
+            url: buildURL("room/1/players/" + authCode),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -35,7 +35,7 @@ var game = {
         $.ajax({
             async: false,
             type: "GET",
-            url: "http://localhost:8080/poker/room/1/" + authCode,
+            url: buildURL("room/1/" + authCode),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -55,7 +55,7 @@ var game = {
         $.ajax({
             async: false,
             type: "GET",
-            url: "http://localhost:8080/poker/room/1/player/" + authCode,
+            url: buildURL("room/1/player/" + authCode),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -75,7 +75,7 @@ var game = {
         $.ajax({
             async: false,
             type: "GET",
-            url: "http://localhost:8080/poker/room/1/actions/" + nickname,
+            url: buildURL("room/1/actions/" + nickname),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -99,7 +99,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/login/" + nickname,
+            url: buildURL("login/" + nickname),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -118,7 +118,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/sitin/" + authCode,
+            url: buildURL("room/1/sitin/" + authCode),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -136,7 +136,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/buychips/" + authCode + "/" + chips,
+            url: buildURL("room/1/buychips/" + authCode + "/" + chips),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -154,7 +154,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/paysmallblind/" + authCode,
+            url: buildURL("room/1/paysmallblind/" + authCode),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -174,7 +174,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/paybigblind/" + authCode,
+            url: buildURL("room/1/paybigblind/" + authCode),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -194,7 +194,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/check/" + authCode,
+            url: buildURL("room/1/check/" + authCode),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -214,7 +214,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/call/" + authCode,
+            url: buildURL("room/1/call/" + authCode),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -234,7 +234,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/bet/" + authCode + "/" + chips,
+            url: buildURL("room/1/bet/" + authCode + "/" + chips),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -254,7 +254,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/raise/" + authCode + "/" + chips,
+            url: buildURL("room/1/raise/" + authCode + "/" + chips),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -274,7 +274,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/allin/" + authCode,
+            url: buildURL("room/1/allin/" + authCode),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -294,7 +294,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/fold/" + authCode,
+            url: buildURL("room/1/fold/" + authCode),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -314,7 +314,7 @@ var game = {
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/show/" + authCode,
+            url: buildURL("room/1/show/" + authCode),
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
