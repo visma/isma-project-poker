@@ -22,17 +22,17 @@ public class PokerWebSocketHandler extends WebSocketHandler {
     }
 
     public WebSocket doWebSocketConnect(HttpServletRequest request, String protocol) {
-        String user = request.getParameter("user");
-        logger.info(format("new socket (user : %s)", user));
-        return new PokerWebSocket(user);
+        String authCode = request.getParameter("authCode");
+        logger.info(format("new socket (user : %s)", authCode));
+        return new PokerWebSocket(authCode);
     }
 
     private class PokerWebSocket implements WebSocket.OnTextMessage {
-        private final String user;
+        private final String authCode;
         private Connection connection;
 
-        private PokerWebSocket(String user) {
-            this.user = user;
+        private PokerWebSocket(String authCode) {
+            this.authCode = authCode;
         }
 
         public void onOpen(Connection connection) {
@@ -51,9 +51,9 @@ public class PokerWebSocketHandler extends WebSocketHandler {
                 JSONObject json = (JSONObject) toJSON(message);
                 JSONObject object = json.getJSONObject("object");
                 if (object.containsKey("target")) {
-                    String user = object.getString("target");
-                    logger.info(format("targetUser : %s", user));
-                    sendToTargetUser(user, message);
+                    String authCode = object.getString("target");
+                    logger.info(format("targetAuthCode : %s", authCode));
+                    sendToTargetUser(authCode, message);
                 } else {
                     sendToAllUsers(message);
                 }
@@ -65,9 +65,9 @@ public class PokerWebSocketHandler extends WebSocketHandler {
             }
         }
 
-        private void sendToTargetUser(String user, String message) throws IOException {
+        private void sendToTargetUser(String authCode, String message) throws IOException {
             for (PokerWebSocket webSocket : webSockets) {
-                if (user.equals(webSocket.user)) {
+                if (authCode.equals(webSocket.authCode)) {
                     webSocket.connection.sendMessage(message);
                 }
             }
@@ -75,7 +75,7 @@ public class PokerWebSocketHandler extends WebSocketHandler {
 
         private void sendToAllUsers(String message) throws IOException {
             for (PokerWebSocket webSocket : webSockets) {
-                if (webSocket.user != null) {
+                if (webSocket.authCode != null) {
                     webSocket.connection.sendMessage(message);
                 }
             }

@@ -6,19 +6,17 @@ var game = {
     /***************************************************************
      *  AJAX WEBSERVICES - GAME INFORMATIONS
      ***************************************************************/
-
     _ajax_error: function (url, response) {
         console.error("error " + response.responseText);
         var error = jQuery.parseJSON(response.responseText);
         alert("Error [" + error.object.type + "]\nurl=" + url + "\nmessage=" + error.object.message);
     },
-
-    getPlayers: function () {
+    getPlayers: function (authCode) {
         var data = "no";
         $.ajax({
             async: false,
             type: "GET",
-            url: "http://localhost:8080/poker//room/1/players",
+            url: "http://localhost:8080/poker//room/1/players/" + authCode,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -32,12 +30,12 @@ var game = {
         });
         return data;
     },
-    getTable: function () {
+    getTable: function (authCode) {
         var data = "no";
         $.ajax({
             async: false,
             type: "GET",
-            url: "http://localhost:8080/poker/room/1",
+            url: "http://localhost:8080/poker/room/1/" + authCode,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -52,12 +50,12 @@ var game = {
         });
         return data;
     },
-    getPlayer: function (nickname) {
+    getPlayer: function (authCode) {
         var data = "no";
         $.ajax({
             async: false,
             type: "GET",
-            url: "http://localhost:8080/poker/room/1/player/" + nickname,
+            url: "http://localhost:8080/poker/room/1/player/" + authCode,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -72,7 +70,6 @@ var game = {
         });
         return data;
     },
-
     getActions: function (nickname) {
         var data = "no";
         $.ajax({
@@ -97,11 +94,31 @@ var game = {
     /***************************************************************
      *  AJAX WEBSERVICES - PLAYER ACTIONS
      ***************************************************************/
-    sitIn: function (nickname) {
+    login: function (nickname) {
+        var authCode;
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/sitin/" + nickname,
+            url: "http://localhost:8080/poker/login/" + nickname,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.debug("succes de login " + JSON.stringify(response));
+                authCode = response;
+            },
+            error: function (response) {
+                game._ajax_error(this.url, response);
+            }
+
+        });
+        return authCode;
+    },
+    sitIn: function (authCode) {
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "http://localhost:8080/poker/room/1/sitin/" + authCode,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -114,13 +131,12 @@ var game = {
 
         });
     },
-
-    buyChips: function (nickname, chips) {
+    buyChips: function (authCode, chips) {
         console.info("buyChips start");
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/buychips/" + nickname + "/" + chips,
+            url: "http://localhost:8080/poker/room/1/buychips/" + authCode + "/" + chips,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -133,13 +149,12 @@ var game = {
         });
         console.info("buyChips end");
     },
-
-    paySmallBlind: function (nickname) {
+    paySmallBlind: function (authCode) {
         var data = "no";
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/paysmallblind/" + nickname,
+            url: "http://localhost:8080/poker/room/1/paysmallblind/" + authCode,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -154,13 +169,12 @@ var game = {
         });
         return data;
     },
-
-    payBigBlind: function (nickname) {
+    payBigBlind: function (authCode) {
         var data = "no";
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/paybigblind/" + nickname,
+            url: "http://localhost:8080/poker/room/1/paybigblind/" + authCode,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -175,13 +189,12 @@ var game = {
         });
         return data;
     },
-
-    check: function (nickname) {
+    check: function (authCode) {
         var data = "no";
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/check/" + nickname,
+            url: "http://localhost:8080/poker/room/1/check/" + authCode,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -196,12 +209,12 @@ var game = {
         });
         return data;
     },
-    call: function (nickname) {
+    call: function (authCode) {
         var data = "no";
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/call/" + nickname,
+            url: "http://localhost:8080/poker/room/1/call/" + authCode,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -216,13 +229,12 @@ var game = {
         });
         return data;
     },
-
-    bet: function (nickname, chips) {
+    bet: function (authCode, chips) {
         var data = "no";
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/bet/" + nickname + "/" + chips,
+            url: "http://localhost:8080/poker/room/1/bet/" + authCode + "/" + chips,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -237,13 +249,12 @@ var game = {
         });
         return data;
     },
-
-    raise: function (nickname, chips) {
+    raise: function (authCode, chips) {
         var data = "no";
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/raise/" + nickname + "/" + chips,
+            url: "http://localhost:8080/poker/room/1/raise/" + authCode + "/" + chips,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -258,13 +269,12 @@ var game = {
         });
         return data;
     },
-
-    allin: function (nickname) {
+    allin: function (authCode) {
         var data = "no";
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/allin/" + nickname,
+            url: "http://localhost:8080/poker/room/1/allin/" + authCode,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -279,12 +289,12 @@ var game = {
         });
         return data;
     },
-    fold: function (nickname) {
+    fold: function (authCode) {
         var data = "no";
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/fold/" + nickname,
+            url: "http://localhost:8080/poker/room/1/fold/" + authCode,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -299,12 +309,12 @@ var game = {
         });
         return data;
     },
-    show: function (nickname) {
+    show: function (authCode) {
         var data = "no";
         $.ajax({
             async: false,
             type: "POST",
-            url: "http://localhost:8080/poker/room/1/show/" + nickname,
+            url: "http://localhost:8080/poker/room/1/show/" + authCode,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -319,38 +329,34 @@ var game = {
         });
         return data;
     },
+
     /***************************************************************
      *  WEBSOCKETS PART
      ***************************************************************/
-    connect: function (user) {
-        var location = "ws://localhost:8081/poker?user=" + user;
+    connect: function (authCode) {
+        var location = "ws://localhost:8081/poker?authCode=" + authCode;
         this._ws = new WebSocket(location);
         this._ws.onopen = this._onopen;
         this._ws.onmessage = this._onmessage;
         this._ws.onclose = this._onclose;
         this._ws.onerror = this._onerror;
     },
-
     _onopen: function () {
         //Nothing to do...
     },
-
     _onmessage: function (m) {
         if (m.data) {
             onmessagereceive(m.data);
         }
     },
-
     _onclose: function (m) {
         this._ws = null;
         console.warn("WebSocket close : " + m);
     },
-
     _onerror: function (e) {
         alert(e);
         console.error("WebSocket error : " + e);
     },
-
     _send: function (user, message) {
         user = user.replace(':', '_');
         if (this._ws)

@@ -1,0 +1,3 @@
+webapps launch order :
+1) server
+2) rest

@@ -37,23 +37,23 @@ PlayerActionsView = Backbone.View.extend({
         alert("todo sitout");
     },
     smallblind: function () {
-        game.paySmallBlind(models['login'].get('nickname'));
+        game.paySmallBlind(models['login'].get('authCode'));
     },
     bigblind: function () {
-        game.payBigBlind(models['login'].get('nickname'));
+        game.payBigBlind(models['login'].get('authCode'));
     },
     check: function () {
-        game.check(models['login'].get('nickname'));
+        game.check(models['login'].get('authCode'));
     },
     call: function () {
-        game.call(models['login'].get('nickname'));
+        game.call(models['login'].get('authCode'));
     },
     bet: function () {
         var chips = this.chipsNumberField.val();
         if (chips <= 0) {
             alert("Enter a bet amount !");
         } else {
-            game.bet(models['login'].get('nickname'), chips);
+            game.bet(models['login'].get('authCode'), chips);
             this.chipsNumberField.val('');
         }
     },
@@ -62,18 +62,18 @@ PlayerActionsView = Backbone.View.extend({
         if (chips <= 0) {
             alert("Enter a raise amount !");
         } else {
-            game.raise(models['login'].get('nickname'), chips);
+            game.raise(models['login'].get('authCode'), chips);
             this.chipsNumberField.val('');
         }
     },
     allin: function () {
-        game.allin(models['login'].get('nickname'));
+        game.allin(models['login'].get('authCode'));
     },
     fold: function () {
-        game.fold(models['login'].get('nickname'));
+        game.fold(models['login'].get('authCode'));
     },
     show: function () {
-        game.show(models['login'].get('nickname'));
+        game.show(models['login'].get('authCode'));
     },
 
     render: function () {

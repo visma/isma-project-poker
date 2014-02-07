@@ -19,6 +19,18 @@ public class HandEvaluatorTest {
     }
 
     @Test
+    public void bug_straight() {
+        hand.add(ACE_OF_HEARTS);
+        hand.add(ACE_OF_CLUBS);
+        hand.add(KING_OF_DIAMONDS);
+        hand.add(QUEEN_OF_SPADES);
+        hand.add(KNAVE_OF_SPADES);
+        hand.add(KNAVE_OF_DIAMONDS);
+        hand.add(TWO_OF_CLUBS);
+
+        assertEquals(TWO_PAIR, evaluator.evaluate(hand));
+    }
+    @Test
     public void kicker() {
         hand.add(ACE_OF_CLUBS);
         hand.add(KING_OF_CLUBS);

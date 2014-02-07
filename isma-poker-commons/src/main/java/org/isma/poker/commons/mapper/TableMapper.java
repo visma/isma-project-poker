@@ -29,4 +29,10 @@ public class TableMapper {
         }
         return dto;
     }
+
+    public static void hiddeHoleCards(TableDTO dto, String nickname) {
+        PlayerMapper.hiddeHoleCards(dto.getBigBlindPlayer(), nickname);
+        PlayerMapper.hiddeHoleCards(dto.getSmallBlindPlayer(), nickname);
+        PlayerMapper.hiddeHoleCards(dto.getCurrentPlayer(), nickname);
+    }
 }

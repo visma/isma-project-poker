@@ -6,13 +6,11 @@ var playerinfo_template =
     <p><label>Status</label></p> \
     <p><label>Chips</label></p> \
     <p><label>Current Bet</label></p> \
-    <p><label>Hand</label></p> \
 </div>\
 <div id="playerinfos-right">\
     <p><label id="player-nickname"><label></p> \
     <p><label id="player-status"><label></p> \
     <p><label id="player-chips"><label></p> \
     <p><label id="player-bet"><label></p> \
-    <p><label id="player-hand"><label></p> \
 </div>\
 ';

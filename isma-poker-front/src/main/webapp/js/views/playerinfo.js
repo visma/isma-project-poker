@@ -8,7 +8,7 @@ PlayerInfoView = Backbone.View.extend({
         this.status = $('#player-status');
         this.chips = $('#player-chips');
         this.bet = $('#player-bet');
-        this.hand = $('#player-hand');
+//        this.hand = $('#player-hand');
 
 
         this.render();
@@ -19,6 +19,6 @@ PlayerInfoView = Backbone.View.extend({
         this.status.html(this.model.get('status'));
         this.chips.html(this.model.get('chips'));
         this.bet.html(this.model.get('bet'));
-        this.hand.html(this.model.get('hand'));
+//        this.hand.html(this.model.get('hand'));
     }
 });

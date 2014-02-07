@@ -55,4 +55,19 @@ public class PlayerMapper {
         });
         return (List<PlayerDTO>) clones;
     }
+
+    public static void hiddeHoleCards(PlayerDTO playerDTO, String nickname) {
+        if (playerDTO != null && !playerDTO.getName().equals(nickname)){
+            if (playerDTO.getHoleCard1() != null){
+                playerDTO.setHoleCard1("hidden");
+                playerDTO.setHoleCard2("hidden");
+            }
+        }
+    }
+
+    public static void hiddeHoleCards(List<PlayerDTO> playerDTOs, String nickname) {
+        for (PlayerDTO playerDTO : playerDTOs) {
+            hiddeHoleCards(playerDTO, nickname);
+        }
+    }
 }

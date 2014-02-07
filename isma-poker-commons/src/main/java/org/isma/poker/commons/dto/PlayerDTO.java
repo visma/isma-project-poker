@@ -7,8 +7,8 @@ public class PlayerDTO {
     private final int chips;
     private final boolean fold;
     private PlayerStatus status;
-    private final String holeCard1;
-    private final String holeCard2;
+    private String holeCard1;
+    private String holeCard2;
     private int position;
     private int currentBet;
 
@@ -62,5 +62,13 @@ public class PlayerDTO {
 
     public void setStatus(PlayerStatus status) {
         this.status = status;
+    }
+
+    public void setHoleCard1(String holeCard1) {
+        this.holeCard1 = holeCard1;
+    }
+
+    public void setHoleCard2(String holeCard2) {
+        this.holeCard2 = holeCard2;
     }
 }

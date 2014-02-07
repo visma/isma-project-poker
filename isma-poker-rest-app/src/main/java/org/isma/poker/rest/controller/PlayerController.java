@@ -44,22 +44,24 @@ public class PlayerController extends AbstractController {
         return "OK";
     }
 
-    @RequestMapping(method = GET, value = "/room/{roomId}")
+    @RequestMapping(method = GET, value = "/room/{roomId}/{authCode}")
     @ResponseBody
-    public TableDTO getTable(@PathVariable Integer roomId) {
-      return gameRestService.getTable(roomId);
+    public TableDTO getTable(@PathVariable Integer roomId,
+                             @PathVariable String authCode) {
+        return gameRestService.getTable(roomId, gameRestService.getPlayerNickname(authCode));
     }
 
-    @RequestMapping(method = GET, value = "/room/{roomId}/players")
+    @RequestMapping(method = GET, value = "/room/{roomId}/players/{authCode}")
     @ResponseBody
-    public List<PlayerDTO> getPlayers(@PathVariable Integer roomId) {
-        return gameRestService.getPlayers(roomId);
+    public List<PlayerDTO> getPlayers(@PathVariable Integer roomId,
+                                      @PathVariable String authCode) {
+        return gameRestService.getPlayers(roomId, gameRestService.getPlayerNickname(authCode));
     }
 
-    @RequestMapping(method = GET, value = "/room/{roomId}/player/{nickname}")
+    @RequestMapping(method = GET, value = "/room/{roomId}/player/{authCode}")
     @ResponseBody
-    public PlayerDTO getPlayer(@PathVariable Integer roomId, @PathVariable String nickname) {
-        return gameRestService.getPlayer(roomId, nickname);
+    public PlayerDTO getPlayer(@PathVariable Integer roomId, @PathVariable String authCode) {
+        return gameRestService.getPlayer(roomId, gameRestService.getPlayerNickname(authCode));
     }
 
     /**
@@ -67,6 +69,21 @@ public class PlayerController extends AbstractController {
      * ACTIONS JOUEURS
      * **********************************************************************************
      */
+
+    @RequestMapping(method = POST, value = "/login/{nickname}")
+    @ResponseBody
+    public String login(
+            @PathVariable String nickname) throws Exception {
+        return gameRestService.login(nickname);
+    }
+
+    @RequestMapping(method = POST, value = "/room/{roomId}/sitin/{authCode}")
+    @ResponseBody
+    public PlayerDTO sitIn(
+            @PathVariable Integer roomId,
+            @PathVariable String authCode) throws PokerGameException {
+        return playerActionRestService.sitIn(roomId, gameRestService.getPlayerNickname(authCode));
+    }
 
     @RequestMapping(method = GET, value = "/room/{roomId}/actions/{nickname}")
     @ResponseBody
@@ -76,97 +93,88 @@ public class PlayerController extends AbstractController {
         return playerActionRestService.getActions(roomId, nickname);
     }
 
-    @RequestMapping(method = POST, value = "/room/{roomId}/buychips/{nickname}/{chips}")
+    @RequestMapping(method = POST, value = "/room/{roomId}/buychips/{authCode}/{chips}")
     @ResponseBody
     public PlayerDTO buyChips(
             @PathVariable Integer roomId,
-            @PathVariable String nickname,
+            @PathVariable String authCode,
             @PathVariable Integer chips) throws InvalidStepActionException {
-        return playerActionRestService.buyChips(roomId, nickname, chips);
+        return playerActionRestService.buyChips(roomId, gameRestService.getPlayerNickname(authCode), chips);
     }
 
-
-    @RequestMapping(method = POST, value = "/room/{roomId}/sitin/{nickname}")
-    @ResponseBody
-    public PlayerDTO sitIn(
-            @PathVariable Integer roomId,
-            @PathVariable String nickname) throws PokerGameException {
-        return playerActionRestService.sitIn(roomId, nickname);
-    }
-
-    @RequestMapping(value = "/room/{roomId}/fold/{nickname}", method = POST)
+    @RequestMapping(value = "/room/{roomId}/fold/{authCode}", method = POST)
     @ResponseBody
     public PlayerDTO fold(
             @PathVariable Integer roomId,
-            @PathVariable String nickname) throws PokerGameException {
-        return playerActionRestService.fold(roomId, nickname);
+            @PathVariable String authCode) throws PokerGameException {
+        return playerActionRestService.fold(roomId, gameRestService.getPlayerNickname(authCode));
     }
 
-    @RequestMapping(value = "/room/{roomId}/paysmallblind/{nickname}", method = POST)
+    @RequestMapping(value = "/room/{roomId}/paysmallblind/{authCode}", method = POST)
     @ResponseBody
     public PlayerDTO paySmallblind(
             @PathVariable Integer roomId,
-            @PathVariable String nickname) throws PokerGameException {
-        return playerActionRestService.paySmallblind(roomId, nickname);
+            @PathVariable String authCode) throws PokerGameException {
+        return playerActionRestService.paySmallblind(roomId, gameRestService.getPlayerNickname(authCode));
     }
 
-    @RequestMapping(value = "/room/{roomId}/paybigblind/{nickname}", method = POST)
+    @RequestMapping(value = "/room/{roomId}/paybigblind/{authCode}", method = POST)
     @ResponseBody
     public PlayerDTO payBigblind(
             @PathVariable Integer roomId,
-            @PathVariable String nickname) throws PokerGameException {
-        return playerActionRestService.payBigblind(roomId, nickname);
+            @PathVariable String authCode) throws PokerGameException {
+        return playerActionRestService.payBigblind(roomId, gameRestService.getPlayerNickname(authCode));
     }
 
-    @RequestMapping(value = "/room/{roomId}/check/{nickname}", method = POST)
+    @RequestMapping(value = "/room/{roomId}/check/{authCode}", method = POST)
     @ResponseBody
     public PlayerDTO check(
             @PathVariable Integer roomId,
-            @PathVariable String nickname) throws PokerGameException {
-        return playerActionRestService.check(roomId, nickname);
+            @PathVariable String authCode) throws PokerGameException {
+        return playerActionRestService.check(roomId, gameRestService.getPlayerNickname(authCode));
     }
 
-    @RequestMapping(value = "/room/{roomId}/call/{nickname}", method = POST)
+    @RequestMapping(value = "/room/{roomId}/call/{authCode}", method = POST)
     @ResponseBody
     public PlayerDTO call(
             @PathVariable Integer roomId,
-            @PathVariable String nickname) throws PokerGameException {
-        return playerActionRestService.call(roomId, nickname);
+            @PathVariable String authCode) throws PokerGameException {
+        return playerActionRestService.call(roomId, gameRestService.getPlayerNickname(authCode));
     }
 
 
-    @RequestMapping(value = "/room/{roomId}/bet/{nickname}/{chips}", method = POST)
+    @RequestMapping(value = "/room/{roomId}/bet/{authCode}/{chips}", method = POST)
     @ResponseBody
     public PlayerDTO bet(
             @PathVariable Integer roomId,
-            @PathVariable String nickname,
+            @PathVariable String authCode,
             @PathVariable Integer chips) throws PokerGameException {
-        return playerActionRestService.bet(roomId, nickname, chips);
+        return playerActionRestService.bet(roomId, gameRestService.getPlayerNickname(authCode), chips);
     }
 
-    @RequestMapping(value = "/room/{roomId}/raise/{nickname}/{chips}", method = POST)
+    @RequestMapping(value = "/room/{roomId}/raise/{authCode}/{chips}", method = POST)
     @ResponseBody
     public PlayerDTO raise(
             @PathVariable Integer roomId,
-            @PathVariable String nickname,
+            @PathVariable String authCode,
             @PathVariable Integer chips) throws PokerGameException {
-        return playerActionRestService.raise(roomId, nickname, chips);
+        return playerActionRestService.raise(roomId, gameRestService.getPlayerNickname(authCode), chips);
     }
 
-    @RequestMapping(value = "/room/{roomId}/allin/{nickname}", method = POST)
+    @RequestMapping(value = "/room/{roomId}/allin/{authCode}", method = POST)
     @ResponseBody
     public PlayerDTO allIn(
             @PathVariable Integer roomId,
-            @PathVariable String nickname) throws PokerGameException {
-        return playerActionRestService.allIn(roomId, nickname);
+            @PathVariable String authCode) throws PokerGameException {
+        return playerActionRestService.allIn(roomId, gameRestService.getPlayerNickname(authCode));
     }
 
-    @RequestMapping(value = "/room/{roomId}/show/{nickname}", method = POST)
+    @RequestMapping(value = "/room/{roomId}/show/{authCode}", method = POST)
     @ResponseBody
     public HandEvaluation show(
             @PathVariable Integer roomId,
-            @PathVariable String nickname) throws PokerGameException {
-        return playerActionRestService.show(roomId, nickname);
+            @PathVariable String authCode) throws PokerGameException {
+        return playerActionRestService.show(roomId, gameRestService.getPlayerNickname(authCode));
     }
 
 }

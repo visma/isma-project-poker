@@ -6,7 +6,8 @@ function onmessagereceive(message) {
     var id = obj.id;
     console.info("type de message :" + id);
     if (id == "playerTurn" || id == "newStep") {
-        var tableDTO = game.getTable();
+        var authCode = models['login'].get('authCode');
+        var tableDTO = game.getTable(authCode);
 
         models['playerActions'].updateActions();
         models['player'].updateDTO();

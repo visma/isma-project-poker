@@ -1,6 +1,8 @@
 work in progress...
 
-keywords : java, maven, spring, log4j, REST, JSON, junit, jbehave, jetty, websocket, jquery, ajax, backbone, jmeter...
-
 TODO :
 - javascript : tests
+
+BUGS FRONT :
+- on showdown :
+    A) hands (2 pocket cards + 5 cards) are sorted and the first 2 pockets cards displayed are not the originals pocket cards

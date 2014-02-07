@@ -1,6 +1,6 @@
 var card_template =
     '\
 <div class="card-class">\
-    <p><label id="card_%index%-value"></label></p> \
+    <p><img id="card_%index%-value"/></p> \
 </div>\
 ';
