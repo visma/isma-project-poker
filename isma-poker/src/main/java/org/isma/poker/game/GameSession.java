@@ -22,7 +22,7 @@ import static java.lang.String.format;
 import static org.isma.poker.factory.IDeckFactory.DeckTypeEnum.FIFTY_TWO_CARDS_DECK;
 import static org.isma.poker.game.step.StepEnum.END;
 
-public class GameSession implements PlayerBetListener, PokerActionStepGame, PokerStepRunner {
+public class GameSession implements PlayerActionListener, PokerActionStepGame, PokerStepRunner {
     private static final Logger LOG = Logger.getLogger(GameSession.class);
     private final GameConfiguration configuration;
     private final IDeckFactory deckFactory;
@@ -124,7 +124,7 @@ public class GameSession implements PlayerBetListener, PokerActionStepGame, Poke
     }
 
     // ********************************************************************************
-    // **** PlayerBetListener implementation
+    // **** PlayerActionListener implementation
     // ********************************************************************************
 
     @Override

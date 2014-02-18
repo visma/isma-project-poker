@@ -1,6 +1,7 @@
 package org.isma.poker.jbehave.steps;
 
 import junit.framework.Assert;
+import org.isma.poker.HandEvaluator;
 import org.isma.poker.game.GameSession;
 import org.isma.poker.game.actions.PlayerAction;
 import org.isma.poker.game.actions.PokerActionEnum;
@@ -202,8 +203,8 @@ public class GameSteps extends AbstractPokerSteps {
         assertEquals(card5, communityCards.get(4));
     }
 
-    @When("$nickname montre $handEvaluation : $card1, $card2, $card3, $card4, $card5")
-    public void givenShow(String nickname, HandEvaluation handEvaluation, Card card1, Card card2, Card card3, Card card4, Card card5) throws PokerGameException {
+    @When("$nickname montre $expectedHandEvaluation : $card1, $card2, $card3, $card4, $card5")
+    public void givenShow(String nickname, HandEvaluation expectedHandEvaluation, Card card1, Card card2, Card card3, Card card4, Card card5) throws PokerGameException {
         GameSession game = current().game;
         Player player = getPlayer(nickname);
 
@@ -211,9 +212,12 @@ public class GameSteps extends AbstractPokerSteps {
 
         ShowEvent showEvent = (ShowEvent) current().showEventListener.poll();
         Hand hand = showEvent.getHand();
+        HandEvaluation handEvaluation = showEvent.getHandEvaluation();
+        new HandEvaluator().sortBest(hand, handEvaluation);
+
         assertEquals(nickname, showEvent.getPlayer());
         assertEquals(7, hand.size());
-        assertEquals(handEvaluation, showEvent.getHandEvaluation());
+        assertEquals(expectedHandEvaluation, handEvaluation);
         assertEquals(card1, hand.get(0));
         assertEquals(card2, hand.get(1));
         assertEquals(card3, hand.get(2));
@@ -266,6 +270,12 @@ public class GameSteps extends AbstractPokerSteps {
     public void givenChips(String nickname, int chips) {
         Player player = getPlayer(nickname);
         assertEquals(chips, player.getChips());
+    }
+
+    @Then("$nickname a $amount carte(s) en main")
+    public void thenHoleCards(String nickname, int amount){
+        Player player = getPlayer(nickname);
+        assertEquals(amount, player.getHand().size());
     }
 
     public static class GameContext {

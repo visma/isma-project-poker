@@ -1,16 +1,15 @@
 package org.isma.poker;
 
-import org.isma.poker.model.HandEvaluation;
-import org.isma.poker.HandEvaluator;
 import org.isma.poker.model.FiftyTwoCardsEnum;
 import org.isma.poker.model.Hand;
+import org.isma.poker.model.HandEvaluation;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Comparator;
 
-import static org.isma.poker.model.HandEvaluation.*;
 import static org.isma.poker.model.FiftyTwoCardsEnum.*;
+import static org.isma.poker.model.HandEvaluation.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -19,6 +18,7 @@ public class HandComparatorTest {
     private final Comparator<Hand> comparator = evaluator.getHandComparator();
     private final Hand lowHand = new Hand();
     private final Hand highHand = new Hand();
+    private static final boolean EQUALITY = true;
 
     @Before
     public void setUp() throws Exception {
@@ -65,9 +65,19 @@ public class HandComparatorTest {
         hand.add(cardEnum2);
     }
 
-    private void assertEvaluation(HandEvaluation highHandEvaluation, HandEvaluation lowHandEvaluation) {
-        assertEquals(highHandEvaluation, evaluator.evaluate(highHand));
-        assertEquals(lowHandEvaluation, evaluator.evaluate(lowHand));
+    private void assertEvaluation(HandEvaluation expectedHighHandEvaluation,
+                                  HandEvaluation expectedLowHandEvaluation, boolean equality) {
+        HandEvaluation highHandEval = evaluator.evaluate(highHand);
+        HandEvaluation lowHandEval = evaluator.evaluate(lowHand);
+        assertEquals(expectedHighHandEvaluation, highHandEval);
+        assertEquals(expectedLowHandEvaluation, lowHandEval);
+        evaluator.sortBest(highHand, highHandEval);
+        evaluator.sortBest(lowHand, lowHandEval);
+        if (equality) {
+            assertTrue(comparator.compare(highHand, lowHand) == 0);
+        } else {
+            assertTrue(comparator.compare(highHand, lowHand) > 0);
+        }
     }
 
     // KICKERS
@@ -75,8 +85,7 @@ public class HandComparatorTest {
     public void kickerEqualsVsKicker() {
         addPocketCards(lowHand, QUEEN_OF_CLUBS, SEVEN_OF_DIAMONDS);
         addPocketCards(highHand, QUEEN_OF_DIAMONDS, SEVEN_OF_CLUBS);
-        assertEvaluation(KICKER, KICKER);
-        assertEquals(0, comparator.compare(highHand, lowHand));
+        assertEvaluation(KICKER, KICKER, EQUALITY);
     }
 
 
@@ -84,8 +93,7 @@ public class HandComparatorTest {
     public void kickerWinVsKicker() {
         addPocketCards(lowHand, QUEEN_OF_CLUBS, SIX_OF_DIAMONDS);
         addPocketCards(highHand, QUEEN_OF_DIAMONDS, SEVEN_OF_CLUBS);
-        assertEvaluation(KICKER, KICKER);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(KICKER, KICKER, !EQUALITY);
     }
 
     // PAIR
@@ -93,24 +101,21 @@ public class HandComparatorTest {
     public void pairWinVsKicker() {
         addPocketCards(lowHand, ACE_OF_CLUBS, SIX_OF_DIAMONDS);
         addPocketCards(highHand, TWO_OF_CLUBS, SEVEN_OF_CLUBS);
-        assertEvaluation(PAIR, KICKER);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(PAIR, KICKER, !EQUALITY);
     }
 
     @Test
     public void pairEqualsVsPair() {
         addPocketCards(lowHand, KING_OF_CLUBS, THREE_OF_CLUBS);
         addPocketCards(highHand, KING_OF_DIAMONDS, THREE_OF_SPADES);
-        assertEvaluation(PAIR, PAIR);
-        assertEquals(0, comparator.compare(highHand, lowHand));
+        assertEvaluation(PAIR, PAIR, EQUALITY);
     }
 
     @Test
     public void pairWinVsPair() {
         addPocketCards(lowHand, KNAVE_OF_CLUBS, THREE_OF_CLUBS);
         addPocketCards(highHand, KING_OF_DIAMONDS, THREE_OF_SPADES);
-        assertEvaluation(PAIR, PAIR);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(PAIR, PAIR, !EQUALITY);
     }
 
     // TWO PAIR
@@ -118,16 +123,14 @@ public class HandComparatorTest {
     public void twoPairWinVsPair() {
         addPocketCards(lowHand, THREE_OF_SPADES, KING_OF_CLUBS);
         addPocketCards(highHand, FIVE_OF_CLUBS, TWO_OF_CLUBS);
-        assertEvaluation(TWO_PAIR, PAIR);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(TWO_PAIR, PAIR, !EQUALITY);
     }
 
     @Test
     public void twoPairWinVsTwoPair() {
         addPocketCards(lowHand, TEN_OF_DIAMONDS, KNAVE_OF_SPADES);
         addPocketCards(highHand, TWO_OF_DIAMONDS, KING_OF_DIAMONDS);
-        assertEvaluation(TWO_PAIR, TWO_PAIR);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(TWO_PAIR, TWO_PAIR, !EQUALITY);
     }
 
 
@@ -136,16 +139,14 @@ public class HandComparatorTest {
     public void threeOfAKindWinVsTwoPair() {
         addPocketCards(lowHand, FIVE_OF_CLUBS, TWO_OF_CLUBS);
         addPocketCards(highHand, TWO_OF_DIAMONDS, TWO_OF_SPADES);
-        assertEvaluation(THREE_OF_A_KIND, TWO_PAIR);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(THREE_OF_A_KIND, TWO_PAIR, !EQUALITY);
     }
 
     @Test
     public void threeOfAKindWinVsThreeOfAKind() {
         addPocketCards(lowHand, TWO_OF_DIAMONDS, TWO_OF_CLUBS);
         addPocketCards(highHand, FIVE_OF_DIAMONDS, FIVE_OF_CLUBS);
-        assertEvaluation(THREE_OF_A_KIND, THREE_OF_A_KIND);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(THREE_OF_A_KIND, THREE_OF_A_KIND, !EQUALITY);
     }
 
     // STRAIGHT
@@ -153,24 +154,21 @@ public class HandComparatorTest {
     public void straightWinVsThreeOfAKind() {
         addPocketCards(lowHand, FIVE_OF_DIAMONDS, FIVE_OF_CLUBS);
         addPocketCards(highHand, ACE_OF_CLUBS, QUEEN_OF_CLUBS);
-        assertEvaluation(STRAIGHT, THREE_OF_A_KIND);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(STRAIGHT, THREE_OF_A_KIND, !EQUALITY);
     }
 
     @Test
     public void straightEqualsVsStraight() {
         addPocketCards(lowHand, ACE_OF_DIAMONDS, QUEEN_OF_DIAMONDS);
         addPocketCards(highHand, ACE_OF_CLUBS, QUEEN_OF_CLUBS);
-        assertEvaluation(STRAIGHT, STRAIGHT);
-        assertEquals(0, comparator.compare(highHand, lowHand));
+        assertEvaluation(STRAIGHT, STRAIGHT, EQUALITY);
     }
 
     @Test
     public void straightWinVsStraight() {
         addPocketCards(lowHand, NINE_OF_DIAMONDS, QUEEN_OF_CLUBS);
         addPocketCards(highHand, ACE_OF_DIAMONDS, QUEEN_OF_DIAMONDS);
-        assertEvaluation(STRAIGHT, STRAIGHT);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(STRAIGHT, STRAIGHT, !EQUALITY);
     }
 
     // FLUSH
@@ -178,16 +176,14 @@ public class HandComparatorTest {
     public void flushWinVsStraight() {
         addPocketCards(lowHand, ACE_OF_DIAMONDS, QUEEN_OF_DIAMONDS);
         addPocketCards(highHand, FOUR_OF_HEARTS, SEVEN_OF_HEARTS);
-        assertEvaluation(FLUSH, STRAIGHT);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(FLUSH, STRAIGHT, !EQUALITY);
     }
 
     @Test
     public void flushWinVsFlush() {
         addPocketCards(lowHand, FOUR_OF_HEARTS, SEVEN_OF_HEARTS);
         addPocketCards(highHand, THREE_OF_HEARTS, EIGHT_OF_HEARTS);
-        assertEvaluation(FLUSH, FLUSH);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(FLUSH, FLUSH, !EQUALITY);
     }
 
     // FULL HOUSE
@@ -196,8 +192,7 @@ public class HandComparatorTest {
         setUpWithPair();
         addPocketCards(lowHand, THREE_OF_HEARTS, EIGHT_OF_HEARTS);
         addPocketCards(highHand, KNAVE_OF_SPADES, TWO_OF_SPADES);
-        assertEvaluation(FULL_HOUSE, FLUSH);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(FULL_HOUSE, FLUSH, !EQUALITY);
     }
 
 
@@ -206,8 +201,7 @@ public class HandComparatorTest {
         setUpWithPair();
         addPocketCards(lowHand, KNAVE_OF_SPADES, TWO_OF_SPADES);
         addPocketCards(highHand, KNAVE_OF_CLUBS, TWO_OF_DIAMONDS);
-        assertEvaluation(FULL_HOUSE, FULL_HOUSE);
-        assertEquals(0, comparator.compare(highHand, lowHand));
+        assertEvaluation(FULL_HOUSE, FULL_HOUSE, EQUALITY);
     }
 
     @Test
@@ -215,8 +209,7 @@ public class HandComparatorTest {
         setUpWithPair();
         addPocketCards(lowHand, KNAVE_OF_SPADES, TWO_OF_SPADES);
         addPocketCards(highHand, KNAVE_OF_CLUBS, FIVE_OF_DIAMONDS);
-        assertEvaluation(FULL_HOUSE, FULL_HOUSE);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(FULL_HOUSE, FULL_HOUSE, !EQUALITY);
     }
 
     // FOUR OF A KIND
@@ -225,8 +218,7 @@ public class HandComparatorTest {
         setUpWithTwoPair();
         addPocketCards(lowHand, KNAVE_OF_CLUBS, KING_OF_SPADES);
         addPocketCards(highHand, TWO_OF_CLUBS, TWO_OF_SPADES);
-        assertEvaluation(FOUR_OF_A_KIND, FULL_HOUSE);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(FOUR_OF_A_KIND, FULL_HOUSE, !EQUALITY);
     }
 
     @Test
@@ -234,8 +226,7 @@ public class HandComparatorTest {
         setUpWithTwoPair();
         addPocketCards(lowHand, TWO_OF_CLUBS, TWO_OF_SPADES);
         addPocketCards(highHand, KNAVE_OF_CLUBS, KNAVE_OF_SPADES);
-        assertEvaluation(FOUR_OF_A_KIND, FOUR_OF_A_KIND);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(FOUR_OF_A_KIND, FOUR_OF_A_KIND, !EQUALITY);
     }
 
     // STRAIGHT FLUSH
@@ -251,8 +242,7 @@ public class HandComparatorTest {
 
         addPocketCards(lowHand, KNAVE_OF_CLUBS, KNAVE_OF_SPADES);
         addPocketCards(highHand, ACE_OF_HEARTS, TEN_OF_HEARTS);
-        assertEvaluation(STRAIGHT_FLUSH, FOUR_OF_A_KIND);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(STRAIGHT_FLUSH, FOUR_OF_A_KIND, !EQUALITY);
     }
 
     @Test
@@ -267,7 +257,6 @@ public class HandComparatorTest {
 
         addPocketCards(lowHand, NINE_OF_HEARTS, FOUR_OF_CLUBS);
         addPocketCards(highHand, ACE_OF_HEARTS, THREE_OF_CLUBS);
-        assertEvaluation(STRAIGHT_FLUSH, STRAIGHT_FLUSH);
-        assertTrue(comparator.compare(highHand, lowHand) > 0);
+        assertEvaluation(STRAIGHT_FLUSH, STRAIGHT_FLUSH, !EQUALITY);
     }
 }

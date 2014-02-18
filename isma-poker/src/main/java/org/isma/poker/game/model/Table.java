@@ -52,12 +52,12 @@ public class Table {
         currentPlayer = smallBlindPlayer;
     }
 
-    public void smallBlindSitOut(){
+    public void smallBlindSitOut() {
         Player oldSmallBlindPlayer = smallBlindPlayer;
         smallBlindPlayer = bigBlindPlayer;
         bigBlindPlayer = inGamePlayers.next(smallBlindPlayer);
         underTheGunPlayer = inGamePlayers.next(bigBlindPlayer);
-        if (underTheGunPlayer == oldSmallBlindPlayer){
+        if (underTheGunPlayer == oldSmallBlindPlayer) {
             underTheGunPlayer = inGamePlayers.next(underTheGunPlayer);
         }
         remainingActionPlayers.clear();
@@ -66,7 +66,7 @@ public class Table {
         remainingActionPlayers.add(bigBlindPlayer);
     }
 
-    public void bigBlindSitOut(){
+    public void bigBlindSitOut() {
         bigBlindPlayer = inGamePlayers.next(bigBlindPlayer);
         underTheGunPlayer = inGamePlayers.next(bigBlindPlayer);
         remainingActionPlayers.clear();
@@ -137,11 +137,15 @@ public class Table {
     //TODO TU pour controler l'ordre de distribution en fonction du bouton
     public void prepareDealHoleCardsStep(Deck deck) {
         int cardAmount = 2;
-        List<Card> cards = deck.deal(inGamePlayers.size() * cardAmount);
+        List<Card> cards = deck.deal(countMatches(inGamePlayers, new AlivePlayerPredicate()) * cardAmount);
         for (int i = 0; i < cardAmount; i++) {
-            underTheGunPlayer.getHand().add(cards.remove(0));
+            if (!underTheGunPlayer.isFold()) {
+                underTheGunPlayer.getHand().add(cards.remove(0));
+            }
             for (Player currPlayer : inGamePlayers.nextList(underTheGunPlayer)) {
-                currPlayer.getHand().add(cards.remove(0));
+                if (!currPlayer.isFold()) {
+                    currPlayer.getHand().add(cards.remove(0));
+                }
             }
         }
     }
@@ -150,7 +154,9 @@ public class Table {
         List<Card> newCards = deck.deal(number);
         this.communityCards.addAll(newCards);
         for (Player inGamePlayer : inGamePlayers) {
-            inGamePlayer.getHand().addAll(newCards);
+            if (!inGamePlayer.isFold()) {
+                inGamePlayer.getHand().addAll(newCards);
+            }
         }
         return newCards;
     }
@@ -246,7 +252,7 @@ public class Table {
     public void handleSitOut(Player player) {
         players.remove(players.indexOf(player));
         inGamePlayers.remove(inGamePlayers.indexOf(player));
-        if (inGamePlayers.size() < 2){
+        if (inGamePlayers.size() < 2) {
             clearTable();
             dealer = null;
             currentPlayer = null;

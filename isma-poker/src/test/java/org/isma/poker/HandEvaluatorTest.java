@@ -57,6 +57,8 @@ public class HandEvaluatorTest {
         assertEquals(PAIR, evaluator.evaluate(hand));
     }
 
+
+
     @Test
     public void twoPair() {
         hand.add(ACE_OF_CLUBS);

@@ -20,6 +20,7 @@ public class StraightHelper {
 
 
     public static List<Hand> getAllStraights(Hand hand) {
+        hand = new Hand(hand);
         Collections.sort(hand, COMPARATOR);
         List<ValueEnum> straightsLowerCardList = getStraightsLowerCards(hand);
         List<Hand> allStraights = new ArrayList<Hand>();

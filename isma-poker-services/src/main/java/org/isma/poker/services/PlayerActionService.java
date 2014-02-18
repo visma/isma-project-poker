@@ -10,7 +10,6 @@ import org.isma.poker.model.HandEvaluation;
 
 public class PlayerActionService {
 
-    //@Autowired
     public PlayerActionService() {
     }
 

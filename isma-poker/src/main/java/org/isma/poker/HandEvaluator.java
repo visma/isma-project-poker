@@ -22,6 +22,7 @@ public class HandEvaluator {
      * **********************************************************************
      */
     public HandEvaluation evaluate(Hand hand) {
+        hand = new Hand(hand);
         HandEvaluation handEvaluation;
         if (isStraightFlush(hand)) {
             handEvaluation = STRAIGHT_FLUSH;
@@ -336,7 +337,11 @@ public class HandEvaluator {
                 return compare;
             }
 
-            //Same combination : compare strongest card values
+            //Same combination : sort then compare strongest card values
+            hand1 = new Hand(hand1);
+            hand2 = new Hand(hand2);
+            sortBest(hand1, handEvaluation1);
+            sortBest(hand2, handEvaluation2);
             for (int i = 0; i < MAX_CARD_COMPARAISON; i++) {
                 Card card1 = hand1.get(i);
                 Card card2 = hand2.get(i);

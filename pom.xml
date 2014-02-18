@@ -28,6 +28,7 @@
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!-- Modules -->
             <dependency>
                 <groupId>org.isma</groupId>
                 <artifactId>isma-poker</artifactId>

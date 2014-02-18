@@ -7,13 +7,13 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 
 public class PlayerActionTest {
-    private PlayerBetListener game;
+    private PlayerActionListener game;
     private Player player;
 
 
     @Before
     public void setUp() throws Exception {
-        game = mock(PlayerBetListener.class);
+        game = mock(PlayerActionListener.class);
         player = new Player("toto");
     }
 

@@ -9,52 +9,52 @@ public class PlayerAction {
     private static final Logger LOG = Logger.getLogger(Player.class);
 
     //TODO faire un TU ou le 2 joueur s'assoit avec 0 jetons, en achete et verifier que la partie demarre
-    public static void buyChips(Player player, PlayerBetListener game, int chips) throws InvalidStepActionException {
+    public static void buyChips(Player player, PlayerActionListener game, int chips) throws InvalidStepActionException {
         game.buy(player, chips);
     }
 
-    public static void allIn(Player player, PlayerBetListener game) throws PokerGameException {
+    public static void allIn(Player player, PlayerActionListener game) throws PokerGameException {
         game.allIn(player);
     }
 
-    public static void raise(Player player, PlayerBetListener game, int chips) throws PokerGameException {
+    public static void raise(Player player, PlayerActionListener game, int chips) throws PokerGameException {
         game.raise(player, chips);
     }
 
-    public static void fold(Player player, PlayerBetListener game) throws PokerGameException {
+    public static void fold(Player player, PlayerActionListener game) throws PokerGameException {
         game.fold(player);
     }
 
-    public static void show(Player player, PlayerBetListener game) throws PokerGameException {
+    public static void show(Player player, PlayerActionListener game) throws PokerGameException {
         game.show(player);
     }
 
-    public static void call(Player player, PlayerBetListener game) throws PokerGameException {
+    public static void call(Player player, PlayerActionListener game) throws PokerGameException {
         game.call(player);
     }
 
-    public static void bet(Player player, PlayerBetListener game, int chips) throws PokerGameException {
+    public static void bet(Player player, PlayerActionListener game, int chips) throws PokerGameException {
         game.bet(player, chips);
     }
 
 
-    public static void paySmallBlind(Player player, PlayerBetListener game) throws PokerGameException {
+    public static void paySmallBlind(Player player, PlayerActionListener game) throws PokerGameException {
         game.paySmallBlind(player);
     }
 
-    public static void payBigBlind(Player player, PlayerBetListener game) throws PokerGameException {
+    public static void payBigBlind(Player player, PlayerActionListener game) throws PokerGameException {
         game.payBigBlind(player);
     }
 
-    public static void check(Player player, PlayerBetListener game) throws PokerGameException {
+    public static void check(Player player, PlayerActionListener game) throws PokerGameException {
         game.check(player);
     }
 
-    public static void sitIn(Player player, PlayerBetListener game) throws PokerGameException {
+    public static void sitIn(Player player, PlayerActionListener game) throws PokerGameException {
         game.sitIn(player);
     }
 
-    public static void sitOut(Player player, PlayerBetListener game) throws PokerGameException {
+    public static void sitOut(Player player, PlayerActionListener game) throws PokerGameException {
         game.sitOut(player);
     }
 
